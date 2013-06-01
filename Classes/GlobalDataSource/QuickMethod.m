@@ -12,6 +12,8 @@
 @implementation QuickMethod
  
 
+//denghuihua
+
 //一个背景透明的UIlabel
 +(UILabel *)getClearLabel
 {

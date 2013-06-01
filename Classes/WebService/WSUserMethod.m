@@ -8,6 +8,28 @@
 
 #import "WSUserMethod.h"
 #import "GlobalDataInfo.h"
+@implementation UserRequestEntity
+@synthesize requestURL = _requestURL;
+
+-(void)setRequestAction:(NSString *)action;
+{
+    if (!_requestURL)
+    {
+        _requestURL = [[NSMutableString alloc] init];
+        [_requestURL setString:HEAD_URL_STR];
+    }
+    [_requestURL appendFormat:@"?action=%@",action];
+}
+-(void)appendRequestParameter:(NSString *)value withKey:(NSString *)key
+{
+    [_requestURL appendFormat:@"&%@=%@",key,[value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+}
+-(void)dealloc
+{
+	setFree(_requestURL);
+	[super dealloc];
+}
+@end
 
 @implementation WSUserMethod
 
@@ -28,7 +50,12 @@
 	
 	[self getConnection:requestDictionary fileDic:nil requestType:nil];
 }
-  
+-(void)nomoalRequestWithEntity:(UserRequestEntity *)entity
+{
+    [finalURLString setString:entity.requestURL];
+    [self getConnection:requestDictionary fileDic:nil requestType:nil];
+}
+
 -(void)dealloc
 {
 	setFree(requestDictionary);

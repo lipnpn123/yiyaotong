@@ -14,7 +14,8 @@
 @synthesize callBackObject;										
 @synthesize callBackFunction;		
 @synthesize wsUserMethod;
-@synthesize currentInfoDic;
+@synthesize selfDataArray;
+@synthesize selfDataDictionary;
 @synthesize lastViewContollerTittle;
 @synthesize progressHUD;
 @synthesize leftBarBtn = _leftBarBtn;;
@@ -56,25 +57,8 @@
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
  }
 #pragma mark -
-#pragma mark 创建按钮
-//创建back按钮取代自动产生的后退按钮
--(void)CreateBackBtn
-{
-// 	[self CreateLeftBtn:lastViewContollerTittle withDone:@"popSelf" withImageName:nil];
-    [self CreateLeftBtn:@"返回" withDone:@"popSelf" withImageName:nil];
-
-}
-
--(void)CreateLeftRootBtn
-{
-	[self CreateLeftBtn:@"首页" withDone:@"popRoot" withImageName:nil];
-}
-
--(void)CreateRigthRootBtn
-{
-	[self CreateRightBtn:@"首页" withDone:@"popRoot" withImageName:nil];
-}
  
+
 //创建左bar  btn
 -(void)createLeftBarBtn:(NSString *)Btntitle action:(SEL)selector withImageName:(NSString*)imageName
 {
@@ -94,7 +78,7 @@
     /******************判断有无高亮点击图片************************/
 	NSRange range= [imageName rangeOfString:@"."];
 	imageName  = [NSString stringWithFormat:@"%@_h.png",[imageName substringToIndex:range.location]] ;
-//	img = [UIImage autoreleaseImageNamed:imageName];
+	img = [UIImage imageNamed:imageName];
 	if (img)
 	{
 		img = [img stretchableImageWithLeftCapWidth:5 topCapHeight:5];
@@ -134,7 +118,7 @@
  		imageName =  @"rightBarBtnImage.png" ;
 	}
     /******************设置正常时候的图片************************/
-	img = [UIImage autoreleaseImageNamed:imageName];
+	img = [UIImage imageNamed:imageName];
 	img = [img stretchableImageWithLeftCapWidth:5 topCapHeight:5];//这里的topCapHeight如果设置的话就会让图片效果失去
 	button.titleLabel.font = NewFontWithBoldSize(15);
     [button setBackgroundImage:img forState:UIControlStateNormal];
@@ -142,7 +126,7 @@
     /******************判断有无高亮点击图片************************/
 	NSRange range= [imageName rangeOfString:@"."];
 	imageName  = [NSString stringWithFormat:@"%@_h.png",[imageName substringToIndex:range.location]] ;
-	img = [UIImage autoreleaseImageNamed:imageName];
+	img = [UIImage imageNamed:imageName];
 	if (img)
 	{
 		img = [img stretchableImageWithLeftCapWidth:5 topCapHeight:5];
@@ -205,7 +189,10 @@
     }
 
 }
-
+-(void)CreateBackBtn
+{
+    
+}
 -(void)dissSelf
 {
 	[self dismissModalViewControllerAnimated:YES];
@@ -230,9 +217,8 @@
     [self hideRequestNotice];
 	MBProgressHUD* tmpHUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:tmpHUD];
-	[tmpHUD release];
-	//	self.progressHUD = tmpHUD;
-	tmpHUD.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]] autorelease];
+ 	//	self.progressHUD = tmpHUD;
+	tmpHUD.customView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
 	
     // Set custom view mode
     tmpHUD.mode = MBProgressHUDModeCustomView;
@@ -257,8 +243,7 @@
  	self.progressHUD = tmpHUD;
 	[self.view addSubview:tmpHUD];
 	[self.view bringSubviewToFront:tmpHUD];
-	[tmpHUD release];
-	tmpHUD.mode = MBProgressHUDModeIndeterminate;
+ 	tmpHUD.mode = MBProgressHUDModeIndeterminate;
 
 	tmpHUD.labelText = notice;
 	
@@ -276,25 +261,15 @@
 	[self.progressHUD removeFromSuperview];
 	self.progressHUD.delegate = nil;
 	self.progressHUD = nil;
-    setFree(wsCustomMethod);
-	[wsUserMethod closeAllConnections];
-	setFree(wsUserMethod);
-    setFree(lastViewContollerTittle);
-	if (callBackObject)
-	{
-		[callBackObject release];
-	}					       
-	if (callBackFunction)
-	{
-		[callBackFunction release];
-	}	
-	if (currentInfoDic)
-	{
-		[currentInfoDic release];
-		currentInfoDic = nil;
-	}
- 
-    [super dealloc];
+ 	[wsUserMethod closeAllConnections];
+    self.wsUserMethod = nil;
+    self.lastViewContollerTittle = nil;
+    self.callBackObject = nil;
+    self.callBackFunction = nil;
+    self.selfDataDictionary = nil;
+    self.leftBarBtn= nil;
+    self.rightBarBtn= nil;
+
 }
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {

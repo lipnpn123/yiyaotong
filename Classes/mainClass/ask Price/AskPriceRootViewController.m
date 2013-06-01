@@ -7,6 +7,7 @@
 //
 
 #import "AskPriceRootViewController.h"
+#import "SeachMedicineTableView.h"
 
 @interface AskPriceRootViewController ()
 
@@ -26,7 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    SeachMedicineTableView *tableview = [[SeachMedicineTableView alloc] initWithFrame:NomalView_Frame];
+    [self.view addSubview:tableview];
 }
 
 - (void)didReceiveMemoryWarning

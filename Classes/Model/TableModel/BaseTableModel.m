@@ -44,10 +44,12 @@
 {
     //    NSString *CellIdentifier = [NSString stringWithFormat:@"%d",indexPath.row];
     static NSString *CellIdentifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+	{
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    return nil;
+    return cell;
 }
 
 -(void)show_noDataBgView

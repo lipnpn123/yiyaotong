@@ -26,10 +26,10 @@
 @end
 
 @implementation ASIFormDataRequest
-@synthesize failedCallBackFunction;
+
 @synthesize keyValue;
 @synthesize timeOutTimer;
-@synthesize callBackFunction;
+@synthesize returnObject;
 
 #pragma mark utilities
 - (NSString*)encodeURL:(NSString *)string
@@ -70,7 +70,7 @@
 #if DEBUG_FORM_DATA_REQUEST
 	[debugBodyString release]; 
 #endif
-	[callBackFunction release];
+
 	[postData release];
 	[fileData release];
 	if (timeOutTimer)
@@ -83,11 +83,7 @@
 		[keyValue release];
 		keyValue = nil;
 	}
-	if (failedCallBackFunction)
-	{
-		[failedCallBackFunction release];
-		failedCallBackFunction =nil;
-	}
+    self.returnObject = nil;
 	[super dealloc];
 }
 

@@ -9,6 +9,7 @@
 #import "HundredMillion_AppDelegate.h"
 #import "GlobalPointer.h"
  #import "TestViewController.h"
+#import "HomePageViewController.h"
 @implementation HundredMillion_AppDelegate
 
 @synthesize window;
@@ -30,8 +31,11 @@
 
 -(void)testMethod
 {
-	TestViewController *vc = [[TestViewController alloc] init];
-	[self.window addSubview:vc.view];
+//	TestViewController *vc = [[TestViewController alloc] init];
+//	[self.window addSubview:vc.view];
+    HomePageViewController *vc = [[HomePageViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.window setRootViewController:nav];
 	
 }
 - (void)applicationWillResignActive:(UIApplication *)application {

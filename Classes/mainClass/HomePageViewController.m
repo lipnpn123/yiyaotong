@@ -7,7 +7,7 @@
 //
 
 #import "HomePageViewController.h"
-
+#import "AskPriceRootViewController.h"
 @interface HomePageViewController ()
 
 @end
@@ -26,7 +26,45 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
+    [self.selfDataArray addObject:@"0"];
+    [self.selfDataArray addObject:@"1"];
+    [self.selfDataArray addObject:@"2"];
+    [self.selfDataArray addObject:@"3"];
+    [self.selfDataArray addObject:@"4"];
+    [self.selfDataArray addObject:@"5"];
+    [self.selfDataArray addObject:@"6"];
+    [self.selfDataArray addObject:@"7"];
+    [self.selfDataArray addObject:@"8"];
+ 	// Do any additional setup after loading the view.
+    int offx =25;
+    int offy = 20;
+    int disx = 30;
+    int disy = 40;
+    
+    for (int i=0; i<3; i++)
+    {
+        for (int j=0; j<3; j++)
+        {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            button.frame = CGRectMake(offx + j*70+disx*j, offy + i*70 +disy*i, 70, 70);
+            button.tag = j+i*3;
+            [button addTarget:self action:@selector(enterDeteil:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitle:[self.selfDataArray objectAtIndex:j+i*3] forState:UIControlStateNormal];
+            [self.view addSubview:button];
+        }
+ 
+    }
+}
+
+-(void)enterDeteil:(UIButton *)button
+{
+    BaseViewController *vc =    nil;
+    if (button.tag == 0)
+    {
+        vc = [[AskPriceRootViewController alloc] init];
+    }
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

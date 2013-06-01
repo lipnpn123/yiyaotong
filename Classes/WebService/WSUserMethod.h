@@ -17,9 +17,15 @@
 #import "WebService.h"
 
 #define testUser
+@interface UserRequestEntity :NSObject
+{
+}
+@property (readonly,nonatomic)NSMutableString *requestURL;
 
+-(void)setRequestAction:(NSString *)action;
+-(void)appendRequestParameter:(NSString *)value withKey:(NSString *)key;
 
-
+@end
 @interface WSUserMethod : WebService 
 {
 	
@@ -30,4 +36,5 @@
 
 /***********************************测试*************************************/
 -(void)testRequest;
+-(void)nomoalRequestWithEntity:(UserRequestEntity *)entity;
  @end

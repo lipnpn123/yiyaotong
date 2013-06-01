@@ -17,10 +17,11 @@ frame的设置
 /******************************************************设置Frame******************************************************************/
 #pragma mark -
 #pragma mark 设置Frame
+#define IS_IPHONE_5 (!(fabs([UIScreen mainScreen].bounds.size.height -568)))
 
 //屏幕的宽高
-#define	Dev_ScreenWidth		320		
-#define	Dev_ScreenHeight	480
+#define	Dev_ScreenWidth		[UIScreen mainScreen].bounds.size.width
+#define	Dev_ScreenHeight	[UIScreen mainScreen].bounds.size.height
 
 //电池栏的高度
 #define	Dev_StateHeight		20

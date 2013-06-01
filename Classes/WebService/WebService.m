@@ -12,6 +12,7 @@
 #import "ASIDownloadCache.h"
 #import "GlobalDataInfo.h"
 
+
 @implementation WebService
 
 @synthesize delegate;
@@ -65,9 +66,9 @@
 	
 	ASIFormDataRequest* connection = [[ASIFormDataRequest alloc] initWithURL:url];
 	connection.delegate = self;
-	connection.requestMethod = @"POST";
+	connection.requestMethod = @"GET";
 	connection.tag = tag;
-    
+    connection.timeOutSeconds = 20;
 	NSMutableString* postData = [NSMutableString string];
 	
 	//循环对表单进行赋值
@@ -134,11 +135,18 @@
 /*------------连接成功-----------*/
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
-    //	NSData *data = [aRequest responseData];
-    //	NSString* resposeString = [[[NSString alloc] initWithBytes:[data bytes] length:[data length] encoding:NSUTF8StringEncoding ] autorelease];
-    //	NSString *resposeString = [aRequest responseString];
-    //    NSLog(@"返回的字符串:%@",resposeString);
-	
+	NSData *data = [aRequest responseData];
+    NSStringEncoding gbkEncoding =CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString *responseString = [[NSString alloc] initWithData:data encoding:gbkEncoding];
+ 
+    SBJSON *json = [[SBJSON alloc] init];
+    NSObject *reurnObj = [json objectWithString:responseString];
+    if (!reurnObj)
+    {
+        reurnObj = responseString;
+    }
+    NSLog(@"返回的字符串:%@",reurnObj);
+    aRequest.returnObject = reurnObj;
 	if ((delegate != nil) && [delegate respondsToSelector:@selector(requestFinished:)])
 	{
 		[delegate requestFinished:aRequest];

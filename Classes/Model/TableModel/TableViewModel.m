@@ -19,9 +19,7 @@
 
 @synthesize refreshHeaderView;
 
-@synthesize requestDic;
 @synthesize dataArray;
-@synthesize cellFlagArray;
 
 @synthesize startLine;
 @synthesize endLine;
@@ -40,15 +38,13 @@
         self.delegate = self;
 		self.dataSource = self;
 //		self.backgroundColor = mostViewBgColor;
-        wsUserMethod = [[WSUserMethod alloc] init];
-		wsUserMethod.delegate = self;
+        self.wsUserMethod = [[WSUserMethod alloc] init];
+		self.wsUserMethod.delegate = self;
         // Custom initialization
         startLine = 0;
 		endLine = 10;
-		requestDic = [[NSMutableDictionary alloc] init];
 		dataArray = [[NSMutableArray alloc] init];
-		cellFlagArray = [[NSMutableArray alloc] init];
-         
+        
 //		UIView *FootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 44)];
 //		
 //		UIImage *cellImage = [UIImage imageNamed:@"tableViewCell_line.png"];
@@ -62,20 +58,18 @@
 		
 		UIView *tableFootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 44)];;
 		[tableFootView setBackgroundColor:[UIColor clearColor]];
-		LoadingMoreFooterView *tempFootView = [[[LoadingMoreFooterView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 44)] autorelease];
+		LoadingMoreFooterView *tempFootView = [[LoadingMoreFooterView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 44)];
  		self.loadFooterView = tempFootView;
 		self.loadFooterView.hidden = YES;
 		self.loadFooterView.delegate = self;
 		[tableFootView addSubview:tempFootView];
 		self.tableFooterView = tableFootView;
-		[tableFootView release];
-        // init refreshHeaderView
+         // init refreshHeaderView
         EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.bounds.size.height, self.frame.size.width, self.bounds.size.height)];
         refreshView.delegate = self;
         [self addSubview:refreshView];
         self.refreshHeaderView = refreshView;
-        [refreshView release];
-//		self.backgroundColor = lightBgColor;
+ //		self.backgroundColor = lightBgColor;
 
         
         //  update the last update date
@@ -93,31 +87,9 @@
 
 - (void)dealloc
 {
-    if (rollBackTimer)
-    {
-        [rollBackTimer invalidate];
-        rollBackTimer=nil;
-    }
 
-    if (refreshHeaderView)
-	{
-        [refreshHeaderView release];
-    } 
- 
-	self.noDataImageName = nil;;
-	if (noDataBgView)
-	{
-		[noDataBgView release];
-	}
-     [requestDic release];
-    [dataArray release];
-    [cellFlagArray release];
-    if (wsUserMethod)
-    {
-        [wsUserMethod release];
-        wsUserMethod = nil;
-    }
-    [super dealloc];
+    [self.rollBackTimer invalidate];
+    self.rollBackTimer = nil;
 }
 
 
@@ -130,13 +102,13 @@
 	//  should be calling your tableviews data source model to reload
 	reloading = YES;
 	needReload = YES;
-	isLoadState = YES;
+	self.isLoadState = YES;
 	NSLog(@"开始请求");
     //请求刷新,记录值重新开始
 	startLine = 0;
 	endLine = 10;
 	[self requestForData];
-	rollBackTimer = [NSTimer scheduledTimerWithTimeInterval:NETWORK_TIMEOUT 
+	self.rollBackTimer = [NSTimer scheduledTimerWithTimeInterval:NETWORK_TIMEOUT
 													target:self 
 												  selector:@selector(checkConnectionIsTimeout) 
 												  userInfo:nil 
@@ -146,8 +118,8 @@
 //此timer用于控制超时后webservice无法回调的情况
 -(void)checkConnectionIsTimeout
 {
-	[rollBackTimer invalidate];
-    rollBackTimer=nil;
+	[self.rollBackTimer invalidate];
+    self.rollBackTimer=nil;
 	[self closeAllConnections];
 	[self performSelectorOnMainThread:@selector(doneLoadingTableViewData) withObject:nil waitUntilDone:NO];
 }
@@ -189,7 +161,7 @@
 					return;
 				}
 
-				[self performSelector:@selector(clickShowMoreBtn:)];
+				[self clickShowMoreBtn];
 				reloading = YES;
 			}
 		}
@@ -230,7 +202,6 @@
 //请求时调用
 -(void)requestForData
 {	
-	[requestDic removeAllObjects];
 //	startLine = [dataArray count];
 
 }
@@ -239,7 +210,7 @@
 //返回数据时调用
 -(void)getDataAndRefreshTable:(NSArray*)responseArray
 {
-	if (isLoadState)
+	if (self.isLoadState)
 	{
 		[dataArray setArray:responseArray];
 	}
@@ -250,9 +221,17 @@
 	[self reloadData];
 	[self show_noDataBgView];
 	[self endRequestMoreUI];
+    if ([responseArray count]<10)
+    {
+        [self setcanReloadMoreState:NO];
+    }
+    else
+    {
+        [self setcanReloadMoreState:YES];
+    }
 }
 
--(void)clickShowMoreBtn:(id)sender
+-(void)clickShowMoreBtn
 {
 	self.loadFooterView.showActivityIndicator = YES;
 	[self requestForData];
@@ -270,15 +249,6 @@
  	[self scrollViewDidEndDragging:((UIScrollView *)self) willDecelerate:YES];
 }
 
--(void)reloadSelfData
-{
-	[cellFlagArray removeAllObjects];
-	for (int i =0 ; i <[dataArray count]; i++)
-	{
-		[cellFlagArray addObject:@"0"];
-	}
-	[self reloadData];
-}
 
 -(void)show_noDataBgView
 {
@@ -292,13 +262,12 @@
 			UIImage * image = [UIImage  imageWithData:data];
 			if (image && self.noDataImageName)
 			{
-				noDataBgView = [[UIImageView alloc] init];
-				noDataBgView.image = image;
-				noDataBgView.frame = CGRectMake(0, 0, 320, 416);
+				self.noDataBgView = [[UIImageView alloc] init];
+				self.noDataBgView.image = image;
+				self.noDataBgView.frame = CGRectMake(0, 0, 320, 416);
 			}
 			[self Apear_noDataBgView];
 			[self addSubview:noDataBgView];
-            [data release];
 		}
 		else 
 		{
@@ -315,16 +284,16 @@
 
 -(void)Apear_noDataBgView
 {
-	if (noDataBgView.alpha == 1)
+	if (self.noDataBgView.alpha == 1)
 	{
 		return;
 	}
-	noDataBgView.hidden = NO;
-	noDataBgView.alpha=0.0;
+	self.noDataBgView.hidden = NO;
+	self.noDataBgView.alpha=0.0;
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:0.75];
 	[UIView setAnimationDelegate:self];
-	noDataBgView.alpha=1.0;
+	self.noDataBgView.alpha=1.0;
 	[UIView commitAnimations];
 }
 
@@ -360,7 +329,7 @@
     TableCellModel *cell = (TableCellModel *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-		cell = [[[TableCellModel alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[TableCellModel alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     return cell;
 	
@@ -368,31 +337,28 @@
 //手动结束界面上的下拉刷新
 -(void)endRequestMoreUI
 {
-	isLoadState = NO;	
+	self.isLoadState = NO;
 
-	[rollBackTimer invalidate];
-	rollBackTimer = nil;
+	[self.rollBackTimer invalidate];
+	self.rollBackTimer = nil;
 	[self performSelectorOnMainThread:@selector(doneLoadingTableViewData) withObject:nil waitUntilDone:NO];
-	if ([dataArray count] >= totalNum) 
-	{
- 		self.loadFooterView.hidden  = YES;
-		canReloadMore = NO;
-	}
-	else 
-	{
- 		self.loadFooterView.hidden  = NO;
-		canReloadMore = YES; 
-	}
+
  	reloading = NO;
 	self.loadFooterView.showActivityIndicator = NO;
 	startLine = [dataArray count];
 }
+
+-(void)setcanReloadMoreState:(BOOL)is
+{
+    self.loadFooterView.hidden  = !is;
+    canReloadMore = is;
+
+}
+
 -(void)closeAllConnections
 {
-    if (wsUserMethod)
-    {
-		[wsUserMethod closeAllConnections];
-    }
+    
+    [self.wsUserMethod closeAllConnections];
 }
 #pragma mark - Table view delegate
 
@@ -403,18 +369,16 @@
 
 #pragma mark - WebService delegate
 
-- (void)requestFinished:(CusASIFormDataRequest *)obj  
+- (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
-	if (obj.isSuccessRequest)
-	{
-		totalNum = [[obj.dataDictionary objectForKey:@"total"] intValue];
-	}
+    [self endRequestMoreUI];
 
 }
 
-- (void)requestFailed:(CusASIFormDataRequest *)obj 
+- (void)requestFailed:(ASIFormDataRequest *)aRequest
 {
-	isLoadState = NO;	
-	[self endRequestMoreUI];
+    [self endRequestMoreUI];
+
 }
+
 @end

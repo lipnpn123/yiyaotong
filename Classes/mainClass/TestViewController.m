@@ -42,9 +42,13 @@
 	btn2.frame = CGRectMake(220,200,100,100);
 	[btn2 addTarget:self action:@selector(btnAction2) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:btn2];
-	
-    WSUserMethod *globalWebRequest = [[WSUserMethod alloc] init];
-	[globalWebRequest testRequest];
+//	UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+//    [entity setRequestAction:@"search_yao"];
+//    [entity appendRequestParameter:@"12" withKey:@"key"];
+//    [entity appendRequestParameter:@"1" withKey:@"pi"];
+//    WSUserMethod *globalWebRequest = [[WSUserMethod alloc] init];
+//    globalWebRequest.delegate = self;
+//	[globalWebRequest nomoalRequestWithEntity:entity];
 }
  
 
@@ -92,6 +96,15 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)requestFinished:(ASIFormDataRequest *)aRequest
+{
+    
+}
+
+- (void)requestFailed:(ASIFormDataRequest *)aRequest
+{
+    
+}
 
 - (void)dealloc {
     [super dealloc];

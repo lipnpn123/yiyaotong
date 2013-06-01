@@ -28,8 +28,7 @@ typedef enum _ASIPostFormat {
 	
 	NSStringEncoding stringEncoding;
 	
-	NSString* callBackFunction;
-	NSString* failedCallBackFunction;
+ 
 
 	NSTimer *timeOutTimer;
 	
@@ -40,10 +39,10 @@ typedef enum _ASIPostFormat {
 #endif
 	
 }
-@property(retain,nonatomic) NSString* failedCallBackFunction;
-@property(retain,nonatomic)NSString* callBackFunction;
+ 
 @property(retain,nonatomic)NSTimer *timeOutTimer;
 @property(retain,nonatomic)NSString *keyValue;
+@property(retain,nonatomic)NSObject *returnObject;
 
 #pragma mark utilities 
 - (NSString*)encodeURL:(NSString *)string; 

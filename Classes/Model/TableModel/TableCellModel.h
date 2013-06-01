@@ -11,18 +11,15 @@
  
 @class TableViewModel;
 
-@interface TableCellModel : UITableViewCell {
+@interface TableCellModel : UITableViewCell
+{
 	
-	id fatherTableViewController;					//记录cell的fatherTable
-	CGFloat totalHeight;												//cell的总高度
-	NSMutableDictionary *cellDic;
-	
+	 
 
 }
 
-@property(assign,nonatomic)id fatherTableViewController;
+@property(assign,nonatomic)id fatherPoint;
 @property(assign,nonatomic)CGFloat totalHeight;
-@property(retain,nonatomic)NSMutableDictionary *cellDic;
- 
+  
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TableViewModel.h"
 @interface SeachMedicineTableView : TableViewModel
 
 @end

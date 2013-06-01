@@ -18,51 +18,41 @@
 #import "EGORefreshTableHeaderView.h"
 #import "TableCellModel.h"
 #import "BaseViewController.h"
-#import "RequestType.h"
+
 #import "LoadingMoreFooterView.h"
 
 
 
 @interface TableViewModel : UITableView<EGORefreshTableHeaderDelegate,UITableViewDelegate, UITableViewDataSource,WebServiceDelegate> {
-  	LoadingMoreFooterView *loadFooterView;
-	EGORefreshTableHeaderView *refreshHeaderView;			//下拉更新视图
+//  	LoadingMoreFooterView *loadFooterView;
+//	EGORefreshTableHeaderView *refreshHeaderView;			//下拉更新视图
 	
-	NSMutableDictionary* requestDic;							//请求数组
-    NSMutableArray* dataArray;                              //返回数据数组
-	NSMutableArray* cellFlagArray;							//记录cell是否需要刷新
+//    NSMutableArray* dataArray;                              //返回数据数组
+//	NSMutableArray* cellFlagArray;							//记录cell是否需要刷新
     
 	NSInteger startLine;									//开始记录
-    BOOL isLoadState;										//是否是下拉刷新
 
     BOOL reloading;							
 	BOOL needReload;
 	BOOL canReloadMore;
-
-//	BOOL isSearchRequest;									//是否search请求
-
-	NSTimer* rollBackTimer;									//超时timer
- 	
-	UIImageView *noDataBgView;								//没有数据的时候显示的背景
-    
-    BaseViewController* fatherViewController;
-    WSUserMethod* wsUserMethod;
-	int totalNum ;
-}
-@property(nonatomic,retain) LoadingMoreFooterView *loadFooterView;
-@property(nonatomic,retain)EGORefreshTableHeaderView* refreshHeaderView;
-
-@property(nonatomic,retain)NSMutableDictionary* requestDic;
-@property(nonatomic,retain)NSMutableArray* dataArray;
-@property(nonatomic,retain)NSMutableArray* cellFlagArray;
  
+ 	    
+}
+@property(nonatomic,strong) LoadingMoreFooterView *loadFooterView;
+@property(nonatomic,strong)EGORefreshTableHeaderView* refreshHeaderView;
+@property(nonatomic,assign)BOOL isLoadState;										//是否是下拉刷新
+
+@property(nonatomic,strong)NSMutableArray* dataArray;
+@property(nonatomic,strong)NSTimer* rollBackTimer;
 @property(nonatomic,assign)NSInteger startLine;
 @property(nonatomic,assign)NSInteger endLine;
 @property(nonatomic,assign)BOOL reloading;
 //@property(nonatomic,assign)BOOL isSearchRequest;
+@property(nonatomic,retain) WSUserMethod *wsUserMethod;
 
-@property(nonatomic,assign)UIImageView *noDataBgView;
+@property(nonatomic,strong)UIImageView *noDataBgView;
 @property(nonatomic,assign)BaseViewController* fatherViewController;
-@property(nonatomic,retain) NSString *noDataImageName;
+@property(nonatomic,strong) NSString *noDataImageName;
 //请求时调用
 -(void)requestForData;
 
@@ -70,7 +60,7 @@
 -(void)getDataAndRefreshTable:(NSArray*)responseArray;
 
 //显示更多
--(void)clickShowMoreBtn:(id)sender;
+-(void)clickShowMoreBtn;
 
 //没数据显示背景图片
 -(void)show_noDataBgView;
@@ -78,8 +68,7 @@
 //手动让其下拉刷新
 -(void)reloadTableData;
 
--(void)reloadSelfData;
-
+ 
 //手动结束界面上的下拉刷新
 -(void)endRequestMoreUI;
 

@@ -12,7 +12,7 @@
 @implementation HundredMillion_AppDelegate
 
 @synthesize window;
-
+    
 
 #pragma mark -
 #pragma mark Application lifecycle

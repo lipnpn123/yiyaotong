@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+     
     SeachMedicineTableView *tableview = [[SeachMedicineTableView alloc] initWithFrame:NomalView_Frame];
     [tableview reloadTableData];
     [self.view addSubview:tableview];
@@ -41,8 +41,8 @@
     UITextField *medicaltf  =[[UITextField alloc] initWithFrame:CGRectMake(20, 50, 120, 30)];
     medicaltf.placeholder= @"按药品名称查找";
     [self.view addSubview:medicaltf];
- 
-}
+  
+ }
 
 - (void)didReceiveMemoryWarning
 {

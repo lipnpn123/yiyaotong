@@ -7,6 +7,7 @@
 //
 
 #import "UserLoginViewController.h"
+#import "UserRegisteredViewController.h"
 
 #import "ASIFormDataRequest.h"
 @interface UserLoginViewController ()
@@ -150,7 +151,8 @@
 }
 -(void)registerButtonAction
 {
-    
+    UserRegisteredViewController *vc = [[UserRegisteredViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)rememberMeButtonAction

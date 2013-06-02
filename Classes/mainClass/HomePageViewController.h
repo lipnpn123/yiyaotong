@@ -7,7 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import <CoreLocation/CoreLocation.h>
+#import <CoreLocation/CLLocationManager.h>
 
-@interface HomePageViewController : BaseViewController
+@interface HomePageViewController : BaseViewController<CLLocationManagerDelegate>
 
 @end

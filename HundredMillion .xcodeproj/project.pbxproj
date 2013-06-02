@@ -26,6 +26,8 @@
 		5A24A036175B2DC6009A9DCC /* UserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A24A035175B2DC6009A9DCC /* UserLoginViewController.m */; };
 		5A24A03A175B3402009A9DCC /* passwordvisibleselectImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A24A038175B3402009A9DCC /* passwordvisibleselectImage.png */; };
 		5A24A03B175B3402009A9DCC /* passwordvisibleUnselectImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A24A039175B3402009A9DCC /* passwordvisibleUnselectImage.png */; };
+		5A24A041175B4207009A9DCC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A24A040175B4207009A9DCC /* CoreLocation.framework */; };
+		5A24A044175B4812009A9DCC /* UserRegisteredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A24A043175B4812009A9DCC /* UserRegisteredViewController.m */; };
 		5A42F517175A299E00792109 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A42F516175A299E00792109 /* ImageIO.framework */; };
 		5A42F532175A29A800792109 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A42F51A175A29A800792109 /* MKAnnotationView+WebCache.m */; };
 		5A42F533175A29A800792109 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A42F51C175A29A800792109 /* NSData+GIF.m */; };
@@ -144,6 +146,9 @@
 		5A24A037175B2DCC009A9DCC /* UserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLoginViewController.h; sourceTree = "<group>"; };
 		5A24A038175B3402009A9DCC /* passwordvisibleselectImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = passwordvisibleselectImage.png; path = testImage/passwordvisibleselectImage.png; sourceTree = "<group>"; };
 		5A24A039175B3402009A9DCC /* passwordvisibleUnselectImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = passwordvisibleUnselectImage.png; path = testImage/passwordvisibleUnselectImage.png; sourceTree = "<group>"; };
+		5A24A040175B4207009A9DCC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5A24A042175B4812009A9DCC /* UserRegisteredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRegisteredViewController.h; sourceTree = "<group>"; };
+		5A24A043175B4812009A9DCC /* UserRegisteredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRegisteredViewController.m; sourceTree = "<group>"; };
 		5A42F516175A299E00792109 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		5A42F519175A29A800792109 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		5A42F51A175A29A800792109 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
@@ -349,6 +354,7 @@
 				B7BC7231153D0223005E85E2 /* CoreGraphics.framework in Frameworks */,
 				B7BC7232153D0223005E85E2 /* Foundation.framework in Frameworks */,
 				5A249F3E175AF2DD009A9DCC /* libMobClickLibrary.a in Frameworks */,
+				5A24A041175B4207009A9DCC /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +421,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A24A040175B4207009A9DCC /* CoreLocation.framework */,
 				5A6AB6F01759D25500CBF622 /* MediaPlayer.framework */,
 				5A6AB6EE1759D24B00CBF622 /* MapKit.framework */,
 				B7BC7218153D0223005E85E2 /* libsqlite3.0.dylib */,
@@ -492,6 +499,8 @@
 			children = (
 				5A24A037175B2DCC009A9DCC /* UserLoginViewController.h */,
 				5A24A035175B2DC6009A9DCC /* UserLoginViewController.m */,
+				5A24A042175B4812009A9DCC /* UserRegisteredViewController.h */,
+				5A24A043175B4812009A9DCC /* UserRegisteredViewController.m */,
 			);
 			path = "user Login";
 			sourceTree = "<group>";
@@ -969,6 +978,7 @@
 				5AC79D87175A5232006C378A /* SeachMedicineTableViewCell.m in Sources */,
 				5A24A02F175B2C22009A9DCC /* UserCenterViewController.m in Sources */,
 				5A24A036175B2DC6009A9DCC /* UserLoginViewController.m in Sources */,
+				5A24A044175B4812009A9DCC /* UserRegisteredViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

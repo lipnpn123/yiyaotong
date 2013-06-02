@@ -125,14 +125,13 @@ static DBDataCacheManager *dataManager;
 
 #pragma mark 测试数据
 
--(BOOL)insertCookiesData:(id )tempValue;
+-(BOOL)insertUserAccountData:(id )tempValue;
 {
-	return [self insertDicData:tempValue tableName:DBMainTable type:DBTestType contentId:nil];
+	return [self insertDicData:tempValue tableName:DBMainTable type:DBUserAccountType contentId:nil];
 }
-
--(id)getCookiesData;
+-(id)getAccountData;
 {
-	return [self selectDicData:nil tableName:DBMainTable type:DBTestType contentId:nil];
+	return [self selectDicData:nil tableName:DBMainTable type:DBUserAccountType contentId:nil];
 }
 
  

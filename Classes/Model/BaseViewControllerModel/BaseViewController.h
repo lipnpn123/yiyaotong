@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "WSUserMethod.h"
 #import "GlobalDataInfo.h"
-
+#import "UserInfoSave.h"
 #import "OperationView.h"
 #import "MBProgressHUD.h"
+#import "DBDataCacheManager.h"
 /*
 		所有controller的基类
 
@@ -35,7 +36,7 @@
 @property (nonatomic, strong) UIButton *rightBarBtn;//导航栏右按钮
 @property (nonatomic, strong) UIImageView *wfTitleImageView;//导航栏右按钮
 @property (nonatomic, strong) UIImageView *wfBgImageView;//导航栏右按钮
-@property(nonatomic, retain)UILabel* selfTittleLabel;
+@property (nonatomic, strong,getter = getWftitleLabel) UILabel* selfTittleLabel;
 
 //创建左bar  btn
 -(void)createLeftBarBtn:(NSString *)Btntitle action:(SEL)selector withImageName:(NSString*)imageName;

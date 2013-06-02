@@ -8,7 +8,8 @@
 
 #import "UserInfoSave.h"
 #import "GlobalPointer.h"
- 
+#import "UserLoginViewController.h"
+
 
 @implementation UserInfoSave
 #define rootPageCachePath [NSString stringWithFormat:@"%@/rootPageCache",userDocumentPath]
@@ -102,19 +103,19 @@
 	NSDictionary * dic = [NSDictionary dictionaryWithContentsOfFile:fileName];
  	return dic;
 }
-
-//拼接分享内容
-+(NSString *)getStringWithType:(NSString *)type shareTitle:(NSString *)_sharetitle DataURL:(NSString *)dataUrl
+//检查登陆用户
++(BOOL)checkUserLoginState:(UIViewController *)vc 
 {
-	if (!dataUrl) 
-	{
-		NSString *datastr = [NSString stringWithFormat:@"【%@：%@】（分享自＃新浪游戏手机版＃）",type,_sharetitle];
-		return datastr;
-	}
-	
-	NSString *datastr = [NSString stringWithFormat:@"【%@：%@】%@（分享自＃新浪游戏手机版＃）",type,_sharetitle,dataUrl];
-	return datastr;
+    if (!isLoginState)
+    {
+        UserLoginViewController *tvc = [[UserLoginViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tvc];
+        [vc presentModalViewController:nav animated:YES];
+        [tvc release];
+        [nav release];
+    }
+    
+    return isLoginState;
 }
-
  
 @end

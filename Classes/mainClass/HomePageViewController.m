@@ -8,6 +8,8 @@
 
 #import "HomePageViewController.h"
 #import "AskPriceRootViewController.h"
+#import "UserCenterViewController.h"
+#import "UserLoginViewController.h"
 @interface HomePageViewController ()
 
 @end
@@ -64,7 +66,23 @@
     {
         vc = [[AskPriceRootViewController alloc] init];
     }
-    [self.navigationController pushViewController:vc animated:YES];
+    else if (button.tag == 5)
+    {
+        if (isLoginState)
+        {
+            vc = [[UserCenterViewController alloc] init];
+        }
+        else
+        {
+            UserLoginViewController *loginVc = [[UserLoginViewController alloc] init];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVc];
+            [self presentModalViewController:nav animated:YES];
+        }
+    }
+    if (vc)
+    {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning

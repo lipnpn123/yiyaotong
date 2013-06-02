@@ -28,8 +28,8 @@
 
 #pragma mark 保存cookies
 
--(BOOL)insertCookiesData:(id )tempValue;
--(id)getCookiesData;
+-(BOOL)insertUserAccountData:(id )tempValue;
+-(id)getAccountData;
 
 
  #pragma mark 检测上次打开的版本

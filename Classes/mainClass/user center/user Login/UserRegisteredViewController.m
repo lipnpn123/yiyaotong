@@ -256,6 +256,8 @@
 {
     NSDictionary* info = [sender userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    int height = self.view.size.height - kbSize.height;
+
 }
 
 -(void)textFieldChageAction:(NSNotification *)sender

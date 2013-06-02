@@ -22,4 +22,5 @@
 #define DBVesionType                    @"DBVesionType"
 #define DBTestType                    @"DBTestType"
 
-#define DBUserAccountType                    @"DBUserAccountType"
+#define DBUserAccountType       @"DBUserAccountType"
+#define DBShopCarInfoType       @"DBShopCarInfoType"

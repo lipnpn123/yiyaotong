@@ -16,7 +16,7 @@
 @end
 
 @implementation AskPriceRootViewController
-
+@synthesize shoppingNumLabel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,6 +31,8 @@
     [super viewDidLoad];
      
     aptableview= [[SeachMedicineTableView alloc] initWithFrame:CGRectMake(0,90, 320, [[UIScreen mainScreen] applicationFrame].size.height-90)];
+    aptableview.fatherViewController =
+    self;
     aptableview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [aptableview reloadTableData];
     [self.wfBgImageView addSubview:aptableview];
@@ -75,7 +77,12 @@
     shoppingCartBtn.backgroundColor = [UIColor greenColor];
     [headBgiv addSubview:shoppingCartBtn];
     [shoppingCartBtn addTarget:self action:@selector(shoppingCartClicked:) forControlEvents:UIControlEventTouchUpInside];
-  
+    
+    shoppingNumLabel = NewLabelWithDefaultSize(14);
+    shoppingNumLabel.frame = CGRectMake(300, 0, 15, 15);
+    shoppingNumLabel.backgroundColor = [UIColor greenColor];
+    [headBgiv addSubview:shoppingNumLabel];
+    
  }
 #pragma mark -
 #pragma mark btnClick
@@ -100,8 +107,12 @@
 	[textField resignFirstResponder];
 	return YES;
 }
+#pragma mark 表回掉事件
 
-
+-(void)comparePriceBtnAction:(NSDictionary*)dic
+{
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

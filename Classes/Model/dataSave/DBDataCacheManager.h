@@ -26,10 +26,15 @@
 -(id)selectTimestampData:(NSDictionary *)tempValue tableName:(NSString *)tableName type:(NSString *)type contentId:(NSString *)contentId;
 -(BOOL)deleteDicData:(NSDictionary *)tempValue tableName:(NSString *)tableName type:(NSString *)type contentId:(NSString *)contentId;
 
-#pragma mark 保存cookies
+#pragma mark 保存账号信息
 
 -(BOOL)insertUserAccountData:(id )tempValue;
 -(id)getAccountData;
+
+#pragma mark 保存账号信息
+
+-(BOOL)insertShopCarInfoData:(id )tempValue;
+-(id)getShopCarInfoData;
 
 
  #pragma mark 检测上次打开的版本

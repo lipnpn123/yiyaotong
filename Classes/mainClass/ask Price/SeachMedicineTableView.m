@@ -75,12 +75,17 @@
 -(void)comparePriceBtnAction:(UIButton*)btn
 {
     NSDictionary *dic = [self.dataArray objectAtIndex:btn.tag];
+    if (self.fatherViewController && [self.fatherViewController respondsToSelector:@selector(comparePriceBtnAction:)])
+    {
+        [self.fatherViewController performSelector:@selector(comparePriceBtnAction) withObject:dic];
+    }
 }
 
 
 -(void)inquirShopBtnAction:(UIButton *)btn
 {
     NSDictionary *dic = [self.dataArray objectAtIndex:btn.tag];
+    
 }
 
 

@@ -134,7 +134,17 @@ static DBDataCacheManager *dataManager;
 	return [self selectDicData:nil tableName:DBMainTable type:DBUserAccountType contentId:nil];
 }
 
- 
+#pragma mark 保存账号信息
+
+-(BOOL)insertShopCarInfoData:(id )tempValue
+{
+	return [self insertDicData:tempValue tableName:DBMainTable type:DBShopCarInfoType contentId:nil];
+
+}
+-(id)getShopCarInfoData
+{
+	return [self selectDicData:nil tableName:DBMainTable type:DBShopCarInfoType contentId:nil];
+}
  
 #pragma mark 检测上次打开的版本
 

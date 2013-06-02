@@ -13,5 +13,6 @@
 
 }
 @property(nonatomic,copy)NSString *medicalName;
+
 @property(nonatomic,copy) NSString *productCompany;
 @end

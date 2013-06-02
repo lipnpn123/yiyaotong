@@ -17,6 +17,6 @@
     UITextField *medicaltf;
     UITextField *productCompany;
 }
-
+@property(nonatomic,strong)UILabel *shoppingNumLabel;
 
 @end

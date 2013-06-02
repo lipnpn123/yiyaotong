@@ -39,6 +39,12 @@
     {
         [entity appendRequestParameter:@"1" withKey:@"pi"];
     }
+    else
+    {
+        int count = [self.dataArray count]/10;
+        count +=1;
+        [entity appendRequestParameter:[NSString stringWithFormat:@"%d",count] withKey:@"pi"];
+    }
 	[self.wsUserMethod nomoalRequestWithEntity:entity];
 
 }
@@ -57,6 +63,7 @@
     return cell;
 }
 
+
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
     NSArray *array = (NSArray *)aRequest.returnObject;
@@ -64,6 +71,7 @@
     [self endRequestMoreUI];
 
 }
+
 
 - (void)requestFailed:(ASIFormDataRequest *)aRequest
 {

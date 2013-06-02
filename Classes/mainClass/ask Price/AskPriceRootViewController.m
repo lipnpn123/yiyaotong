@@ -27,7 +27,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+<<<<<<< HEAD
  
+=======
+
+    
+    
+>>>>>>> d35f7256c1a68511a242e0622f1c60e39b423541
     SeachMedicineTableView *tableview = [[SeachMedicineTableView alloc] initWithFrame:NomalView_Frame];
     [tableview reloadTableData];
     [self.view addSubview:tableview];

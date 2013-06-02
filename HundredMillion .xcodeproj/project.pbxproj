@@ -13,6 +13,7 @@
 		5A249F3E175AF2DD009A9DCC /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A249F3C175AF2DD009A9DCC /* libMobClickLibrary.a */; };
 		5A249F69175B0DB3009A9DCC /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A249F68175B0DB3009A9DCC /* OpenGLES.framework */; };
 		5A249FB5175B1364009A9DCC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A249FB4175B1364009A9DCC /* Default-568h@2x.png */; };
+		5A24A008175B1BFA009A9DCC /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A24A007175B1BFA009A9DCC /* blueArrow@2x.png */; };
 		5A42F517175A299E00792109 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A42F516175A299E00792109 /* ImageIO.framework */; };
 		5A42F532175A29A800792109 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A42F51A175A29A800792109 /* MKAnnotationView+WebCache.m */; };
 		5A42F533175A29A800792109 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A42F51C175A29A800792109 /* NSData+GIF.m */; };
@@ -117,6 +118,7 @@
 		5A249F3D175AF2DD009A9DCC /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		5A249F68175B0DB3009A9DCC /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		5A249FB4175B1364009A9DCC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5A24A007175B1BFA009A9DCC /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
 		5A42F516175A299E00792109 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		5A42F519175A29A800792109 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		5A42F51A175A29A800792109 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
@@ -295,10 +297,6 @@
 		B7BC742F153D0F29005E85E2 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
 		B7BC7432153D0F29005E85E2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B7BC7433153D0F29005E85E2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		C5B19119175B176800759F6C /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Custom.h"; sourceTree = "<group>"; };
-		C5B1911A175B176800759F6C /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Custom.m"; sourceTree = "<group>"; };
-		C5B1911B175B176900759F6C /* NavigationBarButtonSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavigationBarButtonSettings.h; sourceTree = "<group>"; };
-		C5B1911C175B176900759F6C /* NavigationBarButtonSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationBarButtonSettings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,10 +333,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C5B19119175B176800759F6C /* UINavigationBar+Custom.h */,
-				C5B1911A175B176800759F6C /* UINavigationBar+Custom.m */,
-				C5B1911B175B176900759F6C /* NavigationBarButtonSettings.h */,
-				C5B1911C175B176900759F6C /* NavigationBarButtonSettings.m */,
 				5A42F556175A2C7B00792109 /* OtherFrameWork */,
 				B7BC6FE5153D0195005E85E2 /* mainClass */,
 				B7BC723B153D023B005E85E2 /* GlobalDataSource */,
@@ -641,6 +635,7 @@
 		B7BC706A153D01B5005E85E2 /* RefreshTableHeaderView */ = {
 			isa = PBXGroup;
 			children = (
+				5A24A007175B1BFA009A9DCC /* blueArrow@2x.png */,
 				B7BC706B153D01B5005E85E2 /* EGORefreshTableHeaderView.h */,
 				B7BC706C153D01B5005E85E2 /* EGORefreshTableHeaderView.m */,
 			);
@@ -800,6 +795,7 @@
 				5A4E63C8169928580075456C /* SVProgressHUD.bundle in Resources */,
 				5AC79D81175A4DB0006C378A /* TableViewModel.xib in Resources */,
 				5A249FB5175B1364009A9DCC /* Default-568h@2x.png in Resources */,
+				5A24A008175B1BFA009A9DCC /* blueArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

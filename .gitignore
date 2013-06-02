@@ -1,12 +1,4 @@
 
 .DS_Store
 
-*.xcuserstate
-
-*.xcscheme
-
-HundredMillion .xcodeproj/project.xcworkspace/xcuserdata/lipnpn.xcuserdatad/UserInterfaceState.xcuserstate
-
-HundredMillion .xcodeproj/project.xcworkspace/xcuserdata/lipnpn.xcuserdatad/UserInterfaceState.xcuserstate
-
-*.xcuserstate
+.gitignore

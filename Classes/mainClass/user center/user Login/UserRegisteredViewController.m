@@ -36,6 +36,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(rotateShowkeyBoard:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(rotateHiddekeyBoard:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     self.wsUserMethod = [[WSUserMethod alloc] init];
     self.wsUserMethod.delegate = self;
 	// Do any additional setup after loading the view.
@@ -243,6 +252,17 @@
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
     
 }
+-(void)rotateShowkeyBoard:(NSNotification *)sender
+{
+    NSDictionary* info = [sender userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+}
+
+-(void)textFieldChageAction:(NSNotification *)sender
+{
+
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];

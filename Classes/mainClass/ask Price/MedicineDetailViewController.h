@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface MedicineDetailViewController : BaseViewController
-
+@property (copy,nonatomic)NSString *reqeustId;
 @end

@@ -295,10 +295,6 @@
 		B7BC742F153D0F29005E85E2 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
 		B7BC7432153D0F29005E85E2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B7BC7433153D0F29005E85E2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		C5B19119175B176800759F6C /* UINavigationBar+Custom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Custom.h"; sourceTree = "<group>"; };
-		C5B1911A175B176800759F6C /* UINavigationBar+Custom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Custom.m"; sourceTree = "<group>"; };
-		C5B1911B175B176900759F6C /* NavigationBarButtonSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavigationBarButtonSettings.h; sourceTree = "<group>"; };
-		C5B1911C175B176900759F6C /* NavigationBarButtonSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationBarButtonSettings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,10 +331,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C5B19119175B176800759F6C /* UINavigationBar+Custom.h */,
-				C5B1911A175B176800759F6C /* UINavigationBar+Custom.m */,
-				C5B1911B175B176900759F6C /* NavigationBarButtonSettings.h */,
-				C5B1911C175B176900759F6C /* NavigationBarButtonSettings.m */,
 				5A42F556175A2C7B00792109 /* OtherFrameWork */,
 				B7BC6FE5153D0195005E85E2 /* mainClass */,
 				B7BC723B153D023B005E85E2 /* GlobalDataSource */,

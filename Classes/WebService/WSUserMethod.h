@@ -37,4 +37,5 @@
 /***********************************测试*************************************/
 -(void)testRequest;
 -(void)nomoalRequestWithEntity:(UserRequestEntity *)entity;
+-(void)nomoalRequestWithEntity:(UserRequestEntity *)entity withTag:(int)tag;
  @end

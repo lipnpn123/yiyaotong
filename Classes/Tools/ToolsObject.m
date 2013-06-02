@@ -524,15 +524,19 @@
  输入参数：要判断的内容
  输出参数：true为合法，false为不合法
  */
-//+(BOOL)isisMatchedEmail:(NSString *)str
-//{
-//	//	return  [str isMatchedByRegex:@"\\b([a-zA-Z0-9%_.+\\-]+)@([a-zA-Z0-9.\\-]+?\\.[a-zA-Z]{2,6})\\b"];
-//	str = [str lowercaseString];
-//	//return [str isMatchedByRegex:@"([a-z0-9]*[-_.]?[a-z0-9]+)*@[a-z0-9]+([-_.]?[a-z0-9]+)*[.][a-z]{2,3}([.][a-z]{2})?"];
-//	return [str isMatchedByRegex:@"\\b([a-zA-Z0-9%_.+\\-]+)@([a-zA-Z0-9.\\-]+?\\.[a-zA-Z]{2,6})\\b"];
-//}
-
-
++(BOOL)isisMatchedEmail:(NSString *)str
+{
+	NSString *emailRegex = @"^\\w+((\\-\\w+)|(\\.\\w+))*@[A-Za-z0-9]+((\\.|\\-)[A-Za-z0-9]+)*.[A-Za-z0-9]+$";
+	NSPredicate *_Predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",emailRegex];
+	return [_Predicate evaluateWithObject:str];
+}
+//判断是数字
++ (BOOL)isPureInt:(NSString *)string
+{
+    NSScanner* scan = [NSScanner scannerWithString:string];
+    int val;
+    return [scan scanInt:&val] && [scan isAtEnd];
+}
 
 /*
  判断JSon解析出来的Object是否为NSNull类型

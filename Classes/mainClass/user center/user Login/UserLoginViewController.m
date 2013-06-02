@@ -137,10 +137,12 @@
     if ([_userNameTextFild.text length] <6)
     {
         [SVProgressHUD showErrorWithStatus:@"用户名太短"];
+        return;
     }
     if ([_passWordTextFild.text length] <6)
     {
         [SVProgressHUD showErrorWithStatus:@"密码太短"];
+        return;
     }
     
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];

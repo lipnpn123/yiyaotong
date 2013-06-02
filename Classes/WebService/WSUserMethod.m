@@ -54,10 +54,15 @@
 	
 	[self getConnection:requestDictionary fileDic:nil requestType:nil];
 }
--(void)nomoalRequestWithEntity:(UserRequestEntity *)entity
+
+-(void)nomoalRequestWithEntity:(UserRequestEntity *)entity withTag:(int)tag
 {
     [finalURLString setString:entity.requestURL];
-    [self getConnection:requestDictionary fileDic:nil requestType:nil];
+    [self getConnection:requestDictionary fileDic:nil requestTag:nil];
+}
+-(void)nomoalRequestWithEntity:(UserRequestEntity *)entity
+{
+    [self nomoalRequestWithEntity:entity withTag:0];
 }
 
 -(void)dealloc

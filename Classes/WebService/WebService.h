@@ -49,13 +49,13 @@
 /**************连接函数**************/
 
 
--(NSString *)getConnection:(NSDictionary*)paramDic requestType:(int)tag;
+-(NSString *)getConnection:(NSDictionary*)paramDic requestTag:(int)tag;
 
 /*
  *带文件请求参数
  *fileDic{ value:@"文件路径" key:@"参数名"}
  */
--(NSString *)getConnection:(NSDictionary*)paramDic fileDic:(NSDictionary *)fileDic requestType:(int)tag ;
+-(NSString *)getConnection:(NSDictionary*)paramDic fileDic:(NSDictionary *)fileDic requestTag:(int)tag ;
 //关闭连接
 -(void)closeConnection:(ASIFormDataRequest *)aRequest;
 //根据标识关闭连接

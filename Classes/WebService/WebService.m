@@ -51,14 +51,14 @@
 
 -(NSString *)getConnection:(NSDictionary*)paramDic requestType:(int)tag
 {
-   return  [self getConnection:paramDic fileDic:nil requestType:tag];
+   return  [self getConnection:paramDic fileDic:nil requestTag:tag];
 }
 
 /*
  *带文件请求参数
  *fileDic{ value:@"文件路径" key:@"参数名"}
  */
--(NSString *)getConnection:(NSDictionary*)paramDic fileDic:(NSDictionary *)fileDic requestType:(int)tag
+-(NSString *)getConnection:(NSDictionary*)paramDic fileDic:(NSDictionary *)fileDic requestTag:(int)tag
 {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	

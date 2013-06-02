@@ -154,7 +154,10 @@
     
 }
 
-
+-(void)dissSelf
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 -(void)popSelf
 {  
@@ -214,11 +217,7 @@
 {
     [self createLeftBarBtn:@"" action:@selector(popSelf) withImageName:nil];
 }
--(void)dissSelf
-{
-	[self dismissModalViewControllerAnimated:YES];
-}
- 
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.

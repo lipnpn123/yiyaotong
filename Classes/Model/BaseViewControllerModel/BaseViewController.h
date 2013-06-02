@@ -13,6 +13,7 @@
 #import "OperationView.h"
 #import "MBProgressHUD.h"
 #import "DBDataCacheManager.h"
+#import "ToolsObject.h"
 /*
 		所有controller的基类
 
@@ -43,6 +44,8 @@
 
 //创建右bar  btn
 -(void)createRightBarBtn:(NSString *)Btntitle action:(SEL)selector withImageName:(NSString*)imageName;
+-(void)dissSelf;
+
 //弹回上一级视图
 -(void)popSelf;
 

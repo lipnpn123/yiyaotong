@@ -10,7 +10,7 @@
 
 #import "AskPriceRootViewController.h"
 #import "SeachMedicineTableView.h"
-
+#import "ShoppingCartTableView.h"
 @interface AskPriceRootViewController ()
 
 @end
@@ -29,10 +29,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     
+    self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
     aptableview= [[SeachMedicineTableView alloc] initWithFrame:CGRectMake(0,90, 320, [[UIScreen mainScreen] applicationFrame].size.height-90)];
-    aptableview.fatherViewController =
-    self;
+    aptableview.fatherViewController =self;
+    aptableview.navigationController = self.navigationController;
     aptableview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [aptableview reloadTableData];
     [self.wfBgImageView addSubview:aptableview];
@@ -78,8 +78,8 @@
     [headBgiv addSubview:shoppingCartBtn];
     [shoppingCartBtn addTarget:self action:@selector(shoppingCartClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    shoppingNumLabel = NewLabelWithDefaultSize(14);
-    shoppingNumLabel.frame = CGRectMake(300, 0, 15, 15);
+    shoppingNumLabel = NewLabelWithDefaultSize(12);
+    shoppingNumLabel.frame = CGRectMake(300, 0, 20, 20);
     shoppingNumLabel.backgroundColor = [UIColor greenColor];
     [headBgiv addSubview:shoppingNumLabel];
     
@@ -95,24 +95,35 @@
 
 -(void)shoppingCartClicked:(UIButton *)btn
 {
-   
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width,  [[UIScreen mainScreen] applicationFrame].size.height)];
+    [self.wfBgImageView addSubview:bgView];
 
+    ShoppingCartTableView *shoppingCartTableView = [[ShoppingCartTableView alloc] initWithFrame:CGRectMake(50, 0, [[UIScreen mainScreen] applicationFrame].size.width-100, [[UIScreen mainScreen] applicationFrame].size.height)];
+    [bgView addSubview:shoppingCartTableView];
 }
 
 #pragma mark -
 #pragma mark UITextFieldDelegate
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 	
 	[textField resignFirstResponder];
 	return YES;
 }
+
+
 #pragma mark 表回掉事件
 
--(void)comparePriceBtnAction:(NSDictionary*)dic
+-(void)inquirShopBtnAction:(NSDictionary*)dic
 {
-    
+    [self.selfDataArray insertObject:dic atIndex:0];
+    [[DBDataCacheManager shareCacheManager] insertShopCarInfoData:self.selfDataArray];
+    self.shoppingNumLabel.text = [[NSString alloc] initWithFormat:@"%d",[self.selfDataArray count]];
 }
+
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

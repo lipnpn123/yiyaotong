@@ -10,10 +10,19 @@
 #import "SeachMedicineTableViewCell.h"
 
 @implementation SeachMedicineTableView
-
+@synthesize shoppingDic;
 @synthesize medicalName;
 @synthesize productCompany;
 
+- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
+{
+    self = [super initWithFrame:frame style:style];
+    if (self)
+    {
+        self.shoppingDic = [[NSMutableDictionary alloc] initWithCapacity:10];
+    }
+    return self;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -65,9 +74,18 @@
         [cell.comparePriceBtn addTarget:self action:@selector(comparePriceBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [cell.inquirShopBtn addTarget:self action:@selector(inquirShopBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    if ([shoppingDic objectForKey:[dic objectForKey:@"ID"] ])
+    {
+        cell.inquirShopBtn.enabled=NO;
+        NSLog(@"成功已经点击过%@",[dic objectForKey:@"ID"]);
+    }else
+    {
+        cell.inquirShopBtn.enabled=YES;
+        NSLog(@"没有点击过%@",[dic objectForKey:@"ID"]);
+    }
     cell.comparePriceBtn.tag = indexPath.row;
     cell.inquirShopBtn.tag = indexPath.row;
-    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
     [cell updateCellWithDictionary:dic];
     return cell;
 }
@@ -75,17 +93,21 @@
 -(void)comparePriceBtnAction:(UIButton*)btn
 {
     NSDictionary *dic = [self.dataArray objectAtIndex:btn.tag];
-    if (self.fatherViewController && [self.fatherViewController respondsToSelector:@selector(comparePriceBtnAction:)])
-    {
-        [self.fatherViewController performSelector:@selector(comparePriceBtnAction) withObject:dic];
-    }
+    
 }
 
 
 -(void)inquirShopBtnAction:(UIButton *)btn
 {
+    btn.enabled = NO;
     NSDictionary *dic = [self.dataArray objectAtIndex:btn.tag];
-    
+    [shoppingDic setObject:dic forKey:[dic objectForKey:@"ID"]];
+    NSLog(@"成功存储%@",[dic objectForKey:@"ID"]);
+    if (self.fatherViewController && [self.fatherViewController respondsToSelector:@selector(inquirShopBtnAction:)])
+    {
+        [self.fatherViewController performSelector:@selector(inquirShopBtnAction:) withObject:dic];
+    }
+
 }
 
 

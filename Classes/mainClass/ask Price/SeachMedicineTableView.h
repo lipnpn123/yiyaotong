@@ -13,6 +13,6 @@
 
 }
 @property(nonatomic,copy)NSString *medicalName;
-
+@property(nonatomic,strong)NSMutableDictionary *shoppingDic;
 @property(nonatomic,copy) NSString *productCompany;
 @end

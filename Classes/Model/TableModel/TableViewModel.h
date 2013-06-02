@@ -53,6 +53,7 @@
 @property(nonatomic,strong)UIImageView *noDataBgView;
 @property(nonatomic,assign)BaseViewController* fatherViewController;
 @property(nonatomic,strong) NSString *noDataImageName;
+@property(nonatomic,assign)UINavigationController* navigationController;
 
 //刷新表中的内容
 - (void)reloadTableViewDataSource;

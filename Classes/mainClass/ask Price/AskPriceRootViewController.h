@@ -16,6 +16,7 @@
     SeachMedicineTableView *aptableview;
     UITextField *medicaltf;
     UITextField *productCompany;
+    BOOL isShoppingViewHidden;
 }
 @property(nonatomic,strong)UILabel *shoppingNumLabel;
 

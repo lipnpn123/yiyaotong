@@ -29,7 +29,7 @@
 
 @synthesize fatherViewController;
 @synthesize noDataImageName;
-
+@synthesize navigationController;
 #pragma mark - life circle
 - (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
 {

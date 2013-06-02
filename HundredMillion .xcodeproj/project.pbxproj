@@ -28,6 +28,7 @@
 		5A24A03B175B3402009A9DCC /* passwordvisibleUnselectImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A24A039175B3402009A9DCC /* passwordvisibleUnselectImage.png */; };
 		5A24A041175B4207009A9DCC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A24A040175B4207009A9DCC /* CoreLocation.framework */; };
 		5A24A044175B4812009A9DCC /* UserRegisteredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A24A043175B4812009A9DCC /* UserRegisteredViewController.m */; };
+		5A24A048175B9CB2009A9DCC /* MedicineDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A24A047175B9CB2009A9DCC /* MedicineDetailViewController.m */; };
 		5A42F517175A299E00792109 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A42F516175A299E00792109 /* ImageIO.framework */; };
 		5A42F532175A29A800792109 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A42F51A175A29A800792109 /* MKAnnotationView+WebCache.m */; };
 		5A42F533175A29A800792109 /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A42F51C175A29A800792109 /* NSData+GIF.m */; };
@@ -119,6 +120,7 @@
 		B7BC743A153D0F29005E85E2 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC742C153D0F29005E85E2 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
 		B7BC743B153D0F29005E85E2 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC742E153D0F29005E85E2 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
 		B7BC743C153D0F29005E85E2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC7433153D0F29005E85E2 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
+		C5B19168175B9C8D00759F6C /* ShoppingCartTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B19167175B9C8D00759F6C /* ShoppingCartTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -149,6 +151,8 @@
 		5A24A040175B4207009A9DCC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5A24A042175B4812009A9DCC /* UserRegisteredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRegisteredViewController.h; sourceTree = "<group>"; };
 		5A24A043175B4812009A9DCC /* UserRegisteredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRegisteredViewController.m; sourceTree = "<group>"; };
+		5A24A046175B9CB1009A9DCC /* MedicineDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedicineDetailViewController.h; sourceTree = "<group>"; };
+		5A24A047175B9CB2009A9DCC /* MedicineDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedicineDetailViewController.m; sourceTree = "<group>"; };
 		5A42F516175A299E00792109 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		5A42F519175A29A800792109 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		5A42F51A175A29A800792109 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
@@ -327,6 +331,8 @@
 		B7BC742F153D0F29005E85E2 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
 		B7BC7432153D0F29005E85E2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B7BC7433153D0F29005E85E2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		C5B19166175B9C8D00759F6C /* ShoppingCartTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartTableView.h; sourceTree = "<group>"; };
+		C5B19167175B9C8D00759F6C /* ShoppingCartTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -598,6 +604,13 @@
 				5AC79D6A175A4CFC006C378A /* SeachMedicineTableView.m */,
 				5AC79D85175A5232006C378A /* SeachMedicineTableViewCell.h */,
 				5AC79D86175A5232006C378A /* SeachMedicineTableViewCell.m */,
+<<<<<<< HEAD
+				5A24A046175B9CB1009A9DCC /* MedicineDetailViewController.h */,
+				5A24A047175B9CB2009A9DCC /* MedicineDetailViewController.m */,
+=======
+				C5B19166175B9C8D00759F6C /* ShoppingCartTableView.h */,
+				C5B19167175B9C8D00759F6C /* ShoppingCartTableView.m */,
+>>>>>>> 7d02aa55467ebbab91f9787da7da6a5f4374efac
 			);
 			path = "ask Price";
 			sourceTree = "<group>";
@@ -979,6 +992,11 @@
 				5A24A02F175B2C22009A9DCC /* UserCenterViewController.m in Sources */,
 				5A24A036175B2DC6009A9DCC /* UserLoginViewController.m in Sources */,
 				5A24A044175B4812009A9DCC /* UserRegisteredViewController.m in Sources */,
+<<<<<<< HEAD
+				5A24A048175B9CB2009A9DCC /* MedicineDetailViewController.m in Sources */,
+=======
+				C5B19168175B9C8D00759F6C /* ShoppingCartTableView.m in Sources */,
+>>>>>>> 7d02aa55467ebbab91f9787da7da6a5f4374efac
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

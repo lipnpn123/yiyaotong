@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#define UMENG_APPKEY @"4eeb0c7b527015643b000003"
 
 @interface HundredMillion_AppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;

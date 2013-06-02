@@ -51,7 +51,7 @@
             button.tag = j+i*3;
             [button addTarget:self action:@selector(enterDeteil:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitle:[self.selfDataArray objectAtIndex:j+i*3] forState:UIControlStateNormal];
-            [self.view addSubview:button];
+            [self.wfBgImageView addSubview:button];
         }
  
     }

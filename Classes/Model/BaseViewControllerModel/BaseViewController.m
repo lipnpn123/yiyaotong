@@ -41,12 +41,7 @@
 }
 */
 
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-*/
+
 
 /*
 // Override to allow orientations other than the default portrait orientation.
@@ -58,8 +53,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:YES];
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
- }
+	[self.navigationController setNavigationBarHidden:YES animated:NO];
+}
 #pragma mark -
  
 
@@ -71,11 +66,11 @@
 	UIImage* img = nil;
 	if (!imageName)
 	{
- 		imageName =  @"rightBarBtnImage.png" ;
+ 		imageName =  @"left_back_button.png" ;
 	}
     /******************设置正常时候的图片************************/
-//	img = [UIImage autoreleaseImageNamed:imageName];
-	img = [img stretchableImageWithLeftCapWidth:5 topCapHeight:5];//这里的topCapHeight如果设置的话就会让图片效果失去
+	img = [UIImage imageNamed:imageName];
+//	img = [img stretchableImageWithLeftCapWidth:5 topCapHeight:5];//这里的topCapHeight如果设置的话就会让图片效果失去
 	button.titleLabel.font = NewFontWithBoldSize(15);
     [button setBackgroundImage:img forState:UIControlStateNormal];
 	
@@ -172,30 +167,52 @@
 	self.tabBarController.selectedIndex = 0;
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }
- 
 
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
 	self.view.backgroundColor = mostViewBgColor;
+    self.navigationItem.leftBarButtonItem = nil; //去掉系统添加的左边按钮
+    self.view.backgroundColor = mostViewBgColor;
+    self.wfBgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, Dev_NavHeight, 320, Dev_ScreenHeight - Dev_StateHeight-Dev_NavHeight) ];
+    self.wfBgImageView.backgroundColor = mostViewBgColor;
+    self.wfBgImageView.userInteractionEnabled = YES;
+    [self.view addSubview:self.wfBgImageView];
+    if (self.navigationController)
+    {
+        UIImageView* aTittleView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320,44)];
+        self.wfTitleImageView = aTittleView;
+        aTittleView.image = [[UIImage imageNamed:@"title_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+//        self.wfTitleImageView.backgroundColor = [UIColor whiteColor];
+        self.wfTitleImageView.userInteractionEnabled = YES;
+        self.wfTitleImageView.opaque = NO;
+        [self.view addSubview:self.wfTitleImageView];
+    }
+    else
+    {
+        self.wfBgImageView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-0);
+    }
+    [self.view sendSubviewToBack:self.wfBgImageView];
+
+    
+    
     if (self.navigationController.viewControllers)
     {
         NSArray *array = self.navigationController.viewControllers;
         if ([array count] >1) 
         {
-            self.lastViewContollerTittle = ((UIViewController*)[array objectAtIndex:[array count]-2]).title; 
+            self.lastViewContollerTittle = ((UIViewController*)[array objectAtIndex:[array count]-2]).title;
+            [self CreateBackBtn];
+
         }
     }
-    if (lastViewContollerTittle)
-    {
-        [self CreateBackBtn];
-    }
+ 
 
 }
 -(void)CreateBackBtn
 {
-    
+    [self createLeftBarBtn:@"" action:@selector(popSelf) withImageName:nil];
 }
 -(void)dissSelf
 {

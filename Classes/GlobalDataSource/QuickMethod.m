@@ -28,7 +28,7 @@
 {
 	UILabel *label = [[[UILabel alloc] init] autorelease];
 	label.backgroundColor = [UIColor clearColor];
-    label.font = NewDefaultTextFontWithSize(size);
+    label.font = NewFontWithDefaultSize(size);
     label.numberOfLines=0;
 	return label;
 }
@@ -38,7 +38,7 @@
 {
 	UILabel *label = [[[UILabel alloc] init] autorelease];
 	label.backgroundColor = [UIColor clearColor];
-    label.font = NewBoldTextFontWithSize(size);
+    label.font = NewFontWithBoldSize(size);
     label.numberOfLines=0;
 	return label;
 }

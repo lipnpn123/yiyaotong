@@ -30,7 +30,7 @@
  
     SeachMedicineTableView *tableview = [[SeachMedicineTableView alloc] initWithFrame:NomalView_Frame];
     [tableview reloadTableData];
-    [self.view addSubview:tableview];
+    [self.wfBgImageView addSubview:tableview];
 }
 
 - (void)didReceiveMemoryWarning

@@ -119,6 +119,7 @@
 		B7BC743A153D0F29005E85E2 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC742C153D0F29005E85E2 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
 		B7BC743B153D0F29005E85E2 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC742E153D0F29005E85E2 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
 		B7BC743C153D0F29005E85E2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC7433153D0F29005E85E2 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
+		C5B19168175B9C8D00759F6C /* ShoppingCartTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B19167175B9C8D00759F6C /* ShoppingCartTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -327,6 +328,8 @@
 		B7BC742F153D0F29005E85E2 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
 		B7BC7432153D0F29005E85E2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B7BC7433153D0F29005E85E2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		C5B19166175B9C8D00759F6C /* ShoppingCartTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingCartTableView.h; sourceTree = "<group>"; };
+		C5B19167175B9C8D00759F6C /* ShoppingCartTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -598,6 +601,8 @@
 				5AC79D6A175A4CFC006C378A /* SeachMedicineTableView.m */,
 				5AC79D85175A5232006C378A /* SeachMedicineTableViewCell.h */,
 				5AC79D86175A5232006C378A /* SeachMedicineTableViewCell.m */,
+				C5B19166175B9C8D00759F6C /* ShoppingCartTableView.h */,
+				C5B19167175B9C8D00759F6C /* ShoppingCartTableView.m */,
 			);
 			path = "ask Price";
 			sourceTree = "<group>";
@@ -979,6 +984,7 @@
 				5A24A02F175B2C22009A9DCC /* UserCenterViewController.m in Sources */,
 				5A24A036175B2DC6009A9DCC /* UserLoginViewController.m in Sources */,
 				5A24A044175B4812009A9DCC /* UserRegisteredViewController.m in Sources */,
+				C5B19168175B9C8D00759F6C /* ShoppingCartTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

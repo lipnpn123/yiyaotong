@@ -34,7 +34,7 @@ frame的设置
 #define Dev_TitleViewHeight 27
 
 //全屏的高度
-#define mainFrame CGRectMake(0, 0, 320, 480)
+#define mainFrame CGRectMake(0, 0, 320, Dev_ScreenHeight)
 
 //有电池栏的frame
 #define RootView_Frame CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight) 

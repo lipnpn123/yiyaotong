@@ -10,6 +10,42 @@
 #import "SeachMedicineTableViewCell.h"
 
 @implementation SeachMedicineTableView
+
+@synthesize medicalName;
+@synthesize productCompany;
+
+
+-(NSString *)medicalName
+{
+    if (!medicalName||[medicalName isEqualToString:@""])
+    {
+        return @" ";
+    }
+    return medicalName;
+}
+
+
+-(void)setMedicalName:(NSString *)medicalName1
+{
+    medicalName=medicalName1;
+}
+
+-(NSString *)productCompany
+{
+    if (!productCompany||[productCompany isEqualToString:@""])
+    {
+        return @" ";
+    }
+    return productCompany;
+}
+
+
+-(void)setProductCompany:(NSString *)productCompany1
+{
+    productCompany=productCompany1;
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -34,7 +70,7 @@
 //    }
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:@"search_yao"];
-    [entity appendRequestParameter:@"12" withKey:@"key"];
+    [entity appendRequestParameter:@" " withKey:@"key"];
     if (self.isLoadState)
     {
         [entity appendRequestParameter:@"1" withKey:@"pi"];
@@ -67,6 +103,7 @@
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
     NSArray *array = (NSArray *)aRequest.returnObject;
+    NSLog(@"aRequest.returnObject%@",aRequest.returnObject);
     [self getDataAndRefreshTable:array];
     [self endRequestMoreUI];
 

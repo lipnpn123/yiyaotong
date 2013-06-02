@@ -12,14 +12,16 @@
 #import "GlobalDataInfo.h"
 #import "SVProgressHUD.h"
 #import "WSUserMethod.h" 
-
+ 
 extern BOOL isLoginState;
    
 extern NSMutableDictionary *globalPersonDic;
 
- 
 extern SBJSON *userInfoSb;
 
+
+extern NSMutableString *globalLastLatitude;
+extern NSMutableString *globalLastLongitude;
 
 @interface GlobalPointe : NSObject
 

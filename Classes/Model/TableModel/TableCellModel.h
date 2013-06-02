@@ -15,11 +15,12 @@
 {
 	
 	 
-
+ 
 }
 
 @property(assign,nonatomic)id fatherPoint;
 @property(assign,nonatomic)CGFloat totalHeight;
   
-
+-(void)updateCellWithDictionary:(NSDictionary *)dic;
 @end
+

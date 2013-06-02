@@ -14,6 +14,9 @@ SBJSON *userInfoSb;
 NSMutableDictionary *globalPersonDic;
 WSUserMethod *globalWebRequest;
 
+
+NSMutableString *globalLastLatitude;
+NSMutableString *globalLastLongitude;
 @interface GlobalPointe(privateMethod)
 
  
@@ -39,7 +42,8 @@ WSUserMethod *globalWebRequest;
 	}
  
 	NSLog(@"%@",globalPersonDic);
-	
+	globalLastLatitude = [[NSMutableString alloc] init];
+    globalLastLongitude = [[NSMutableString alloc] init];
 //	[globarSinaSyn.weiBoEngine addFriendAttention:nil];
 }
 

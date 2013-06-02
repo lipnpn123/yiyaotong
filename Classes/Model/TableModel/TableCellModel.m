@@ -23,7 +23,10 @@
 	}
     return self;
 }
+-(void)updateCellWithDictionary:(NSDictionary *)dic
+{
 
+}
  
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

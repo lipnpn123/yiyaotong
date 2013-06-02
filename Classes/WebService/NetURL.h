@@ -15,7 +15,7 @@
 //#define HEAD_URL_STR        @"http://58.17.31.108:8004/api"			//主机名
 //#define HEAD_URL_STR  @"http://202.75.213.134:8012/api"
 #define HEAD_URL_STR  @"http://www.yiyaotong.cn/m/m.aspx"
-
+#define CreateImagePath(obj) [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",HEAD_URL_STR,obj]]
 
 
 #define HEADIMAGE_URL_STR				@"http://202.75.213.134:8012/uploadImages/"	 				//图片主机名

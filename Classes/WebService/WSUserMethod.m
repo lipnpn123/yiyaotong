@@ -22,6 +22,10 @@
 }
 -(void)appendRequestParameter:(NSString *)value withKey:(NSString *)key
 {
+    if (!value)
+    {
+        value = @"";
+    }
     [_requestURL appendFormat:@"&%@=%@",key,[value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 -(void)dealloc

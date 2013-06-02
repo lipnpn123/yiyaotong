@@ -14,38 +14,6 @@
 @synthesize medicalName;
 @synthesize productCompany;
 
-
--(NSString *)medicalName
-{
-    if (!medicalName||[medicalName isEqualToString:@""])
-    {
-        return @" ";
-    }
-    return medicalName;
-}
-
-
--(void)setMedicalName:(NSString *)medicalName1
-{
-    medicalName=medicalName1;
-}
-
--(NSString *)productCompany
-{
-    if (!productCompany||[productCompany isEqualToString:@""])
-    {
-        return @" ";
-    }
-    return productCompany;
-}
-
-
--(void)setProductCompany:(NSString *)productCompany1
-{
-    productCompany=productCompany1;
-}
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -54,7 +22,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return 60;
+    return 90;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -70,7 +38,8 @@
 //    }
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:@"search_yao"];
-    [entity appendRequestParameter:@" " withKey:@"key"];
+    [entity appendRequestParameter:self.medicalName withKey:@"key"];
+    [entity appendRequestParameter:self.productCompany withKey:@"key"];
     if (self.isLoadState)
     {
         [entity appendRequestParameter:@"1" withKey:@"pi"];
@@ -93,10 +62,25 @@
     if (cell == nil)
     {
         cell = [[SeachMedicineTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-
+        [cell.comparePriceBtn addTarget:self action:@selector(comparePriceBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.inquirShopBtn addTarget:self action:@selector(inquirShopBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
+    cell.comparePriceBtn.tag = indexPath.row;
+    cell.inquirShopBtn.tag = indexPath.row;
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    [cell updateCellWithDictionary:dic];
     return cell;
+}
+
+-(void)comparePriceBtnAction:(UIButton*)btn
+{
+    NSDictionary *dic = [self.dataArray objectAtIndex:btn.tag];
+}
+
+
+-(void)inquirShopBtnAction:(UIButton *)btn
+{
+    NSDictionary *dic = [self.dataArray objectAtIndex:btn.tag];
 }
 
 

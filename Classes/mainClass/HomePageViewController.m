@@ -8,8 +8,12 @@
 
 #import "HomePageViewController.h"
 #import "AskPriceRootViewController.h"
+#import "UserCenterViewController.h"
+#import "UserLoginViewController.h"
 @interface HomePageViewController ()
-
+{
+    CLLocationManager *locationManager;
+}
 @end
 
 @implementation HomePageViewController
@@ -26,6 +30,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self initDefaultLocation];
+    
     self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
     [self.selfDataArray addObject:@"0"];
     [self.selfDataArray addObject:@"1"];
@@ -64,9 +71,77 @@
     {
         vc = [[AskPriceRootViewController alloc] init];
     }
-    [self.navigationController pushViewController:vc animated:YES];
+    else if (button.tag == 5)
+    {
+        if (isLoginState)
+        {
+            vc = [[UserCenterViewController alloc] init];
+        }
+        else
+        {
+            UserLoginViewController *loginVc = [[UserLoginViewController alloc] init];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVc];
+            [self presentModalViewController:nav animated:YES];
+        }
+    }
+    if (vc)
+    {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
+//初始化位置信息
+-(void)initDefaultLocation
+{
+    [globalLastLongitude setString:@"116.473858"];
+    [globalLastLatitude setString:@"39.837142"];
+    
+    if ([CLLocationManager locationServicesEnabled])
+    {
+        locationManager = [[CLLocationManager alloc] init];//创建位置管理器
+        locationManager.delegate=self;//设置代理
+        [locationManager startUpdatingLocation];
+    }
+    else
+    {
+        [self readSaveLocation];
+    }
+}
+
+
+#pragma mark 
+//读取保存的位置信息
+-(void)readSaveLocation
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *latitude = [defaults objectForKey:@"globalLastLatitude"];;
+    NSString *longitude = [defaults objectForKey:@"globalLastLongitude"];;
+    if (latitude && longitude)
+    {
+        [globalLastLatitude setString:latitude];
+        [globalLastLongitude setString:longitude];
+    }
+}
+
+//定位成功
+- (void)locationManager:(CLLocationManager *)manager
+	didUpdateToLocation:(CLLocation *)newLocation
+		   fromLocation:(CLLocation *)oldLocation
+{
+    [globalLastLatitude setString:[NSString stringWithFormat:@"%f",newLocation.coordinate.latitude] ];
+    [globalLastLongitude setString:[NSString stringWithFormat:@"%f",newLocation.coordinate.longitude] ];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:globalLastLatitude forKey:@"globalLastLatitude"];
+    [defaults setObject:globalLastLongitude forKey:@"globalLastLongitude"];
+    [defaults synchronize];
+}
+//定位失败
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [self readSaveLocation];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

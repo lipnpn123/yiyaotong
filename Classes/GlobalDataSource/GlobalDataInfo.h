@@ -33,6 +33,7 @@
 //
 #import "UIViewAdditions.h"
 
- 
+#import "UIImageView+WebCache.h"
+
 
 

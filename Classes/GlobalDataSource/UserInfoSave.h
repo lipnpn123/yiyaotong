@@ -35,12 +35,8 @@
 //监测是否打开过
 +(BOOL)checkVersion;
 
-//拼接分享内容
-+(NSString *)getStringWithType:(NSString *)type shareTitle:(NSString *)_sharetitle DataURL:(NSString *)dataUrl;
-
 //检查登陆用户
-+(NSArray *)checkLogUserInfo;
++(BOOL)checkUserLoginState:(UIViewController *)vc;
 
-//保存当前的用户信息
-+(void)saveLogUserInfo;
+
 @end

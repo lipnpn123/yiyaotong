@@ -25,6 +25,8 @@
 
 //快速输出一个对象的引用技术
 #define  PPwriteRetainCount(obj) NSLog(@"引用计数是-----%d",[obj retainCount])
+//判断是字典
+#define isNSDictionary(obj) obj&&[obj isKindOfClass:[NSDictionary class]]
 
 //监测修正一个对象成为字符串
 #define checkNullValue(obj)  [ToolsObject checkNullValueForString:obj]

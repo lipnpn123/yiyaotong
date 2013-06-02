@@ -8,7 +8,15 @@
 //#import "NavigationBarButtonSettings.h"
 
 #import "BaseViewController.h"
+@class SeachMedicineTableView;
+
 //寻购比价格
-@interface AskPriceRootViewController : BaseViewController
+@interface AskPriceRootViewController : BaseViewController<UITextFieldDelegate>
+{
+    SeachMedicineTableView *aptableview;
+    UITextField *medicaltf;
+    UITextField *productCompany;
+}
+
 
 @end

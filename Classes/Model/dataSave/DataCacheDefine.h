@@ -22,4 +22,4 @@
 #define DBVesionType                    @"DBVesionType"
 #define DBTestType                    @"DBTestType"
 
- 
+#define DBUserAccountType                    @"DBUserAccountType"

@@ -52,13 +52,13 @@
 	[finalURLString setString:@"http://app.onepiece.cn/plugin.php?id=iphone:user&func=readpid&tid=2"];
 	[requestDictionary removeAllObjects];
 	
-	[self getConnection:requestDictionary fileDic:nil requestType:nil];
+	[self getConnection:requestDictionary fileDic:nil requestTag:nil];
 }
 
 -(void)nomoalRequestWithEntity:(UserRequestEntity *)entity withTag:(int)tag
 {
     [finalURLString setString:entity.requestURL];
-    [self getConnection:requestDictionary fileDic:nil requestTag:nil];
+    [self getConnection:requestDictionary fileDic:nil requestTag:tag];
 }
 -(void)nomoalRequestWithEntity:(UserRequestEntity *)entity
 {

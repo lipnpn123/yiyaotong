@@ -22,7 +22,7 @@
  
 @property(assign,nonatomic)BaseViewController* fatherViewController;
 @property(assign,nonatomic)NSObject *callBackObject;
-@property(assign,nonatomic)NSString *callBackFunction;	
+@property(copy,nonatomic)NSString *callBackFunction;
 @property(strong,nonatomic)WSUserMethod* wsUserMethod;
 
 @property(strong,nonatomic)NSMutableDictionary *selfDataDictionary;

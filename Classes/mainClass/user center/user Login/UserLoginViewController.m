@@ -154,6 +154,8 @@
 -(void)registerButtonAction
 {
     UserRegisteredViewController *vc = [[UserRegisteredViewController alloc] init];
+    vc.callBackObject = self.callBackObject;
+    vc.callBackFunction = self.callBackFunction;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -168,7 +170,21 @@
     if (isNSDictionary(aRequest.returnObject))
     {
         [[DBDataCacheManager shareCacheManager] insertUserAccountData:aRequest.returnObject];
-        
+        if (self.callBackObject)
+        {
+            SEL func = NSSelectorFromString(self.callBackFunction);
+            if ([self.callBackObject respondsToSelector:func])
+            {
+                [self.callBackObject performSelector:func  ];
+            }
+        }
+        isLoginState = YES;
+        [self dissSelf];
+
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"登陆失败"];
     }
 
 }

@@ -80,6 +80,8 @@
         else
         {
             UserLoginViewController *loginVc = [[UserLoginViewController alloc] init];
+            loginVc.callBackObject = self;
+            loginVc.callBackFunction = @"loinSucCallBack";
             UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVc];
             [self presentModalViewController:nav animated:YES];
         }
@@ -88,6 +90,13 @@
     {
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+-(void)loinSucCallBack
+{
+   UserCenterViewController *vc = [[UserCenterViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 //初始化位置信息

@@ -227,7 +227,7 @@
         [SVProgressHUD showErrorWithStatus:@"输入的密码两次不一致"];
         return;
     }
-    if (![ToolsObject isPureInt:phoneText])
+    if ([phoneText length]!=11 && ![ToolsObject isPureInt:phoneText])
     {
         [SVProgressHUD showErrorWithStatus:@"请输入正确的手机号码"];
         return;
@@ -255,14 +255,38 @@
 -(void)rotateShowkeyBoard:(NSNotification *)sender
 {
     NSDictionary* info = [sender userInfo];
+    [UIView animateWithDuration:0.25 animations:
+     ^{
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    int height = self.view.size.height - kbSize.height;
-
+    int height = self.wfBgImageView.size.height - kbSize.height;
+    _mainSrollView.height =  height;
+    _mainSrollView.contentSize = CGSizeMake(320, 380);
+     } completion:^(BOOL finished)
+     {
+         
+         
+     }];
+    
+    [UIView setAnimationsEnabled:YES];
 }
 
--(void)textFieldChageAction:(NSNotification *)sender
+-(void)rotateHiddekeyBoard:(NSNotification *)sender
 {
-
+    [UIView animateWithDuration:0.25 animations:
+     ^{
+    _mainSrollView.frame= CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44);
+    _mainSrollView.contentSize = CGSizeMake(320, _mainSrollView.size.height+2);
+    if (!IS_IPHONE_5)
+    {
+        _mainSrollView.contentSize = CGSizeMake(320, _mainSrollView.size.height+30);
+    }
+     } completion:^(BOOL finished)
+     {
+         
+         
+     }];
+    
+    [UIView setAnimationsEnabled:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -276,17 +300,17 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [emailTextFild resignFirstResponder];
-    [passTextFild resignFirstResponder];
-    [surepassTextFild resignFirstResponder];
-    [mobileTextFild resignFirstResponder];
-    [addressTextFild resignFirstResponder];
+//    [emailTextFild resignFirstResponder];
+//    [passTextFild resignFirstResponder];
+//    [surepassTextFild resignFirstResponder];
+//    [mobileTextFild resignFirstResponder];
+//    [addressTextFild resignFirstResponder];
 
 }
 
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
-    if (aRequest.tag == 0)
+    if (aRequest.tag == 1)
     {
         if (aRequest.returnObject && [aRequest.returnObject isKindOfClass:[NSString class]])
         {
@@ -301,12 +325,21 @@
             [SVProgressHUD showErrorWithStatus:@"注册失败"];
         }
     }
-    else if (aRequest.tag ==1)
+    else if (aRequest.tag ==2)
     {
         
         if (isNSDictionary(aRequest.returnObject))
         {
             [[DBDataCacheManager shareCacheManager] insertUserAccountData:aRequest.returnObject];
+            isLoginState = YES;
+            if (self.callBackObject)
+            {
+                SEL func = NSSelectorFromString(self.callBackFunction);
+                if ([self.callBackObject respondsToSelector:func])
+                {
+                    [self.callBackObject performSelector:func  ];
+                }
+            }
             [self dissSelf];
         }
     }

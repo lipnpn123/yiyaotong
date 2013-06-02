@@ -20,6 +20,10 @@
 @synthesize progressHUD;
 @synthesize leftBarBtn = _leftBarBtn;;
 @synthesize rightBarBtn = _rightBarBtn;
+
+@synthesize wfTitleImageView = _wfTitleImageView;
+@synthesize wfBgImageView = _wfBgImageView;
+@synthesize wftitleLabel = _wftitleLabel;
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -254,7 +258,20 @@
 {
 	[self.progressHUD hide:YES];
 }
-
+-(UILabel *)getWftitleLabel
+{
+    if (!_wftitleLabel)
+    {
+        UILabel *tempLable = NewLabelWithBoldSize(18);
+        tempLable.frame = CGRectMake(65, 0, 320-65*2, 44);
+        tempLable.textAlignment = NSTextAlignmentCenter;
+        tempLable.textColor = [UIColor blackColor];
+        _wftitleLabel = tempLable;
+    }
+    [self.view addSubview:_wftitleLabel];
+    self.wftitleLabel = _wftitleLabel;
+    return _wftitleLabel;
+}
 - (void)dealloc 
 {
     [self.progressHUD.hideTimer invalidate];
@@ -269,7 +286,8 @@
     self.selfDataDictionary = nil;
     self.leftBarBtn= nil;
     self.rightBarBtn= nil;
-
+    self.wfBgImageView = nil;
+    self.wfTitleImageView = nil;
 }
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {

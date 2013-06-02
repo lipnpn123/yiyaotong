@@ -27,10 +27,15 @@
 @property(strong,nonatomic)NSMutableArray *selfDataArray;
 @property(nonatomic, retain)MBProgressHUD* progressHUD;
 
+@property (nonatomic, strong,getter = getWftitleLabel) UILabel *wftitleLabel;//导航栏右按钮
+
+
 @property(strong,nonatomic) NSString  *lastViewContollerTittle;
 @property (nonatomic, strong) UIButton *leftBarBtn;	//导航栏左按钮
 @property (nonatomic, strong) UIButton *rightBarBtn;//导航栏右按钮
- 
+@property (nonatomic, strong) UIImageView *wfTitleImageView;//导航栏右按钮
+@property (nonatomic, strong) UIImageView *wfBgImageView;//导航栏右按钮
+@property(nonatomic, retain)UILabel* selfTittleLabel;
 
 //创建左bar  btn
 -(void)createLeftBarBtn:(NSString *)Btntitle action:(SEL)selector withImageName:(NSString*)imageName;

@@ -10,6 +10,9 @@
 #import "AskPriceRootViewController.h"
 #import "UserCenterViewController.h"
 #import "UserLoginViewController.h"
+#import "NearSearchStoreMapViewController.h"
+#import "NearSearchStoreTableViewController.h"
+
 @interface HomePageViewController ()
 {
     CLLocationManager *locationManager;
@@ -70,6 +73,16 @@
     if (button.tag == 0)
     {
         vc = [[AskPriceRootViewController alloc] init];
+    }
+    else if (button.tag == 1)
+    {
+        vc = [[NearSearchStoreMapViewController alloc] init];
+        
+    }
+    else if (button.tag == 2)
+    {
+        vc = [[NearSearchStoreTableViewController alloc] init];
+        
     }
     else if (button.tag == 5)
     {

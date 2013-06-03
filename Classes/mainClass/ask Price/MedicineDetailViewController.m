@@ -22,7 +22,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.wsUserMethod = [[WSUserMethod alloc] init];
+        self.wsUserMethod.delegate = nil;
     }
     return self;
 }

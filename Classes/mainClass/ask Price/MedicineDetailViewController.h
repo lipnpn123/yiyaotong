@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
+//药品详情
 @interface MedicineDetailViewController : BaseViewController
 @property (copy,nonatomic)NSString *reqeustId;
 @end

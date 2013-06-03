@@ -8,6 +8,7 @@
 
 #import "NearSearchStoreTableView.h"
 #import "NearSearchStoreTableViewCell.h"
+#import "StoreDetilViewController.h"
 
 @implementation NearSearchStoreTableView
 @synthesize keyWords;
@@ -38,21 +39,29 @@
     cell.textLabel.text= [NSString stringWithFormat:@"%d",indexPath.row];
     return cell;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    StoreDetilViewController *vc = [[StoreDetilViewController alloc] init];
+    vc.storeCode = checkNullValue([dic objectForKey:@"ID"]);
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 -(void)requestForData
 {
  
-    self.distance = @"300";
-    self.keyWords = @"1";
+    self.distance = @"300000000";
+    self.keyWords = @"";
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:@"search_store"];
     [entity appendRequestParameter:self.keyWords withKey:@"store"];
     [entity appendRequestParameter:self.distance withKey:@"distance"];
-//    [entity appendRequestParameter:globalLastLongitude withKey:@"lon"];
-//    [entity appendRequestParameter:globalLastLatitude withKey:@"lat"];
-    [entity appendRequestParameter:@"0" withKey:@"lon"];
-    [entity appendRequestParameter:@"0" withKey:@"lat"];
+    [entity appendRequestParameter:globalLastLongitude withKey:@"lon"];
+    [entity appendRequestParameter:globalLastLatitude withKey:@"lat"];
+//    [entity appendRequestParameter:@"0" withKey:@"lon"];
+//    [entity appendRequestParameter:@"0" withKey:@"lat"];
     if (self.isLoadState)
     {
         [entity appendRequestParameter:@"1" withKey:@"pi"];

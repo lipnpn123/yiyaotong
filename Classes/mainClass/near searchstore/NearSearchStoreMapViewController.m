@@ -8,7 +8,6 @@
 #import "BMapKit.h"
 
 #import "NearSearchStoreMapViewController.h"
-
 @interface NearSearchStoreMapViewController ()
 {
     BMKMapView *mainMapView;
@@ -31,6 +30,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.wsUserMethod = [[WSUserMethod alloc] init];
+    self.wsUserMethod.delegate = self;
     mainMapView = [[BMKMapView alloc] initWithFrame:NomalView_Frame];
     [mainMapView addZoomButton];
     mainMapView.delegate = self;

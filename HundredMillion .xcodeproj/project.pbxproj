@@ -76,6 +76,7 @@
 		5AE81942175C9FE600919F8B /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE81941175C9FE600919F8B /* RatingView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
 		5AE81946175CA2F500919F8B /* ratingViewImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE81944175CA2F500919F8B /* ratingViewImage@2x.png */; };
 		5AE81947175CA2F500919F8B /* ratingViewUnImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE81945175CA2F500919F8B /* ratingViewUnImage@2x.png */; };
+		5AE8194A175CA5E900919F8B /* StoreDetilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE81949175CA5E800919F8B /* StoreDetilViewController.m */; };
 		B7BC703D153D01AD005E85E2 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC7016153D01AD005E85E2 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
 		B7BC703E153D01AD005E85E2 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC7018153D01AD005E85E2 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
 		B7BC703F153D01AD005E85E2 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BC701A153D01AD005E85E2 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc  "; }; };
@@ -280,6 +281,8 @@
 		5AE81941175C9FE600919F8B /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
 		5AE81944175CA2F500919F8B /* ratingViewImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ratingViewImage@2x.png"; sourceTree = "<group>"; };
 		5AE81945175CA2F500919F8B /* ratingViewUnImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ratingViewUnImage@2x.png"; sourceTree = "<group>"; };
+		5AE81948175CA5E800919F8B /* StoreDetilViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreDetilViewController.h; sourceTree = "<group>"; };
+		5AE81949175CA5E800919F8B /* StoreDetilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreDetilViewController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* HundredMillion_-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HundredMillion_-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		B7BC7014153D01AD005E85E2 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		B7BC7015153D01AD005E85E2 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
@@ -745,6 +748,8 @@
 		5AE81932175C975800919F8B /* near searchstore */ = {
 			isa = PBXGroup;
 			children = (
+				5AE81948175CA5E800919F8B /* StoreDetilViewController.h */,
+				5AE81949175CA5E800919F8B /* StoreDetilViewController.m */,
 				5AE81933175C977200919F8B /* NearSearchStoreMapViewController.h */,
 				5AE81934175C977200919F8B /* NearSearchStoreMapViewController.m */,
 				5AE81936175C998700919F8B /* NearSearchStoreTableViewController.h */,
@@ -1156,6 +1161,7 @@
 				5AE8193B175C999C00919F8B /* NearSearchStoreTableView.m in Sources */,
 				5AE8193E175C99B400919F8B /* NearSearchStoreTableViewCell.m in Sources */,
 				5AE81942175C9FE600919F8B /* RatingView.m in Sources */,
+				5AE8194A175CA5E900919F8B /* StoreDetilViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

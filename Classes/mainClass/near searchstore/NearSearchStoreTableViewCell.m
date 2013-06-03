@@ -44,6 +44,7 @@
         self.starView  = [[RatingView alloc] init];
         [self.starView setImagesDeselected:@"ratingViewUnImage.png" partlySelected:@"ratingViewHalfImage.png" fullSelected:@"ratingViewImage.png" andDelegate:nil];
         self.starView.frame = CGRectMake(70, 30, 200, 20);
+        self.starView.userInteractionEnabled = NO;
         [self addSubview:self.starView];
         
         

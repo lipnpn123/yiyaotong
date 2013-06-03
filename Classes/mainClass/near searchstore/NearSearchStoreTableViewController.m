@@ -42,6 +42,7 @@
     [self.wfBgImageView addSubview:searchButton];
     mainTableView = [[NearSearchStoreTableView alloc] initWithFrame:CGRectMake(0, 44, 320, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44) style:UITableViewStylePlain];
     mainTableView.fatherViewController =self;
+    mainTableView.navigationController = self.navigationController;
     [mainTableView reloadTableData];
     [self.wfBgImageView addSubview:mainTableView];
 	// Do any additional setup after loading the view.

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #define UMENG_APPKEY @"4eeb0c7b527015643b000003"
+#define BAIDU_APPKEY @"8C530589D4AFB1A344A9384E92B4FC377E3F9FAC"
+#import "BMapKit.h"
 
-@interface HundredMillion_AppDelegate : NSObject <UIApplicationDelegate> {
+@interface HundredMillion_AppDelegate : NSObject <UIApplicationDelegate,BMKGeneralDelegate> {
     UIWindow *window;
 }
 

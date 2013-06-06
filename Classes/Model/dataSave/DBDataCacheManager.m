@@ -8,7 +8,7 @@
 
 #import "DBDataCacheManager.h"
 static DBDataCacheManager *dataManager;
-
+#import "SBJSON.h"
 
 @implementation DBDataCacheManager
 
@@ -36,7 +36,7 @@ static DBDataCacheManager *dataManager;
 	FMDatabase *dataBase= [dataCache getFMDatabase] ;
 	if (![dataBase tableExists:DBMainTable])
 	{
-		NSString *sql =  [NSString stringWithFormat:@"CREATE TABLE  %@ (contentId text , content text ,type text)",DBMainTable];
+		NSString *sql =  [NSString stringWithFormat:@"CREATE TABLE  %@ (contentId text , content blob ,type text)",DBMainTable];
 		NSLog(@"%@",sql);
 		BOOL result = [dataBase executeUpdate:sql];
 		if (result)
@@ -44,7 +44,16 @@ static DBDataCacheManager *dataManager;
  			NSLog(@"create DBTestTable success");
 		}
 	}
- 
+ 	if (![dataBase tableExists:DBMedicinalCollectTable])
+	{
+        NSString *sql =  [NSString stringWithFormat: @"CREATE TABLE %@  (rowID INTEGER PRIMARY KEY AUTOINCREMENT, content blob, dataId text)",DBMedicinalCollectTable];
+		NSLog(@"%@",sql);
+		BOOL result = [dataBase executeUpdate:sql];
+		if (result)
+		{
+ 			NSLog(@"create DBTestTable success");
+		}
+	}
     
 }
 #pragma mark 常用函数
@@ -133,7 +142,11 @@ static DBDataCacheManager *dataManager;
 {
 	return [self selectDicData:nil tableName:DBMainTable type:DBUserAccountType contentId:nil];
 }
+-(BOOL)deleteAccountData
+{
+	return [self deleteDicData:nil tableName:DBMainTable type:DBUserAccountType contentId:nil];
 
+}
 #pragma mark 保存账号信息
 
 -(BOOL)insertShopCarInfoData:(id )tempValue
@@ -145,7 +158,46 @@ static DBDataCacheManager *dataManager;
 {
 	return [self selectDicData:nil tableName:DBMainTable type:DBShopCarInfoType contentId:nil];
 }
- 
+#pragma mark 保存收藏
+
+-(BOOL)insertCollectInfoData:(id )tempValue dataId:(NSString *)dataId
+{
+	NSData *str = [dataCache  dictionaryToDataAction:(NSDictionary *)tempValue];
+    NSString *sql2 = [NSString stringWithFormat:
+                      @"INSERT INTO '%@' ('content', 'dataId') VALUES (?, ?)",
+                      DBMedicinalCollectTable];
+    FMDatabase *dataBase= [dataCache getFMDatabase] ;
+    return [dataBase executeUpdate:sql2,str,dataId];
+}
+-(id)getCollectInfoData:(NSDictionary *)dic
+{
+    int rowID = [[dic objectForKey:@"rowID"] intValue];
+    if (!dic)
+    {
+        rowID = 0;
+    }
+    NSString *sql2 = [NSString stringWithFormat:@" select * from %@  where (rowID >'%d') limit 0,10",DBMedicinalCollectTable,rowID];
+    FMDatabase *dataBase= [dataCache getFMDatabase] ;
+    FMResultSet *rs = [dataBase executeQuery:sql2];
+	NSMutableArray *returnArray = [NSMutableArray arrayWithCapacity:0];
+     
+	while ([rs next])
+	{
+        NSDictionary *cellDic = [dataCache dataTodictionaryAction: [rs dataForColumn:@"content"]];
+        NSLog(@"cellDic -- %@",cellDic);
+        NSMutableDictionary *returnDic = [NSMutableDictionary dictionaryWithDictionary:cellDic];
+        [returnDic setValue:[NSString stringWithFormat:@"%@",[rs stringForColumn:@"rowID"]] forKey:@"rowID"];
+		[returnArray addObject:returnDic];
+	}
+ 	return returnArray;
+}
+
+-(BOOL)deleteCollectInfoData:(NSDictionary *)dic
+{
+    NSString *sql =[NSString stringWithFormat: @"DELETE FROM %@ WHERE rowID = %@",DBMedicinalCollectTable,[dic objectForKey:@"rowID"]];
+    FMDatabase *dataBase= [dataCache getFMDatabase] ;
+    return [dataBase executeUpdate:sql];
+}
 #pragma mark 检测上次打开的版本
 
 -(BOOL)insertLoadViseion:(id )tempValue

@@ -84,6 +84,12 @@
         vc = [[NearSearchStoreTableViewController alloc] init];
         
     }
+    else if (button.tag == 3)
+    {
+//        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] dataId:@"1"];
+        NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:nil]);
+//        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:@"11" dataId:@"11"];
+    }
     else if (button.tag == 5)
     {
         if (isLoginState)
@@ -103,6 +109,8 @@
     {
         [self.navigationController pushViewController:vc animated:YES];
     }
+ 
+
 }
 
 -(void)loinSucCallBack

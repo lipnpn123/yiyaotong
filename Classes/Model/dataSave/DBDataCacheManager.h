@@ -30,11 +30,17 @@
 
 -(BOOL)insertUserAccountData:(id )tempValue;
 -(id)getAccountData;
-
+-(BOOL)deleteAccountData;
 #pragma mark 保存账号信息
 
 -(BOOL)insertShopCarInfoData:(id )tempValue;
 -(id)getShopCarInfoData;
+
+#pragma mark 保存收藏
+
+-(BOOL)insertCollectInfoData:(id )tempValue dataId:(NSString *)dataId;
+-(id)getCollectInfoData:(NSDictionary *)dic;
+-(BOOL)deleteCollectInfoData:(NSDictionary *)dic;
 
 
  #pragma mark 检测上次打开的版本

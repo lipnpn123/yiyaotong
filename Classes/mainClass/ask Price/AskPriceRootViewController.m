@@ -30,7 +30,8 @@
 {
     [super viewDidLoad];
     self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
-    aptableview= [[SeachMedicineTableView alloc] initWithFrame:CGRectMake(0,90, 320, [[UIScreen mainScreen] applicationFrame].size.height-90)];
+    aptableview= [[SeachMedicineTableView alloc] initWithFrame:CGRectMake(0,90, 320,Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight-90)];
+    
     aptableview.fatherViewController =self;
     aptableview.navigationController = self.navigationController;
     aptableview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;

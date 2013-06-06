@@ -56,7 +56,7 @@
  		
         needReload = YES;
 		
-		UIView *tableFootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 44)];;
+		UIView *tableFootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 80)];;
 		[tableFootView setBackgroundColor:[UIColor clearColor]];
 		LoadingMoreFooterView *tempFootView = [[LoadingMoreFooterView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 44)];
  		self.loadFooterView = tempFootView;

@@ -164,7 +164,7 @@ static DBDataCacheManager *dataManager;
 { 
 	NSData *str = [dataCache  dictionaryToDataAction:(NSDictionary *)tempValue];
     NSString *sql2 = [NSString stringWithFormat:
-                      @"INSERT INTO '%@' ('content', 'dataId') VALUES (?, ?)",
+                      @"INSERT  OR REPLACE INTO '%@' ('content', 'dataId') VALUES (?, ?)",
                       DBMedicinalCollectTable];
     FMDatabase *dataBase= [dataCache getFMDatabase] ;
     return [dataBase executeUpdate:sql2,str,dataId];

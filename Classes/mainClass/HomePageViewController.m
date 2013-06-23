@@ -86,7 +86,7 @@
     }
     else if (button.tag == 3)
     {
-//        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] dataId:@"1"];
+        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] dataId:@"1"];
         NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:nil]);
 //        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:@"11" dataId:@"11"];
     }

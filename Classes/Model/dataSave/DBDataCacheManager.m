@@ -161,7 +161,7 @@ static DBDataCacheManager *dataManager;
 #pragma mark 保存收藏
 
 -(BOOL)insertCollectInfoData:(id )tempValue dataId:(NSString *)dataId
-{
+{ 
 	NSData *str = [dataCache  dictionaryToDataAction:(NSDictionary *)tempValue];
     NSString *sql2 = [NSString stringWithFormat:
                       @"INSERT INTO '%@' ('content', 'dataId') VALUES (?, ?)",

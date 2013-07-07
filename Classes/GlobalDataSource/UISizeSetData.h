@@ -59,6 +59,7 @@ frame的设置
 #pragma mark -
 #pragma mark 设置Color
 
+#define createRGBColor(r,g,b) [UIColor colorWithRed:r/255.0  green:g/255.0 blue:b/255.0 alpha:1.0]
 
 //表的cell的墨绿色背景
 #define  cell_most_backgroundColor [UIColor colorWithRed:239.0/255  green:253.0/255 blue:232.0/255 alpha:1.0]

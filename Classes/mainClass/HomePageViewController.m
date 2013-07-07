@@ -116,7 +116,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 //    [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] rowID:[NSString stringWithFormat:@"%d",cout]];
-//    NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:@"10"]);;
+    NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:@"10"]);;
     cout ++;
 
 }

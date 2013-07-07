@@ -196,6 +196,7 @@
 #pragma mark---
 - (void)KRShareDidLogIn:(KRShare *)krShare
 {
+    [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
 }
 - (void)KRShareDidLogOut:(KRShare *)sinaweibo
 {

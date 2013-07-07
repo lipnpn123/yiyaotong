@@ -12,10 +12,11 @@
 #import "UserLoginViewController.h"
 #import "NearSearchStoreMapViewController.h"
 #import "NearSearchStoreTableViewController.h"
-
+#import "ComparePriceMapViewController.h"
 @interface HomePageViewController ()
 {
     CLLocationManager *locationManager;
+    int cout ;
 }
 @end
 
@@ -91,8 +92,8 @@
     }
     else if (button.tag == 3)
     {
-        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] dataId:@"1"];
-        NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:nil]);
+        vc = [[ComparePriceMapViewController alloc] init];
+//        NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:nil]);
 //        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:@"11" dataId:@"11"];
     }
     else if (button.tag == 5)
@@ -114,7 +115,9 @@
     {
         [self.navigationController pushViewController:vc animated:YES];
     }
- 
+//    [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] rowID:[NSString stringWithFormat:@"%d",cout]];
+//    NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:@"10"]);;
+    cout ++;
 
 }
 

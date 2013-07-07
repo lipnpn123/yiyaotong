@@ -66,7 +66,7 @@
 	UIImage* img = nil;
 	if (!imageName)
 	{
- 		imageName =  @"left_back_button.png" ;
+ 		imageName =  @"leftbackImage.png" ;
 	}
     /******************设置正常时候的图片************************/
 	img = [UIImage imageNamed:imageName];

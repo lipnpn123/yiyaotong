@@ -47,7 +47,7 @@
 }
 - (void)mapView:(BMKMapView *)mapView didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
-    NSLog(@"1111");
+//    NSLog(@"1111");
     if (!isFouce)
     {
         isFouce = YES;

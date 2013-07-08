@@ -10,9 +10,13 @@
 #import "AskPriceRootViewController.h"
 #import "UserCenterViewController.h"
 #import "UserLoginViewController.h"
+#import "NearSearchStoreMapViewController.h"
+#import "NearSearchStoreTableViewController.h"
+#import "ComparePriceMapViewController.h"
 @interface HomePageViewController ()
 {
     CLLocationManager *locationManager;
+    int cout ;
 }
 @end
 
@@ -30,34 +34,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    
+    self.wfBgImageView.image = [UIImage imageNamed:@"mostbgImage.png"] ;
+    self.wfTitleImageView.image = [UIImage imageNamed:@"home_nav.png"];
     [self initDefaultLocation];
     
     self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
-    [self.selfDataArray addObject:@"0"];
-    [self.selfDataArray addObject:@"1"];
-    [self.selfDataArray addObject:@"2"];
-    [self.selfDataArray addObject:@"3"];
-    [self.selfDataArray addObject:@"4"];
-    [self.selfDataArray addObject:@"5"];
-    [self.selfDataArray addObject:@"6"];
-    [self.selfDataArray addObject:@"7"];
-    [self.selfDataArray addObject:@"8"];
+    [self.selfDataArray addObject:@"xungoubijia_s.png"];
+    [self.selfDataArray addObject:@"fujinyaodian_s.png"];
+    [self.selfDataArray addObject:@"chayaodian_s.png"];
+    [self.selfDataArray addObject:@"fujintejia_s.png"];
+    [self.selfDataArray addObject:@"yaoshizixun_s.png"];
+    [self.selfDataArray addObject:@"yonghuzhongxin_s.png"];
+    [self.selfDataArray addObject:@"biyunjisuan_s.png"];
+    [self.selfDataArray addObject:@"yaopinkuaixun_s.png"];
+    [self.selfDataArray addObject:@"changjianwenti_s.png"];
  	// Do any additional setup after loading the view.
-    int offx =25;
-    int offy = 20;
-    int disx = 30;
+    int offx =20;
+    int offy = 45;
+    if (iPhone5)
+    {
+         offy = 80;
+    }
+    int disx = 20;
     int disy = 40;
     
     for (int i=0; i<3; i++)
     {
         for (int j=0; j<3; j++)
         {
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            button.frame = CGRectMake(offx + j*70+disx*j, offy + i*70 +disy*i, 70, 70);
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake(offx + j*80+disx*j, offy + i*80 +disy*i, 80, 80);
             button.tag = j+i*3;
             [button addTarget:self action:@selector(enterDeteil:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitle:[self.selfDataArray objectAtIndex:j+i*3] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:[self.selfDataArray objectAtIndex:j+i*3]] forState:UIControlStateNormal];
+//            [button setTitle:[self.selfDataArray objectAtIndex:j+i*3] forState:UIControlStateNormal];
             [self.wfBgImageView addSubview:button];
         }
  
@@ -70,6 +82,22 @@
     if (button.tag == 0)
     {
         vc = [[AskPriceRootViewController alloc] init];
+    }
+    else if (button.tag == 1)
+    {
+        vc = [[NearSearchStoreMapViewController alloc] init];
+        
+    }
+    else if (button.tag == 2)
+    {
+        vc = [[NearSearchStoreTableViewController alloc] init];
+        
+    }
+    else if (button.tag == 3)
+    {
+        vc = [[ComparePriceMapViewController alloc] init];
+//        NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:nil]);
+//        [[DBDataCacheManager shareCacheManager] insertCollectInfoData:@"11" dataId:@"11"];
     }
     else if (button.tag == 5)
     {
@@ -90,6 +118,10 @@
     {
         [self.navigationController pushViewController:vc animated:YES];
     }
+//    [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] rowID:[NSString stringWithFormat:@"%d",cout]];
+//    NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:@"10"]);;
+    cout ++;
+
 }
 
 -(void)loinSucCallBack

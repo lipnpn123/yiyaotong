@@ -14,6 +14,9 @@
 #import "MBProgressHUD.h"
 #import "DBDataCacheManager.h"
 #import "ToolsObject.h"
+
+#import "BMKMapView+Addtions.h"
+
 /*
 		所有controller的基类
 

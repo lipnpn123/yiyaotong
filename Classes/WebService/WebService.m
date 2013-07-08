@@ -68,7 +68,7 @@
 	connection.delegate = self;
 	connection.requestMethod = @"GET";
 	connection.tag = tag;
-    connection.timeOutSeconds = 20;
+    connection.timeOutSeconds = 30;
 	NSMutableString* postData = [NSMutableString string];
 	
 	//循环对表单进行赋值

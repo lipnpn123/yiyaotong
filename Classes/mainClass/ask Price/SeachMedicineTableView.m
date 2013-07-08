@@ -8,7 +8,8 @@
 
 #import "SeachMedicineTableView.h"
 #import "SeachMedicineTableViewCell.h"
-
+#import "MedicineDetailViewController.h"
+#import "ComparePriceMapViewController.h"
 @implementation SeachMedicineTableView
 @synthesize shoppingDic;
 @synthesize medicalName;
@@ -71,6 +72,7 @@
     if (cell == nil)
     {
         cell = [[SeachMedicineTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         [cell.comparePriceBtn addTarget:self action:@selector(comparePriceBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [cell.inquirShopBtn addTarget:self action:@selector(inquirShopBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -93,7 +95,8 @@
 -(void)comparePriceBtnAction:(UIButton*)btn
 {
     NSDictionary *dic = [self.dataArray objectAtIndex:btn.tag];
-    
+    ComparePriceMapViewController *mapVC = [[ComparePriceMapViewController alloc] init];
+    [self.navigationController pushViewController:mapVC animated:YES];
 }
 
 
@@ -110,6 +113,15 @@
 
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
+    MedicineDetailViewController *vc = [[MedicineDetailViewController alloc] init];
+    vc.reqeustId = checkNullValue([dic objectForKey:@"ID"]);
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {

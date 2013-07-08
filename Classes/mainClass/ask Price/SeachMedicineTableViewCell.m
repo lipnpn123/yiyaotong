@@ -22,10 +22,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
 	{
-        
         // Initialization code
         imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 50, 50)];
-//        imageView.backgroundColor = [UIColor redColor];
+//        imageView.image = [UIImage imageNamed:@""];
+        imageView.backgroundColor = [UIColor redColor];
         [self addSubview:imageView];
         
         namelab = NewLabelWithDefaultSize(18.0);
@@ -43,18 +43,29 @@
         yaoCompanylab.frame = CGRectMake(70, 50, 80, 15);
         [self addSubview:yaoCompanylab];
         
+        
+        UIImageView *compareImageViwe = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jiujinbijia.png"]];
+        compareImageViwe.frame = CGRectMake(70, 70, 20, 15);
+        [self addSubview:compareImageViwe];
+        
         comparePriceBtn  =[UIButton buttonWithType:UIButtonTypeCustom];
         [comparePriceBtn setTitle:@"就近比价" forState:UIControlStateNormal];
         comparePriceBtn.titleLabel.font=NewFontWithBoldSize(16.0);
-        comparePriceBtn.backgroundColor = [UIColor greenColor];
-        comparePriceBtn.frame = CGRectMake(70, 70, 80, 15);
+        [comparePriceBtn setTitleColor:[UIColor
+                                        blackColor] forState:UIControlStateNormal];
+        comparePriceBtn.frame = CGRectMake(90, 70, 80, 15);
         [self addSubview:comparePriceBtn];
         
+        
+        UIImageView *inquireImageViwe = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jiujinxunjia.png"]];
+        inquireImageViwe.frame = CGRectMake(180, 70, 20, 15);
+        [self addSubview:inquireImageViwe];
         inquirShopBtn  =[UIButton buttonWithType:UIButtonTypeCustom];
         [inquirShopBtn setTitle:@"就近寻购" forState:UIControlStateNormal];
         inquirShopBtn.titleLabel.font=NewFontWithBoldSize(16.0);
-        inquirShopBtn.backgroundColor = [UIColor greenColor];
-        inquirShopBtn.frame = CGRectMake(160, 70, 80, 15);
+        [inquirShopBtn setTitleColor:[UIColor
+                                        blackColor] forState:UIControlStateNormal];
+        inquirShopBtn.frame = CGRectMake(200, 70, 80, 15);
         [self addSubview:inquirShopBtn];
     }
     return self;

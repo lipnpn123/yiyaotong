@@ -1,6 +1,6 @@
 //
 //  AskPriceRootViewController.m
-//  HundredMillion 
+//  HundredMillion
 //
 //  Created by lipnpn on 13-6-1.
 //
@@ -10,7 +10,7 @@
 
 #import "AskPriceRootViewController.h"
 #import "SeachMedicineTableView.h"
-#import "ShoppingCartTableView.h"
+#import "ShoppingCartViewController.h"
 @interface AskPriceRootViewController ()
 
 @end
@@ -29,14 +29,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.selfTittleLabel.text=@"药品查询";
+    self.selfTittleLabel.font=[UIFont systemFontOfSize:18.0];
+
     self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
-    aptableview= [[SeachMedicineTableView alloc] initWithFrame:CGRectMake(0,90, 320, [[UIScreen mainScreen] applicationFrame].size.height-90)];
-    aptableview.fatherViewController =
-    self;
+    aptableview= [[SeachMedicineTableView alloc] initWithFrame:CGRectMake(0,90, 320,Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight-90)];
+    
+    aptableview.fatherViewController =self;
+    aptableview.navigationController = self.navigationController;
     aptableview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [aptableview reloadTableData];
     [self.wfBgImageView addSubview:aptableview];
     [self addHeadView];
+    
+    [self createRightBarBtn:nil action:@selector(shoppingCartClicked:) withImageName:@"gouwuche.png"];
+    shoppingNumLabel = NewLabelWithDefaultSize(12);
+    shoppingNumLabel.frame = CGRectMake(300, 0, 20, 20);
+    shoppingNumLabel.backgroundColor = [UIColor greenColor];
+    [self.view  addSubview:shoppingNumLabel];
     
 }
 
@@ -44,21 +55,22 @@
 {
     UIImageView *headBgiv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 90)];
     headBgiv.userInteractionEnabled=  YES;
-    headBgiv.backgroundColor = [UIColor redColor];
+    headBgiv.backgroundColor = [UIColor clearColor];
     [self.wfBgImageView addSubview:headBgiv];
     
-    medicaltf  =[[UITextField alloc] initWithFrame:CGRectMake(20, 10, 120, 30)];
+    medicaltf  =[[UITextField alloc] initWithFrame:CGRectMake(10, 10, 220, 30)];
     medicaltf.backgroundColor =[UIColor greenColor];
-    medicaltf.placeholder= @"按药品名称查找";
-
+    medicaltf.placeholder= @"  按药品名称查找";
+    medicaltf.background =[UIImage imageNamed:@"input.png"]
+    ;
     medicaltf.delegate=self;
     medicaltf.textAlignment = UITextAlignmentLeft;
     medicaltf.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [headBgiv addSubview:medicaltf];
     
-    productCompany  =[[UITextField alloc] initWithFrame:CGRectMake(20, 50, 120, 30)];
-    productCompany.placeholder= @"按生产企业查找";
-
+    productCompany  =[[UITextField alloc] initWithFrame:CGRectMake(10, 50,  220, 30)];
+    productCompany.placeholder= @"  按生产企业查找";
+    productCompany.background =[UIImage imageNamed:@"input.png"];
     productCompany.delegate=self;
     productCompany.textAlignment = UITextAlignmentLeft;
     productCompany.backgroundColor =[UIColor greenColor];
@@ -66,22 +78,19 @@
     [headBgiv addSubview:productCompany];
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame  =CGRectMake(200, 20, 50, 50);
-    searchBtn.backgroundColor = [UIColor greenColor];
+    searchBtn.frame  =CGRectMake(240, 10, 70, 70);
+    searchBtn.backgroundColor = [UIColor clearColor];
+    [searchBtn setImage:[UIImage imageNamed:@"search.png"] forState:UIControlStateNormal];
+     [searchBtn setImage:[UIImage imageNamed:@"search.png"] forState:UIControlStateHighlighted];
     [headBgiv addSubview:searchBtn];
     [searchBtn addTarget:self action:@selector(searchBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    UIButton *shoppingCartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    shoppingCartBtn.frame  =CGRectMake(260, 20, 50, 50);
-    shoppingCartBtn.backgroundColor = [UIColor greenColor];
-    [headBgiv addSubview:shoppingCartBtn];
-    [shoppingCartBtn addTarget:self action:@selector(shoppingCartClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    shoppingNumLabel = NewLabelWithDefaultSize(12);
-    shoppingNumLabel.frame = CGRectMake(300, 0, 20, 20);
-    shoppingNumLabel.backgroundColor = [UIColor greenColor];
-    [headBgiv addSubview:shoppingNumLabel];
+//    UIImageView *footerview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 90)];
+//    footerview.userInteractionEnabled=  YES;
+//    footerview.image=[UIImage imageNamed:@""];
+//    footerview.backgroundColor = [UIColor clearColor];
+//    [headBgiv addSubview:footerview];
+
     
  }
 #pragma mark -
@@ -95,11 +104,10 @@
 
 -(void)shoppingCartClicked:(UIButton *)btn
 {
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width,  [[UIScreen mainScreen] applicationFrame].size.height)];
-    [self.wfBgImageView addSubview:bgView];
 
-    ShoppingCartTableView *shoppingCartTableView = [[ShoppingCartTableView alloc] initWithFrame:CGRectMake(50, 0, [[UIScreen mainScreen] applicationFrame].size.width-100, [[UIScreen mainScreen] applicationFrame].size.height)];
-    [bgView addSubview:shoppingCartTableView];
+    ShoppingCartViewController *shoppingCartViewController = [[ShoppingCartViewController alloc] init];
+    [self.navigationController pushViewController:shoppingCartViewController animated:YES];
+   
 }
 
 #pragma mark -

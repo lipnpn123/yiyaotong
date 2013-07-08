@@ -20,22 +20,23 @@
 -(void)createTable;
 
 #pragma mark 常用函数
-
--(BOOL)insertDicData:(NSObject *)tempValue tableName:(NSString *)tableName type:(NSString *)type contentId:(NSString *)contentId;
--(id)selectDicData:(NSDictionary *)tempValue tableName:(NSString *)tableName type:(NSString *)type contentId:(NSString *)contentId;
--(id)selectTimestampData:(NSDictionary *)tempValue tableName:(NSString *)tableName type:(NSString *)type contentId:(NSString *)contentId;
--(BOOL)deleteDicData:(NSDictionary *)tempValue tableName:(NSString *)tableName type:(NSString *)type contentId:(NSString *)contentId;
-
+ 
 #pragma mark 保存账号信息
 
 -(BOOL)insertUserAccountData:(id )tempValue;
 -(id)getAccountData;
-
+-(BOOL)deleteAccountData;
 #pragma mark 保存账号信息
 
 -(BOOL)insertShopCarInfoData:(id )tempValue;
 -(id)getShopCarInfoData;
 
+#pragma mark 保存收藏
+
+-(BOOL)insertCollectInfoData:(id )tempValue rowID:(NSString *)rowID;
+
+-(id)getCollectInfoData:(NSString *)rowID;
+-(BOOL)deleteCollectInfoData:(NSString *)rowID;
 
  #pragma mark 检测上次打开的版本
 

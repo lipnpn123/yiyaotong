@@ -19,8 +19,14 @@
  
 
 #define DBMainTable                     @"DBTestTable"
+
 #define DBVesionType                    @"DBVesionType"
 #define DBTestType                    @"DBTestType"
 
 #define DBUserAccountType       @"DBUserAccountType"
 #define DBShopCarInfoType       @"DBShopCarInfoType"
+
+
+
+#define DBMedicinalCollectTable                     @"DBMedicinalCollectTable"
+#define DBMedicinalCollectType       @"DBMedicinalCollectType"

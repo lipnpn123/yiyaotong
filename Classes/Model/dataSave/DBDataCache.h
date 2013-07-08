@@ -53,5 +53,7 @@
 -(BOOL)saveCotentDetailValue:(NSDictionary *)dic tableName:(NSString *)tableName;
 -(id)getCotentDetailValue:(NSDictionary *)dic tableName:(NSString *)tableName;
 
+-(NSData *)dictionaryToDataAction:(NSDictionary *)dic;
 
+-(NSDictionary *)dataTodictionaryAction:(NSData *)data;
 @end

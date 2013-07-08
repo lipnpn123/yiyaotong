@@ -54,17 +54,15 @@
     NSString *sql = [NSString stringWithFormat: @"DELETE FROM %@ where (type = '%@' and contentId = '%@' )",tableName,type,contentId];
 //    PPwriteObject(sql);
 //	[dataBase executeUpdate:sql];
+ 
 	
- 	SBJSON *tempSb = [[SBJSON alloc] init];
-	NSString *str = [tempSb stringWithObject:dic];
-	
+    NSData *strData = [self dictionaryToDataAction:dic];
  
 //	sql = [NSString stringWithFormat:@"INSERT  INTO  %@ ( content , type,contentId) VALUES ( '%@','%@','%@');",tableName,str,type,contentId];
 	sql = [NSString stringWithFormat:@"INSERT  INTO  %@ ( content , type,contentId) VALUES ( ?,?,?);",tableName];
 
  	PPwriteObject(sql);
-	[tempSb release];
-    BOOL isSuc = [dataBase executeUpdate:sql,str,type,contentId];
+    BOOL isSuc = [dataBase executeUpdate:sql,strData,type,contentId];
     if (isSuc)
     {
         NSLog(@"插入成功了啊");
@@ -93,13 +91,10 @@
 	NSMutableDictionary *dataDic = [NSMutableDictionary dictionaryWithCapacity:0];
  	while ([rs next])
     {
-		NSString *str = checkNullValue([rs stringForColumn:@"content"]);
+		NSData *str = [rs dataForColumn:@"content"];
  		
- 
-		SBJSON *tempSb = [[SBJSON alloc] init];
-		NSDictionary *dic = [tempSb objectWithString:str];
+ 		NSDictionary *dic = [self dataTodictionaryAction:str];
 		[dataDic setDictionary:dic];
-        [tempSb release];
 	}	
  	return dataDic;
 }
@@ -141,15 +136,14 @@
     PPwriteObject(sql);
 	[dataBase executeUpdate:sql];
 	
- 	SBJSON *tempSb = [[SBJSON alloc] init];
-	NSString *str = [tempSb stringWithObject:dic];
+    NSData *strData = [self dictionaryToDataAction:dic];
+
  
 //	sql = [NSString stringWithFormat:@"INSERT  INTO  %@ ( content , type,contentId, detailId) VALUES ( '%@','%@','%@','%@');",tableName,str,type,contentId,detailId];
     sql = [NSString stringWithFormat:@"INSERT  INTO  %@ ( content , type,contentId, detailId) VALUES ( ?,?,?,?);",tableName];
 
  	PPwriteObject(sql);
-	[tempSb release];
-	return [dataBase executeUpdate:sql,str,type,contentId,detailId];
+	return [dataBase executeUpdate:sql,strData,type,contentId,detailId];
 }
 
 -(id)getCotentDetailValue:(NSDictionary *)dic tableName:(NSString *)tableName
@@ -168,17 +162,40 @@
 	NSMutableDictionary *dataDic = [NSMutableDictionary dictionaryWithCapacity:0];
  	while ([rs next])
     {
-		NSString *str = checkNullValue([rs stringForColumn:@"content"]);
+		NSData *str = [rs dataForColumn:@"content"];
  		
  
-		SBJSON *tempSb = [[SBJSON alloc] init];
-		NSDictionary *dic = [tempSb objectWithString:str];
+ 		NSDictionary *dic = [self dataTodictionaryAction:str];
 		[dataDic setDictionary:dic];
-        [tempSb release];
 	}	
  	return dataDic;
 }
 
+-(NSData *)dictionaryToDataAction:(NSDictionary *)dic
+{
+    if (dic == nil)
+    {
+        dic = [NSDictionary dictionaryWithDictionary:0];
+    }
+    NSMutableData *data = [[[NSMutableData alloc] init] autorelease];
+    //    NSLog(@"data --- %@",data);
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeObject:dic forKey:@"Some Key Value"];
+    [archiver finishEncoding];
+    return data;
+}
 
+-(NSDictionary *)dataTodictionaryAction:(NSData *)data
+{
+    if (data == nil)
+    {
+        data = [NSData data];
+    }
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+    NSDictionary *myDictionary = [unarchiver decodeObjectForKey:@"Some Key Value"];
+    [unarchiver finishDecoding];
+    //    NSLog(@"myDictionary --- %@",myDictionary);
+    return myDictionary;
+}
 
 @end

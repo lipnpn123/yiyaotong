@@ -66,7 +66,7 @@
 	UIImage* img = nil;
 	if (!imageName)
 	{
- 		imageName =  @"left_back_button.png" ;
+ 		imageName =  @"leftbackImage.png" ;
 	}
     /******************设置正常时候的图片************************/
 	img = [UIImage imageNamed:imageName];
@@ -186,7 +186,7 @@
     {
         UIImageView* aTittleView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320,44)];
         self.wfTitleImageView = aTittleView;
-        aTittleView.image = [[UIImage imageNamed:@"title_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        aTittleView.image = [[UIImage imageNamed:@"nabarImage.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
 //        self.wfTitleImageView.backgroundColor = [UIColor whiteColor];
         self.wfTitleImageView.userInteractionEnabled = YES;
         self.wfTitleImageView.opaque = NO;

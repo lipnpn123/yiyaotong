@@ -5,9 +5,7 @@
 //  Created by lipnpn on 13-6-2.
 //
 //
-<<<<<<< HEAD
 
-=======
 #define NameLabHeight  20
 #define NameLabWidth   100
 #define Space    5
@@ -18,17 +16,14 @@
 #define detailNameLabWidth 170
 #define detailNameLabHeight 20
  
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
-#import "MedicineDetailViewController.h"
+ #import "MedicineDetailViewController.h"
 
 @interface MedicineDetailViewController ()
 {
     UIScrollView *_mainSrollView;
-<<<<<<< HEAD
-=======
+ 
     KRShare *_krShare;
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
-
+ 
 }
 @end
 
@@ -40,24 +35,18 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.wsUserMethod = [[WSUserMethod alloc] init];
-<<<<<<< HEAD
-        self.wsUserMethod.delegate = nil;
-=======
+ 
         self.wsUserMethod.delegate = self;
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
-    }
+     }
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-<<<<<<< HEAD
-    self.selfTittleLabel.text = @"药品详情";
-=======
-    
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
-    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+     self.selfTittleLabel.text = @"药品详情";
+     
+     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:@"get_yao"];
     [entity appendRequestParameter:self.reqeustId withKey:@"yaocode"];
   
@@ -68,19 +57,7 @@
 
 -(void)createMainView
 {
-<<<<<<< HEAD
-    _mainSrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44)];
-    UIImageView *medicineImageView = [[UIImageView alloc] init];
-    medicineImageView.backgroundColor = [UIColor redColor];
-    medicineImageView.frame = CGRectMake(10, 10, 50, 50);
-    [_mainSrollView addSubview:medicineImageView];
-    
-    
-    [self.wfBgImageView addSubview:_mainSrollView];
-}
-
-=======
-    int offy = 10;
+     int offy = 10;
 
     _mainSrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44)];
     UIImageView *medicineImageView = [[UIImageView alloc] init];
@@ -268,21 +245,17 @@
 
 
 #pragma mark---
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
-- (void)didReceiveMemoryWarning
+ - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
-<<<<<<< HEAD
  
-=======
     NSMutableDictionary *dic = (NSMutableDictionary *)aRequest.returnObject;
     self.selfDataDictionary = [NSMutableDictionary dictionaryWithDictionary:dic];
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
-    [self createMainView];
+     [self createMainView];
 
 }
 

@@ -34,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+<<<<<<< HEAD
     
     
     self.wfBgImageView.image = [UIImage imageNamed:@"mostbgImage.png"] ;
@@ -42,6 +43,13 @@
     
     self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
     [self.selfDataArray addObject:@"xungoubijia_s.png"];
+=======
+    self.wfBgImageView.image = [UIImage imageNamed:@"mostbgImage.png"] ;
+    [self initDefaultLocation];
+    
+    self.selfDataArray = [NSMutableArray arrayWithCapacity:0];
+    [self.selfDataArray addObject:@"fujintejia_s.png"];
+>>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
     [self.selfDataArray addObject:@"fujinyaodian_s.png"];
     [self.selfDataArray addObject:@"chayaodian_s.png"];
     [self.selfDataArray addObject:@"fujintejia_s.png"];
@@ -119,7 +127,11 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 //    [[DBDataCacheManager shareCacheManager] insertCollectInfoData:[NSDictionary dictionaryWithObjectsAndKeys:@"1111",@"1111", nil] rowID:[NSString stringWithFormat:@"%d",cout]];
+<<<<<<< HEAD
 //    NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:@"10"]);;
+=======
+    NSLog(@"%@",[[DBDataCacheManager shareCacheManager] getCollectInfoData:@"10"]);;
+>>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
     cout ++;
 
 }

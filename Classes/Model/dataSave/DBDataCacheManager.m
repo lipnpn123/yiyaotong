@@ -36,12 +36,9 @@ static DBDataCacheManager *dataManager;
 	FMDatabase *dataBase= [dataCache getFMDatabase] ;
 	if (![dataBase tableExists:DBMainTable])
 	{
-<<<<<<< HEAD
-		NSString *sql =  [NSString stringWithFormat:@"CREATE TABLE  %@ (contentId text , content blob ,type text)",DBMainTable];
-=======
+ 
 		NSString *sql =  [NSString stringWithFormat:@"CREATE TABLE  %@ (rowID INTEGER , content blob ,type text)",DBMainTable];
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
-		NSLog(@"%@",sql);
+ 		NSLog(@"%@",sql);
 		BOOL result = [dataBase executeUpdate:sql];
 		if (result)
 		{
@@ -105,11 +102,8 @@ static DBDataCacheManager *dataManager;
         count = 1;
     }
     NSString *sql2 = nil;
-<<<<<<< HEAD
-    if (rowID == 0)
-=======
+
     if ([rowID intValue] == 0)
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
     {
         sql2 = [NSString stringWithFormat:@" select * from %@  where ( type = '%@' ) order by rowID desc limit %d ",table,type,count];
     }
@@ -144,13 +138,6 @@ static DBDataCacheManager *dataManager;
 
 -(BOOL)insertUserAccountData:(id )tempValue;
 {
-<<<<<<< HEAD
-   return  [self insertOneDetailInfoData:tempValue rowID:nil type:DBUserAccountType table:DBMainTable];
-}
--(id)getAccountData;
-{
-    return [self getOneDetailInfoData:nil type:DBUserAccountType table:DBMainTable];
-=======
    return  [self insertOneDetailInfoData:tempValue rowID:@"1" type:DBUserAccountType table:DBMainTable];
 }
 -(id)getAccountData;
@@ -161,7 +148,6 @@ static DBDataCacheManager *dataManager;
         return nil;
     }
     return [array objectAtIndex:0];;
->>>>>>> 9784939a37676e9be6a65138a9009536e95fba6a
 }
 -(BOOL)deleteAccountData
 {

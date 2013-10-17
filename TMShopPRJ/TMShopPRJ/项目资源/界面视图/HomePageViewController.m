@@ -1,0 +1,96 @@
+//
+//  HomePageViewController.m
+//  TMShopPRJ
+//
+//  Created by 李 碰碰 on 13-8-19.
+//  Copyright (c) 2013年 李 鹏鹏. All rights reserved.
+//
+
+#import "HomePageViewController.h"
+#import "sdkCall.h"
+
+@interface HomePageViewController ()
+
+@end
+
+@implementation HomePageViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+
+    [self createLeftBarBtn:nil action:@selector(leftAction) withImageName:@"leftbackImage.png"];
+    [self createRightBarBtn:nil action:@selector(rightAction) withImageName:@"leftbackImage.png"];
+    
+    
+
+    
+	// Do any additional setup after loading the view.
+}
+
+-(void)leftAction
+{
+//    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+//    req.bText = YES;
+//    req.text = @"11121212";
+//    req.scene = WXSceneSession;
+//    
+//    [WXApi sendReq:req];
+    
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+
+}
+
+-(void)rightAction
+{
+//    TencentOAuth *te = [[sdkCall getinstance] oauth];
+//    NSLog(@"    _oauth.accessToken  %@",    te.openId);
+//    NSLog(@"    expirationDate  %@",    te.expirationDate);
+//    if (![te isSessionValid])
+//    {
+//        
+//        NSArray *permissions =  [[NSArray arrayWithObjects:@"get_user_info", @"add_share", nil] retain];
+//        [[[sdkCall getinstance] oauth] authorize:permissions inSafari:NO];
+//    }
+    
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+
+}
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    
+    return YES;
+}
+
+-(void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(NSDate *)date_ targetHeight:(float)targetHeight animated:(BOOL)animated {
+    NSLog(@"%@",date_);
+    if ([date_ month]==[[NSDate date] month] && [date_ year]==[[NSDate date] year]) {
+        NSArray *dates = [NSArray arrayWithObjects:[NSNumber numberWithInt:1],[NSNumber numberWithInt:5], nil];
+        [calendarView markDates:dates];
+    }
+}
+
+-(void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date {
+    NSLog(@"Selected date = %@",date);
+}
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

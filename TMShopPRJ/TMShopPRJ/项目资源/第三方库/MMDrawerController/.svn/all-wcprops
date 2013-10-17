@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 169
+/svn/taimeishangcheng/!svn/ver/29/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController
+END
+UIViewController+MMDrawerController.h
+K 25
+svn:wc:ra_dav:version-url
+V 207
+/svn/taimeishangcheng/!svn/ver/20/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/UIViewController+MMDrawerController.h
+END
+MMDrawerBarButtonItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 193
+/svn/taimeishangcheng/!svn/ver/20/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/MMDrawerBarButtonItem.h
+END
+UIViewController+MMDrawerController.m
+K 25
+svn:wc:ra_dav:version-url
+V 207
+/svn/taimeishangcheng/!svn/ver/20/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/UIViewController+MMDrawerController.m
+END
+MMDrawerController.h
+K 25
+svn:wc:ra_dav:version-url
+V 190
+/svn/taimeishangcheng/!svn/ver/20/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/MMDrawerController.h
+END
+MMDrawerBarButtonItem.m
+K 25
+svn:wc:ra_dav:version-url
+V 193
+/svn/taimeishangcheng/!svn/ver/20/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/MMDrawerBarButtonItem.m
+END
+MMDrawerVisualState.h
+K 25
+svn:wc:ra_dav:version-url
+V 191
+/svn/taimeishangcheng/!svn/ver/20/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/MMDrawerVisualState.h
+END
+MMDrawerController.m
+K 25
+svn:wc:ra_dav:version-url
+V 190
+/svn/taimeishangcheng/!svn/ver/20/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/MMDrawerController.m
+END
+MMDrawerVisualState.m
+K 25
+svn:wc:ra_dav:version-url
+V 191
+/svn/taimeishangcheng/!svn/ver/29/client/iphone/branches/TMShopPRJ/TMShopPRJ/%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/MMDrawerController/MMDrawerVisualState.m
+END

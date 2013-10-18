@@ -11,8 +11,11 @@
 #import "CBRegularExpressionManager.h"
 #import "NSString+CBExtension.h"
 #import "NSArray+CBExtension.h"
+#import "NSString+Extension.h"
 
 #define EmotionItemPattern          @"</(\\w+)>"
+//#define EmotionItemPattern          @"[/(\\w+)]"
+
 #define PlaceHolder                 @" "
 #define EmotionFileType             @"gif"
 #define AttributedImageNameKey      @"ImageName"
@@ -63,6 +66,7 @@
 {
     CFRelease(typesetter);
     dispatch_release(group);    // iOS 6.0 以下需要手动释放
+    [super dealloc];
 }
 
 - (void)setup

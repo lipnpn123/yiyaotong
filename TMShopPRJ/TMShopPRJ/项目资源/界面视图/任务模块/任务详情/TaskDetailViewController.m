@@ -158,6 +158,7 @@
     offy += 30;
     
     UIButton *faceButton = [[UIButton alloc] init];
+    [faceButton addTarget:self action:@selector(faceButtonAction) forControlEvents:UIControlEventTouchUpInside];
     faceButton.frame = CGRectMake(10, offy, 30, 30);
     [faceButton setImage:[UIImage imageNamed:@"priority-face_image.png"] forState:UIControlStateNormal];
     [headView addSubview:faceButton];
@@ -180,7 +181,14 @@
     [imageButton setImage:[UIImage imageNamed:@"priority-tp_image.png"] forState:UIControlStateNormal];
     [headView addSubview:imageButton];
 
-    
+    UIButton *commentButton = [[UIButton alloc] init];
+//    [commentButton addTarget:self action:@selector(faceButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    commentButton.frame = CGRectMake(230, offy, 60, 30);
+    [commentButton setTitle:@"发表评论" forState:UIControlStateNormal];
+    commentButton.backgroundColor = [UIColor yellowColor];
+    [commentButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+//    [commentButton setImage:[UIImage imageNamed:@"priority-face_image.png"] forState:UIControlStateNormal];
+    [headView addSubview:commentButton];
     offy += 30;
     headView.frame = CGRectMake(0, 0, 320, offy );
 
@@ -194,9 +202,9 @@
 }
 
 - (void)keyboardDidHide:(NSNotification*)notification {
-    _faceBoard.inputTextView = self.textView;
-    self.textView.inputView = _faceBoard;
-    [self.textView becomeFirstResponder];
+//    _faceBoard.inputTextView = self.textView;
+//    self.textView.inputView = _faceBoard;
+//    [self.textView becomeFirstResponder];
 }
 -(void)testAction
 {
@@ -205,8 +213,35 @@
 
 }
 
+-(void)faceButtonAction
+{
+    if (self.textView.inputView == nil)
+    {
+        _faceBoard.inputTextView = self.textView;
+        [self.textView resignFirstResponder];
+        self.textView.inputView = _faceBoard;
+        [self.textView becomeFirstResponder];
+    }
+    else
+    {
+        _faceBoard.inputTextView = self.textView;
+        [self.textView resignFirstResponder];
+        self.textView.inputView = nil;
+        [self.textView becomeFirstResponder];
+    }
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    [self foucusTextView:textView];
+
+    return YES;
+}
+
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 {
+    [self foucusTextView:textView];
     if ([text isEqualToString:@"\n"])
     {
         [self.textView resignFirstResponder];
@@ -214,6 +249,14 @@
     }
     return YES;
 }
+
+-(void)foucusTextView:(UITextView *)textView
+{
+    int y = textView.origin.y;
+    [_tableView setContentOffset:CGPointMake(0, y-90) animated:YES];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

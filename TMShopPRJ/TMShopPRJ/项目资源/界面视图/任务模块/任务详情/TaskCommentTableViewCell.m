@@ -37,10 +37,17 @@
 
 -(void)updateCellWithDictionary:(NSDictionary *)dic
 {
-    self.nameLabel.text  = @"礼品能陪你";
+//    self.nameLabel.text  = @"礼品能陪你";
+//    self.headImageView.image = [UIImage imageNamed:@"tx.png"];;
+//    self.emotionView.emotionString = @"[/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[晕]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]";
+//    self.emotionView.emotionString = [NSString stringWithFormat:@"%@：%@", self.nameLabel.text,self.emotionView.emotionString];
+    
+    self.nameLabel.text  = checkNullValue([dic objectForKey:@"id"]);
     self.headImageView.image = [UIImage imageNamed:@"tx.png"];;
-    self.emotionView.emotionString = @"[/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[晕]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]";
+    self.emotionView.emotionString  = checkNullValue([dic objectForKey:@"comment"]);
     self.emotionView.emotionString = [NSString stringWithFormat:@"%@：%@", self.nameLabel.text,self.emotionView.emotionString];
+
+    
     self.emotionView.colorLength = [self.nameLabel.text length]+1;
     self.headImageView.frame = CGRectMake(5, 5, 30, 30);
 //    self.nameLabel.frame = CGRectMake(45, 5, 30, 30);

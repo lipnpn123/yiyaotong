@@ -90,7 +90,7 @@
         [_messageNumView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _messageNumView.titleLabel.font = NewFontWithDefaultSize(12);
     }
-    [_messageNumView addTarget:self action:@selector(numButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [_messageNumView addTarget:self action:@selector(rightButtonAction) forControlEvents:UIControlEventTouchUpInside];
     int w = [ToolsObject getLabelSize:_messageNumView.titleLabel].width;
     _messageNumView.frame = CGRectMake(304-w, 7, w+6, 30);
     [self.wfTitleImageView addSubview:_messageNumView];
@@ -119,6 +119,11 @@
     NewMessageViewController *vc = [[NewMessageViewController alloc] init];
     [self.navigationController pushViewController: vc animated:YES];
 
+}
+
+-(void)rightButtonAction
+{
+    [self.mm_drawerController openDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 }
 
 -(void)creatInputView

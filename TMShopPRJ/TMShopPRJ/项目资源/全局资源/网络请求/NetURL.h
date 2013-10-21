@@ -79,6 +79,10 @@
 //2.5 修改任务
 #define XtaskChangeTaskPath     @"/xtask/task/"
 
+//2.6 完成任务
+#define XtaskResolveTaskPath     @"/xtask/task/resolve/"
+
+
 #define XtaskClaimTaskPath      @"/xtask/task/claim/"
  
 //2.18 任务检索列表

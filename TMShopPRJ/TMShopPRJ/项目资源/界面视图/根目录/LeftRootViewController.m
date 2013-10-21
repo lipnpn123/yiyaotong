@@ -9,6 +9,8 @@
 #import "LeftRootViewController.h"
 #import "MyConnectPersonViewController.h"
 #import "TaskRootPageViewController.h"
+#import "ProjectEditeViewController.h"
+
 @interface LeftRootViewController ()
 {
     UITableView *_mainTableView;
@@ -169,13 +171,17 @@
     }
     else if (indexPath.section == 1)
     {
- 
+        TaskRootPageViewController *vc = [[TaskRootPageViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        [self.mm_drawerController setCenterViewController:nav withCloseAnimation:YES completion:nil];
         
     }
     else if (indexPath.section == 2)
     {
  
-        
+        ProjectEditeViewController *vc = [[ProjectEditeViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        [self.mm_drawerController setCenterViewController:nav withCloseAnimation:YES completion:nil];
     }
     else if (indexPath.section == 3)
     {

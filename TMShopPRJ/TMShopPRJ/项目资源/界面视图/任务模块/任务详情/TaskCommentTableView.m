@@ -22,7 +22,7 @@
     // Return the number of rows in the section.
     // 默认返回dataArray的数据元素个数
     int num = [self.dataArray count];
-    return 10;
+//    return 10;
     return num;
 }
 

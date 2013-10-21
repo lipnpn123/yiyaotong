@@ -16,7 +16,7 @@
 #import "UserEntity.h"    
 #import "TaskRootPageViewController.h"
 #import "LeftRootViewController.h"
-
+#import "NewMessageViewController.h"
 
 @implementation AppDelegate
 
@@ -63,7 +63,7 @@
     LeftRootViewController *vc2 = [[LeftRootViewController alloc] init];
     UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController:vc2];
     
-    HomePageViewController *vc3 = [[HomePageViewController alloc] init];
+    NewMessageViewController *vc3 = [[NewMessageViewController alloc] init];
     UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:vc3];
     
     MMDrawerController * drawerController = [[MMDrawerController alloc]

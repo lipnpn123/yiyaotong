@@ -355,7 +355,7 @@
 {
     NSDictionary *returnDic = (NSDictionary *)aRequest.returnObject;
     NSLog(@"returnDic -- %@",returnDic);
-//    if (aRequest.isRequestSuccess)
+    if (aRequest.isRequestSuccess)
     {
         NSString*email = checkNullValue([returnDic objectForKey:@"email"]);
         NSString*mobile = checkNullValue([returnDic objectForKey:@"mobile"]);

@@ -79,7 +79,7 @@
 
 - (void)prepare
 {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
     
     [UIImage imageNamed:@"1.gif"];
     [UIImage imageNamed:@"2.gif"];

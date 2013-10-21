@@ -10,18 +10,22 @@
 #import "MyConnectPersonViewController.h"
 #import "TaskCommentTableView.h"
 #import "FaceBoard.h"
+#import "SelectGroupViewController.h"
+
 @interface TaskDetailViewController ()
 {
     FaceBoard *_faceBoard;
 }
 @property (strong, nonatomic)   UITextView *textView;
 @property(nonatomic,strong) TaskCommentTableView *tableView;
+@property(nonatomic,strong) UIView *selftoolbarView;
 @end
 
 @implementation TaskDetailViewController
 
 #define taskDetailRequestTag            111
 #define taskCommentRequestTag           112
+#define comepleteRequestTag             113
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -205,10 +209,46 @@
     offy += 30;
     headView.frame = CGRectMake(0, 0, 320, offy );
 
-    self.tableView = [[TaskCommentTableView alloc] initWithFrame:NomalView_Frame style:UITableViewStylePlain];
+    self.tableView = [[TaskCommentTableView alloc] initWithFrame:CGRectMake(10, 0, 300, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44) style:UITableViewStylePlain];
     [self.tableView reloadTableData];
+    self.tableView.backgroundColor = RGBCOLOR(244, 249, 255, 1);
     [self.wfBgImageView addSubview:self.tableView];
     self.tableView.tableHeaderView = headView;
+    
+    if (!self.selftoolbarView)
+    {
+        self.selftoolbarView = [[UIView alloc] init];
+    }
+    self.selftoolbarView.frame = CGRectMake(0,self.wfBgImageView.height-44, 320, 44);
+    self.selftoolbarView.backgroundColor =[UIColor whiteColor];
+    [self.wfBgImageView addSubview:self.selftoolbarView];
+    
+    UIButton *button = [[UIButton alloc] init];;
+    button.frame = CGRectMake(15, 7, 40, 35);
+    [button addTarget:self action:@selector(editeButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"priority-bj.png"] forState:UIControlStateNormal];
+//    button.backgroundColor = [UIColor redColor];
+    [self.selftoolbarView addSubview:button];
+     
+    UIButton *button2 = [[UIButton alloc] init];;
+    [button2 addTarget:self action:@selector(fileButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [button2 setImage:[UIImage imageNamed:@"priority-fj.png"] forState:UIControlStateNormal];
+    button2.frame = CGRectMake(100, 7, 40, 35);
+    [self.selftoolbarView addSubview:button2];
+    
+    UIButton *button3 = [[UIButton alloc] init];;
+    button3.frame = CGRectMake(180, 7, 40, 35);
+    [button3 setImage:[UIImage imageNamed:@"priority-fjwc.png"] forState:UIControlStateNormal];
+    [button3 addTarget:self action:@selector(comeplateButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.selftoolbarView addSubview:button3];
+    
+    
+    UIButton *button4 = [[UIButton alloc] init];;
+    button4.frame = CGRectMake(260, 7, 40, 35);
+    [button4 setImage:[UIImage imageNamed:@"priority-gd.png"] forState:UIControlStateNormal];
+    [button4 addTarget:self action:@selector(groupButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.selftoolbarView addSubview:button4];
+
 }
 - (void)faceBoardClick:(id)sender {
     [self.textView resignFirstResponder];
@@ -219,6 +259,35 @@
 //    self.textView.inputView = _faceBoard;
 //    [self.textView becomeFirstResponder];
 }
+
+-(void)editeButtonAction
+{
+
+}
+
+-(void)fileButtonAction
+{
+    
+}
+
+
+-(void)comeplateButtonAction
+{
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskResolveTaskPath,self.requestDetailId]];
+    
+    entity.requestMethod = @"POST";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:comepleteRequestTag];
+}
+
+-(void)groupButtonAction
+{
+    SelectGroupViewController *vc = [[SelectGroupViewController alloc] init];
+    vc.taskId = self.requestDetailId;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
 -(void)testAction
 {
     MyConnectPersonViewController *vc = [[MyConnectPersonViewController alloc] init];
@@ -321,7 +390,9 @@
         NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
         if (dic && [dic isKindOfClass:[NSDictionary class]])
         {
-            
+            NSArray *array = [dic objectForKey:@"comments"];
+            [self.tableView.dataArray setArray:array];
+            [self.tableView reloadData];
         }
     }
     if (aRequest.tag == taskCommentRequestTag)
@@ -329,10 +400,24 @@
         NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
         if (dic && [dic isKindOfClass:[NSDictionary class]])
         {
-            
+            if (aRequest.isRequestSuccess)
+            {
+                [SVProgressHUD showSuccessWithStatus:@"发表成功"];
+            }
+
         }
     }
-    
+    if (aRequest.tag == comepleteRequestTag)
+    {
+        NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
+        if (dic && [dic isKindOfClass:[NSDictionary class]])
+        {
+            if (aRequest.isRequestSuccess)
+            {
+                [SVProgressHUD showSuccessWithStatus:@"完成成功"];
+            }
+        }
+    }
   
  }
 

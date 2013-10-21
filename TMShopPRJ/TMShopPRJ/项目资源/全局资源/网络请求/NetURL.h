@@ -61,6 +61,11 @@
 //2.1 新建任务
 #define XtaskNewtaskPath        @"/xtask/newtask"
 
+//2.2 查看任务
+#define XtaskTaskDetailPath  @"/xtask/task/"
+
+//2.4 添加评论
+#define XtaskAddCommentPath     @"/xtask/task/commentnew"
 
 //2.18 任务检索列表
 #define XtasksearchTaskPath     @"/xtask/search"
@@ -71,6 +76,8 @@
 //2.22 任务拒绝
 #define XtaskRejectTaskPath     @"/xtask/task/reject"
 
+//2.5 修改任务
+#define XtaskChangeTaskPath     @"/xtask/task/"
 
 #define XtaskClaimTaskPath      @"/xtask/task/claim/"
  
@@ -79,3 +86,7 @@
 
 //用户任务
 #define XTaskLists     @"/xtask/task/lists"
+
+
+//5.2 用户动态
+#define XTaskActivityDongPath @"/xtask/activity/"

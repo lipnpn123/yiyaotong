@@ -20,6 +20,9 @@
 
 @implementation TaskDetailViewController
 
+#define taskDetailRequestTag            111
+#define taskCommentRequestTag           112
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,7 +36,7 @@
 {
     [super viewDidLoad];
     self.wftitleLabel.text = @"任务详情";
-    
+    [self requestDetailData];
 //    UIButton *_titlebutton = [[UIButton alloc] init];
 //    _titlebutton.frame = CGRectMake(110, 17, 120, 130);
 //    [_titlebutton addTarget:self action:@selector(testAction) forControlEvents:UIControlEventTouchUpInside];
@@ -45,6 +48,8 @@
     [self createTableHeadView];
     
     _faceBoard = [[FaceBoard alloc]init];
+    _faceBoard.origin = CGPointMake(0,  self.wfBgImageView.height );
+    [self.wfBgImageView addSubview:_faceBoard];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 
 }
@@ -95,20 +100,20 @@
     [headView addSubview:timeButton];
     {
         UILabel *titleLabel = NewLabelWithBoldSize(16);
-        titleLabel.frame= CGRectMake(40, offy, 50, 30);
+        titleLabel.frame= CGRectMake(40, offy, 100, 30);
         titleLabel.text = @"2013.01.01";
         [headView addSubview:titleLabel];
     }
     
     
     UIImageView *tixingButton = [[UIImageView alloc] init];
-    tixingButton.frame = CGRectMake(240, offy, 20, 20);
+    tixingButton.frame = CGRectMake(180, offy, 20, 20);
     tixingButton.image = [UIImage imageNamed:@"priority-icon_2.png"];
 //    tixingButton.backgroundColor = [UIColor redColor];
     [headView addSubview:tixingButton];
     {
         UILabel *titleLabel = NewLabelWithBoldSize(16);
-        titleLabel.frame= CGRectMake(270, offy, 50, 30);
+        titleLabel.frame= CGRectMake(210, offy, 50, 30);
         titleLabel.text = @"提醒";
         [headView addSubview:titleLabel];
     }
@@ -130,13 +135,13 @@
     }
     
     UIImageView *groupButton = [[UIImageView alloc] init];
-    groupButton.frame = CGRectMake(240, offy, 20, 20);
+    groupButton.frame = CGRectMake(180, offy, 20, 20);
     groupButton.image = [UIImage imageNamed:@"priority-icon_4.png"];
 //    groupButton.backgroundColor = [UIColor redColor];
     [headView addSubview:groupButton];
     {
         UILabel *titleLabel = NewLabelWithBoldSize(16);
-        titleLabel.frame= CGRectMake(270, offy, 50, 30);
+        titleLabel.frame= CGRectMake(210, offy, 50, 30);
         titleLabel.text = @"分组";
         [headView addSubview:titleLabel];
     }
@@ -149,10 +154,18 @@
     [headView addSubview:actionLabel];
     
     offy += 30;
+    
+    UIImageView *textViewBgView = [[UIImageView alloc] init];
+    textViewBgView.frame= CGRectMake(10, offy-5, 300, 30);
+    textViewBgView.image = [[UIImage imageNamed:@"priority-icon_plk.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:5];
+//    textViewBgView.backgroundColor = [UIColor redColor];
+    [headView addSubview:textViewBgView];
+    
     self.textView = [[UITextView alloc] init];
     self.textView.delegate = self;
+    self.textView.backgroundColor = [UIColor clearColor];
     self.textView.text = @"";
-    self.textView.frame= CGRectMake(10, offy, 300, 20);
+    self.textView.frame= CGRectMake(15, offy, 290, 20);
     [headView addSubview:self.textView];
 
     offy += 30;
@@ -182,12 +195,12 @@
     [headView addSubview:imageButton];
 
     UIButton *commentButton = [[UIButton alloc] init];
-//    [commentButton addTarget:self action:@selector(faceButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    commentButton.frame = CGRectMake(230, offy, 60, 30);
-    [commentButton setTitle:@"发表评论" forState:UIControlStateNormal];
-    commentButton.backgroundColor = [UIColor yellowColor];
+    [commentButton addTarget:self action:@selector(commentButtonButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    commentButton.frame = CGRectMake(230, offy+6, 50, 17);
+//    [commentButton setTitle:@"发表评论" forState:UIControlStateNormal];
+//    commentButton.backgroundColor = [UIColor yellowColor];
     [commentButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-//    [commentButton setImage:[UIImage imageNamed:@"priority-face_image.png"] forState:UIControlStateNormal];
+    [commentButton setImage:[UIImage imageNamed:@"priority-icon_hp.png"] forState:UIControlStateNormal];
     [headView addSubview:commentButton];
     offy += 30;
     headView.frame = CGRectMake(0, 0, 320, offy );
@@ -215,20 +228,59 @@
 
 -(void)faceButtonAction
 {
-    if (self.textView.inputView == nil)
+         
+    if ([self.textView isFirstResponder])
     {
-        _faceBoard.inputTextView = self.textView;
-        [self.textView resignFirstResponder];
-        self.textView.inputView = _faceBoard;
-        [self.textView becomeFirstResponder];
+        
+        [UIView animateWithDuration:0.35 animations:
+         ^{
+             [self.textView resignFirstResponder];
+             _faceBoard.origin = CGPointMake(0, self.wfBgImageView.height-_faceBoard.height);
+             _faceBoard.inputTextView = self.textView;
+         }completion:^(BOOL finished)
+         {
+ 
+         }];
     }
     else
     {
-        _faceBoard.inputTextView = self.textView;
-        [self.textView resignFirstResponder];
-        self.textView.inputView = nil;
-        [self.textView becomeFirstResponder];
+        [UIView animateWithDuration:0.35 animations:
+         ^{
+             [self.textView becomeFirstResponder];
+             _faceBoard.origin = CGPointMake(0, self.wfBgImageView.height );
+         }completion:^(BOOL finished)
+         {
+             
+         }];
+
     }
+}
+-(void)requestDetailData
+{
+    
+    if (!self.wsUserMethod)
+    {
+        self.wsUserMethod = [[WSUserMethod alloc] init];
+    }
+    self.wsUserMethod.delegate = self;
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskTaskDetailPath,self.requestDetailId]];
+    
+    entity.requestMethod = @"POST";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:taskDetailRequestTag];
+}
+-(void)commentButtonButtonAction
+{
+    self.wsUserMethod.delegate = self;
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:XtaskAddCommentPath];
+    
+    entity.requestMethod = @"POST";
+    [entity appendRequestParameter:self.requestDetailId withKey:@"taskid"];
+    [entity appendRequestParameter:@"userId" withKey:@"comment"];
+    [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userId"];
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:taskCommentRequestTag];
+    
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -262,10 +314,36 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)requestFinished:(ASIFormDataRequest *)aRequest
+{
+    if (aRequest.tag == taskDetailRequestTag)
+    {
+        NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
+        if (dic && [dic isKindOfClass:[NSDictionary class]])
+        {
+            
+        }
+    }
+    if (aRequest.tag == taskCommentRequestTag)
+    {
+        NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
+        if (dic && [dic isKindOfClass:[NSDictionary class]])
+        {
+            
+        }
+    }
+    
+  
+ }
 
+- (void)requestFailed:(ASIFormDataRequest *)aRequest
+{
+     
+}
 -(void)dealloc
 {
     self.tableView = nil;
+    self.requestDetailId = nil;
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardDidHideNotification object:nil];
 
 }

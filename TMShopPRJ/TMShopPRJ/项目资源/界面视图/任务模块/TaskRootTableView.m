@@ -118,6 +118,7 @@
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
     TaskDetailViewController *vc = [[TaskDetailViewController alloc] init];
+    vc.requestDetailId = checkNullValue([[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"id"]);
     [self.navigationController  pushViewController:vc animated:YES];
 
 }

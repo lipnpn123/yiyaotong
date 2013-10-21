@@ -5,7 +5,7 @@
 //  Created by ly on 8/21/13.
 //  Copyright (c) 2013 ly. All rights reserved.
 //
-
+#import "FaceBoard.h"
 #import "CBEmotionView.h"
 #import <CoreText/CoreText.h>
 #import "CBRegularExpressionManager.h"
@@ -13,8 +13,8 @@
 #import "NSArray+CBExtension.h"
 #import "NSString+Extension.h"
 
-#define EmotionItemPattern          @"</(\\w+)>"
-//#define EmotionItemPattern          @"[/(\\w+)]"
+//#define EmotionItemPattern          @"</(\\w+)>"
+    #define EmotionItemPattern          @"\\[(\\w+)\\]"
 
 #define PlaceHolder                 @" "
 #define EmotionFileType             @"gif"
@@ -200,7 +200,16 @@
 - (UIImage *)getEmotionForKey:(NSString *)key
 {
     // 使用系统缓存
-    return [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif", key]];
+//    return [UIImage imageNamed:[NSString stringWithFormat:@"%@.gif", key]];
+    NSDictionary *faceDic  = [FaceBoard shareFaceDictionary];
+    NSString *string = nil;
+    NSArray *array = [faceDic allKeysForObject:[NSString stringWithFormat:@"[%@]",key]];
+    if ([array count] >0)
+    {
+        string = [array objectAtIndex:0];
+    }
+    return [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", string]];
+
 }
 
 CTRunDelegateRef newEmotionRunDelegate()

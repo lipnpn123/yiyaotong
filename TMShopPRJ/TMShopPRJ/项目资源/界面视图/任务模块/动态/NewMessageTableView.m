@@ -23,7 +23,7 @@
     // Return the number of rows in the section.
     // 默认返回dataArray的数据元素个数
     int num = [self.dataArray count];
-    return 10;
+//    return 10;
     return num;
 }
 
@@ -58,6 +58,39 @@
     }
     return cell;
 	
+}
+-(void)requestForData
+{
+    
+    if (!self.wsUserMethod)
+    {
+        self.wsUserMethod = [[WSUserMethod alloc] init];
+    }
+    self.wsUserMethod.delegate = self;
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XTaskActivityDongPath,[UserEntity shareGlobalUserEntity].personUid]];
+    
+    entity.requestMethod = @"POST";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
+}
+- (void)requestFinished:(ASIFormDataRequest *)aRequest
+{
+    NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
+    if (dic && [dic isKindOfClass:[NSDictionary class]])
+    {
+        NSArray *array = [dic objectForKey:@"data"];
+        if (array && [array isKindOfClass:[NSArray class]])
+        {
+            [self getDataAndRefreshTable:array];
+        }
+    }
+    [self endRequestMoreUI];
+}
+
+- (void)requestFailed:(ASIFormDataRequest *)aRequest
+{
+    [self endRequestMoreUI];
+    
 }
 
 

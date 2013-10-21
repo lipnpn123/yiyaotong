@@ -17,5 +17,6 @@
 }
 @property (nonatomic, retain) UITextField *inputTextField;
 @property (nonatomic, retain) UITextView *inputTextView;
++(NSDictionary *)shareFaceDictionary;
 
 @end

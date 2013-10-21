@@ -9,4 +9,6 @@
 #import "BaseViewController.h"
 
 @interface TaskDetailViewController : BaseViewController <UITextViewDelegate>
+
+@property(nonatomic,strong)NSString *requestDetailId;
 @end

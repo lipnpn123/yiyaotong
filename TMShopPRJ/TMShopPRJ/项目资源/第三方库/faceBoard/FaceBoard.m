@@ -6,6 +6,7 @@
 //  Email - 360511404@qq.com
 //  http://github.com/bluemood
 
+static NSMutableDictionary *faceDictionary;
 #import "FaceBoard.h"
 
 @implementation FaceBoard
@@ -22,6 +23,22 @@
     [super dealloc];
 }
 
++(NSDictionary *)shareFaceDictionary
+{
+    if (!faceDictionary)
+    {
+        faceDictionary = [[NSMutableDictionary alloc] init];
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
+    if ([[languages objectAtIndex:0] hasPrefix:@"zh"]) {
+         [faceDictionary setDictionary:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"faceMap_ch" ofType:@"plist"]] ];
+    } else {
+        [faceDictionary setDictionary:[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"faceMap_en" ofType:@"plist"]]retain]];
+    }
+    return faceDictionary;
+}
+
 - (id)init
 {
     self = [super initWithFrame:CGRectMake(0, 0, 320, 216)];
@@ -30,9 +47,9 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
         if ([[languages objectAtIndex:0] hasPrefix:@"zh"]) {
-            _faceMap = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"faceMap_ch" ofType:@"plist"]]retain];
+            _faceMap = [[FaceBoard shareFaceDictionary] retain];
         } else {
-            _faceMap = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"faceMap_en" ofType:@"plist"]]retain];
+            _faceMap = [[FaceBoard shareFaceDictionary] retain];
         }
        
         //表情盘
@@ -109,6 +126,9 @@
         [faceString appendString:[_faceMap objectForKey:[NSString stringWithFormat:@"%03d",i]]];
         self.inputTextView.text = faceString;
         [faceString release];
+        
+        NSArray *array = [_faceMap allKeysForObject:[_faceMap objectForKey:[NSString stringWithFormat:@"%03d",i]]];
+        NSLog(@"%@",array);
     }
 }
 

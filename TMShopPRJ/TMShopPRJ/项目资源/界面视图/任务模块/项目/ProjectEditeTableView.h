@@ -8,6 +8,7 @@
 
 #import "TableViewModel.h"
 #import "MyConnectTableView.h"
+#import "ProjectEditeTableViewCell.h"
 
 @interface ProjectEditeTableView : TableViewModel
 

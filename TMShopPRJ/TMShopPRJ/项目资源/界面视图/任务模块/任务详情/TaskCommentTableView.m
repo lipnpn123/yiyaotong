@@ -10,6 +10,8 @@
 #import "TaskCommentTableViewCell.h"
 @implementation TaskCommentTableView
 
+@synthesize requestDetailId;
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -43,6 +45,8 @@
     if (cell == nil)
 	{
 		cell = [[TaskCommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.backgroundView = [[UIImageView alloc] init];
+        cell.backgroundView.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     NSDictionary *dic = nil;;
@@ -60,6 +64,37 @@
 }
 
 
+-(void)requestForData
+{
+    
+    if (!self.wsUserMethod)
+    {
+        self.wsUserMethod = [[WSUserMethod alloc] init];
+    }
+    self.wsUserMethod.delegate = self;
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:Xtaskcommentsget];
+    [entity appendRequestParameter:self.requestDetailId withKey:@"taskid"];
+    [entity appendRequestParameter:@"20" withKey:@"size"];
+    [entity appendRequestParameter:@"0" withKey:@"start"];
+    [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userid"];
+
+    entity.requestMethod = @"POST";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
+}
+- (void)requestFinished:(ASIFormDataRequest *)aRequest
+{
+    NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
+    if (dic && [dic isKindOfClass:[NSDictionary class]])
+    {
+        NSArray *array = [dic objectForKey:@"data"];
+        if (array && [array isKindOfClass:[NSArray class]])
+        {
+            [self getDataAndRefreshTable:array];
+        }
+    }
+    [self endRequestMoreUI];
+}
 
 
 @end

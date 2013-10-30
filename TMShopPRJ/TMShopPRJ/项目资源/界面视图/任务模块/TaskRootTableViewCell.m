@@ -46,7 +46,7 @@
         self.lineImageView = [[UIImageView alloc] init];
         self.lineImageView.frame = CGRectMake(10, 5, 20, 20);
 //        self.lineImageView.image = [[UIImage imageNamed:@"login_press_tx.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
-        self.lineImageView.backgroundColor = [UIColor grayColor];
+        self.lineImageView.backgroundColor = RGBCOLOR(224, 231, 238, 1);
         [self addSubview:self.lineImageView];
         
         
@@ -69,7 +69,10 @@
     [self addSubview:self.permissionLabel];
     [self addSubview:self.attentionLabel];
     [self addSubview:self.lineImageView];
-    self.projectnameLabel.text = checkNullValue([dic objectForKey:@"taskname"]);
+    NSString *taskname = checkNullValue([dic objectForKey:@"taskname"]);
+    self.projectnameLabel.text = [taskname stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ;
+    
+ 
     NSString *description = checkNullValue([dic objectForKey:@"description"]);
     if ( [description isEqualToString:@""])
     {
@@ -123,6 +126,7 @@
 
     self.totalHeight =  h;
 }
+ 
 
 -(void)dealloc
 {

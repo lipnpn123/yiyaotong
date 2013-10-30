@@ -148,6 +148,10 @@
         UserRequestEntity *entity = [[UserRequestEntity alloc] init];
         [entity setRequestAction:XTaskLists];
         [entity appendRequestParameter:self.requestId withKey:@"list"];
+        if (self.projectId)
+        {
+            [entity appendRequestParameter:self.projectId withKey:@"project"];
+        }
         
         entity.requestMethod = @"POST";
         [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
@@ -160,6 +164,10 @@
         [entity appendRequestParameter:self.keyWords withKey:@"keywords"];
         [entity appendRequestParameter:@"[system]all" withKey:@"list"];
         //    [entity appendRequestParameter:@"1" withKey:@"list"];
+        if (self.projectId)
+        {
+            [entity appendRequestParameter:self.projectId withKey:@"project"];
+        }
         
         entity.requestMethod = @"POST";
         [self.wsUserMethod nomoalRequestWithEntity:entity withTag:2];

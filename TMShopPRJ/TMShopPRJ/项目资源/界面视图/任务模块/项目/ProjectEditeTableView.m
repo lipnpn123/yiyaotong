@@ -7,7 +7,7 @@
 //
 
 #import "ProjectEditeTableView.h"
-#import "MyConnectTableViewCell.h"
+#import "ProjectEditeTableViewCell.h"
 
 @implementation ProjectEditeTableView
 
@@ -41,10 +41,10 @@
 {
 	NSString *CellIdentifier = [NSString stringWithFormat:@"cel"];
  	//flag为0代表cell需要刷新，1代表不需要刷新，可复用
-    MyConnectTableViewCell *cell = (MyConnectTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ProjectEditeTableViewCell *cell = (ProjectEditeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-		cell = [[MyConnectTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[ProjectEditeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     NSDictionary *dic = nil;;
@@ -77,15 +77,15 @@
 }
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
-    NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
-    if (dic && [dic isKindOfClass:[NSDictionary class]])
-    {
-        NSArray *array = [dic objectForKey:@"data"];
-        if (array && [array isKindOfClass:[NSArray class]])
-        {
-            [self getDataAndRefreshTable:array];
-        }
-    }
+//    NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
+//    if (dic && [dic isKindOfClass:[NSDictionary class]])
+//    {
+//        NSArray *array = [dic objectForKey:@"data"];
+//        if (array && [array isKindOfClass:[NSArray class]])
+//        {
+//            [self getDataAndRefreshTable:array];
+//        }
+//    }
     [self endRequestMoreUI];
 }
 

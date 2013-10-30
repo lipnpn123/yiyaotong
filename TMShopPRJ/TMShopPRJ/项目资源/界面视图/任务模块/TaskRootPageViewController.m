@@ -71,6 +71,11 @@
     {
         _popListView = [[RootTaskPopView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     }
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(100, 12, 20, 20);
+    imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
+    [self.wfTitleImageView addSubview:imageView];
+    
     if (!_titlebutton)
     {
         _titlebutton = [[UIButton alloc] init];
@@ -105,19 +110,25 @@
     _mainTableView.fatherViewController = self;
     _mainTableView.navigationController = self.navigationController;
     _mainTableView.requestType = TaskRootTableViewNomalRequest;
+    _mainTableView.projectId = self.projectId;
     [_mainTableView reloadTableData];
     [_mainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.wfBgImageView addSubview:_mainTableView];
     
 
     [self requestGoupData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 	// Do any additional setup after loading the view.
 }
-
+- (void)keyboardDidHide:(NSNotification*)notification
+{
+    [self beginNomalTaskTextSate];
+}
 -(void)leftButtonAction
 {
-    NewMessageViewController *vc = [[NewMessageViewController alloc] init];
-    [self.navigationController pushViewController: vc animated:YES];
+    
+    [self.mm_drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 
 }
 
@@ -296,6 +307,11 @@
     [entity setRequestAction:XtaskNewtaskPath];
     [entity appendRequestParameter:taskString withKey:@"taskname"];
     [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"createuser"];
+    if (self.projectId)
+    {
+        [entity appendRequestParameter:self.projectId withKey:@"project"];
+    }
+     
 //    [entity appendRequestParameter:@"1" withKey:@"list"];
 
     entity.requestMethod = @"POST";
@@ -538,5 +554,7 @@
 //    setFree(groupArray);
 //    setFree(actionPopView);
 //    [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 }
 @end

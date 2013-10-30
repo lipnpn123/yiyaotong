@@ -74,10 +74,10 @@
 //2.20任务分配
 #define XtaskdelegateTaskPath   @"/xtask/task/delegate/"
 //2.22 任务拒绝
-#define XtaskRejectTaskPath     @"/xtask/task/reject"
+#define XtaskRejectTaskPath     @"/xtask/task/reject/"
 
 //2.5 修改任务
-#define XtaskChangeTaskPath     @"/xtask/task/"
+#define XtaskChangeTaskPath     @"/xtask/task/update/"
 
 //2.6 完成任务
 #define XtaskResolveTaskPath     @"/xtask/task/resolve/"
@@ -88,8 +88,31 @@
 //2.18 任务检索列表
 #define  XtaskSearchPath             @"/xtask/search"
 
+//取任务的所有评论
+#define Xtaskcommentsget @"/xtask/task/commentsget/"
+
+
 //用户任务
 #define XTaskLists     @"/xtask/task/lists"
+
+
+//2.18 任务检索列表
+#define  XtaskSearchPath             @"/xtask/search"
+
+//3.1 创建项目
+#define  XtaskProjectNewPath             @"/xtask/project/new"
+
+//3.2 增加项目组成员
+#define  XtaskProjectadduserPath            @"/xtask/project/adduser"
+
+//3.3 删除项目组成员
+#define XtaskProjectDeleteuserPath        @"/xtask/project/moveuser"
+
+//3.7 修改项目
+#define  XtaskProjectmodifyPath             @"/xtask/project/modify"
+
+//3.6 删除项目
+#define  XtaskProjectDeletePath             @"/xtask/project/"
 
 
 //5.2 用户动态

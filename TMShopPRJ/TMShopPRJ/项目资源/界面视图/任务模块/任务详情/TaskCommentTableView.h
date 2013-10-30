@@ -9,5 +9,6 @@
 #import "TableViewModel.h"
 
 @interface TaskCommentTableView : TableViewModel
+@property(nonatomic,strong)NSString *requestDetailId;
 
 @end

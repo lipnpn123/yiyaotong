@@ -20,6 +20,7 @@ typedef NSUInteger TaskRootTableViewRequestType;
 @property (nonatomic,strong)NSString *requestId;
 @property (nonatomic,assign)int curSelectRow;;
 @property (nonatomic,strong)NSString *keyWords;
+@property (nonatomic,strong)NSString *projectId;
 
 
 @property (nonatomic,assign)TaskRootTableViewRequestType requestType ;;

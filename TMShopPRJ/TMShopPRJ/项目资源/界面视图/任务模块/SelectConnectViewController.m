@@ -82,6 +82,8 @@
 {
     int row = indexPath.row;
     NSDictionary *dic  = [self.dataArray objectAtIndex:row];
+    
+
     NSString *message = [NSString stringWithFormat:@"你确定要分配给%@ ?",checkNullValue([dic objectForKey:@"linkuser"])];
  
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"

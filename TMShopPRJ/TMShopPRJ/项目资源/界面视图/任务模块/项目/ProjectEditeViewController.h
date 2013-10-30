@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface ProjectEditeViewController : BaseViewController
+@interface ProjectEditeViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UITextViewDelegate>
 
 @end

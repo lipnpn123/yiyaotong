@@ -10,11 +10,13 @@
 #import "MyConnectPersonViewController.h"
 #import "TaskRootPageViewController.h"
 #import "ProjectEditeViewController.h"
+#import "ProjectListViewController.h"
+#import "PersonViewController.h"
 
 @interface LeftRootViewController ()
 {
     UITableView *_mainTableView;
-    UIImageView *_logoImageView;
+    UIButton *_logoImageView;
 }
 @end
 
@@ -38,11 +40,12 @@
     self.wfBgImageView.backgroundColor = RGBCOLOR(219, 219, 219, 1);
     if (!_logoImageView)
     {
-        _logoImageView  =[[UIImageView alloc] init];
+        _logoImageView  =[[UIButton alloc] init];
     }
+    [_logoImageView addTarget:self action:@selector(logoImageViewAction) forControlEvents:UIControlEventTouchUpInside];
     _logoImageView.frame = CGRectMake(70, 40, 90, 90);
     //    _logoImageView.backgroundColor = [UIColor redColor];
-    _logoImageView.image = [UIImage imageNamed:@"login_press_tx.png"];
+    [_logoImageView setBackgroundImage:[UIImage imageNamed:@"login_press_tx.png"] forState:UIControlStateNormal];
     [self.wfBgImageView addSubview:_logoImageView];
     
     UIView *headView = [[UIView alloc] init];
@@ -79,6 +82,17 @@
 
     
 }
+
+-(void)logoImageViewAction
+{
+    PersonViewController *vc = [[PersonViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.mm_drawerController setCenterViewController:nav withCloseAnimation:YES completion:nil];
+}
+
+#pragma --
+#pragma mark --
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 5;
@@ -171,15 +185,17 @@
     }
     else if (indexPath.section == 1)
     {
+        NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
         TaskRootPageViewController *vc = [[TaskRootPageViewController alloc] init];
+        vc.projectId = checkNullValue([dic objectForKey:@"id"]);
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         [self.mm_drawerController setCenterViewController:nav withCloseAnimation:YES completion:nil];
         
     }
     else if (indexPath.section == 2)
     {
- 
-        ProjectEditeViewController *vc = [[ProjectEditeViewController alloc] init];
+        ProjectListViewController *vc = [[ProjectListViewController alloc] init];
+        vc.dataArray = [NSMutableArray arrayWithArray:self.dataArray];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         [self.mm_drawerController setCenterViewController:nav withCloseAnimation:YES completion:nil];
     }

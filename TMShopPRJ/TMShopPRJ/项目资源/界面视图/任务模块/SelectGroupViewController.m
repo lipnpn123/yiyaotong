@@ -30,6 +30,21 @@
 {
     [super viewDidLoad];
     
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(100, 12, 20, 20);
+    imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
+    [self.wfTitleImageView addSubview:imageView];
+    
+    UIButton *_titlebutton = nil;
+    if (!_titlebutton)
+    {
+        _titlebutton = [[UIButton alloc] init];
+        _titlebutton.frame = CGRectMake(110, 7, 120, 30);
+        [_titlebutton setTitle:@"Xtask工作" forState:UIControlStateNormal];
+        [_titlebutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
+    [self.wfTitleImageView addSubview:_titlebutton];
+    
     if (self.mainTableView == nil)
     {
         self.mainTableView = [[UITableView alloc] init];

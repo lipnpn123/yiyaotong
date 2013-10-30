@@ -71,7 +71,7 @@
                                              leftDrawerViewController:nav2
                                              rightDrawerViewController:nav3];
     [drawerController setMaximumLeftDrawerWidth:250.0];
-    [drawerController setMaximumRightDrawerWidth:250.0];
+    [drawerController setMaximumRightDrawerWidth:320];
     [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [[MMExampleDrawerVisualStateManager sharedManager] setLeftDrawerAnimationType:MMDrawerAnimationTypeSlide];
@@ -82,6 +82,7 @@
          block = [[MMExampleDrawerVisualStateManager sharedManager]
                   drawerVisualStateBlockForDrawerSide:drawerSide];
          if(block){
+             [self.window.rootViewController.view endEditing:YES];
              block(drawerController, drawerSide, percentVisible);
          }
      }];

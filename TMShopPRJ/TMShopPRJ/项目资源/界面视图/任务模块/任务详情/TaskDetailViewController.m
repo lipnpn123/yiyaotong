@@ -11,14 +11,16 @@
 #import "TaskCommentTableView.h"
 #import "FaceBoard.h"
 #import "SelectGroupViewController.h"
-
+#import "TaskEditeViewController.h"
+#import "SelectConnectViewController.h"
 @interface TaskDetailViewController ()
 {
     FaceBoard *_faceBoard;
+    UIButton *_titlebutton;
 }
 @property (strong, nonatomic)   UITextView *textView;
 @property(nonatomic,strong) TaskCommentTableView *tableView;
-@property(nonatomic,strong) UIView *selftoolbarView;
+@property(nonatomic,strong) UIImageView *selftoolbarView;
 @end
 
 @implementation TaskDetailViewController
@@ -26,6 +28,9 @@
 #define taskDetailRequestTag            111
 #define taskCommentRequestTag           112
 #define comepleteRequestTag             113
+
+#define acceptTaskTag             114
+#define rejectTaskTag             115
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,18 +44,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.wftitleLabel.text = @"任务详情";
-    [self requestDetailData];
-//    UIButton *_titlebutton = [[UIButton alloc] init];
-//    _titlebutton.frame = CGRectMake(110, 17, 120, 130);
-//    [_titlebutton addTarget:self action:@selector(testAction) forControlEvents:UIControlEventTouchUpInside];
-//    [_titlebutton setTitle:@"Xtask工作" forState:UIControlStateNormal];
-//    [_titlebutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.wfBgImageView addSubview:_titlebutton];
 
-	// Do any additional setup after loading the view.
-    [self createTableHeadView];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(100, 12, 20, 20);
+    imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
+    [self.wfTitleImageView addSubview:imageView];
     
+    if (!_titlebutton)
+    {
+        _titlebutton = [[UIButton alloc] init];
+        _titlebutton.frame = CGRectMake(110, 7, 120, 30);
+        [_titlebutton setTitle:@"Xtask工作" forState:UIControlStateNormal];
+        [_titlebutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
+    [self.wfTitleImageView addSubview:_titlebutton];
+    
+
+    UIImageView *mainBgView = [[UIImageView alloc] init];
+    mainBgView.userInteractionEnabled = YES;
+    //    mainBgView.backgroundColor= [UIColor blackColor];
+    mainBgView.image = [[UIImage imageNamed:@"dabeijingImage.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+    mainBgView.frame = CGRectMake(5, 5, 310, self.wfBgImageView.height-   44-10);
+    [self.wfBgImageView addSubview:mainBgView];
+    
+	// Do any additional setup after loading the view.
+//    [self createTableHeadView];
+    self.tableView = [[TaskCommentTableView alloc] initWithFrame:CGRectMake(5, 0, 310, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44-10) style:UITableViewStylePlain];
+    self.tableView.requestDetailId = self.requestDetailId;
+    //    [self.tableView reloadTableData];
+    self.tableView.backgroundColor =[UIColor clearColor];
+//    self.tableView.backgroundColor = RGBCOLOR(244, 249, 255, 1);
+    [self.wfBgImageView addSubview:self.tableView];
+    
+    
+    
+    [self requestDetailData];
+
     _faceBoard = [[FaceBoard alloc]init];
     _faceBoard.origin = CGPointMake(0,  self.wfBgImageView.height );
     [self.wfBgImageView addSubview:_faceBoard];
@@ -67,7 +96,9 @@
     
     UILabel *titleLabel = NewLabelWithBoldSize(16);
     titleLabel.frame= CGRectMake(10, offy, 260, 30);
-    titleLabel.text = @"可是华的";
+    NSString *taskname = checkNullValue([self.dataDictionary objectForKey:@"taskname"]);
+    taskname = [taskname stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ;
+    titleLabel.text = taskname;;
     [headView addSubview:titleLabel];
     
     int w = [ToolsObject getLabelSize:titleLabel].width;
@@ -77,10 +108,14 @@
     [headView addSubview:stateImageView];
  
     offy += 30;
-    
+    NSString *description = checkNullValue([self.dataDictionary objectForKey:@"description"]);
+    if ( [description isEqualToString:@""])
+    {
+        description= @"没有任务描述";
+    }
     UILabel *cotentLabel = NewLabelWithDefaultSize(14);
     cotentLabel.frame= CGRectMake(10, offy, 300, 20);
-    cotentLabel.text = @"可是华的可是华的可是华的可是华的可是华的可是华的可是华的可是华的可是华的可是华的可是华的可是华的可是华的";
+    cotentLabel.text = description;
     [headView addSubview:cotentLabel];
     
     h = [ToolsObject getLabelSize: cotentLabel].height;
@@ -105,7 +140,8 @@
     {
         UILabel *titleLabel = NewLabelWithBoldSize(16);
         titleLabel.frame= CGRectMake(40, offy, 100, 30);
-        titleLabel.text = @"2013.01.01";
+        titleLabel.text = checkNullValue( [self.dataDictionary objectForKey:@"createTime"]);
+       ;
         [headView addSubview:titleLabel];
     }
     
@@ -118,7 +154,12 @@
     {
         UILabel *titleLabel = NewLabelWithBoldSize(16);
         titleLabel.frame= CGRectMake(210, offy, 50, 30);
-        titleLabel.text = @"提醒";
+        NSString *repeattype = checkNullValue([self.dataDictionary objectForKey:@"repeattype"]);
+        if ([repeattype isEqualToString:@""])
+        {
+            repeattype = @"每天";
+        }
+        titleLabel.text = repeattype;
         [headView addSubview:titleLabel];
     }
 
@@ -134,7 +175,12 @@
     {
         UILabel *titleLabel = NewLabelWithBoldSize(16);
         titleLabel.frame= CGRectMake(40, offy, 50, 30);
-        titleLabel.text = @"每天";
+        NSString *remindtime = checkNullValue([self.dataDictionary objectForKey:@"remindtime"]);
+        if ([remindtime isEqualToString:@""])
+        {
+            remindtime = @"每天";
+        }
+        titleLabel.text = remindtime;
         [headView addSubview:titleLabel];
     }
     
@@ -149,6 +195,13 @@
         titleLabel.text = @"分组";
         [headView addSubview:titleLabel];
     }
+    {
+//        分组点击
+        UIButton *touchButton = [[UIButton alloc] init];
+        [touchButton addTarget:self action:@selector(groupButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        touchButton.frame= CGRectMake(180, offy, 80, 30);
+        [headView addSubview:touchButton];
+    }
     
     
     offy += 40;
@@ -156,6 +209,20 @@
     actionLabel.frame= CGRectMake(10, offy, 300, 20);
     actionLabel.text = @"关注的人:";
     [headView addSubview:actionLabel];
+    
+    int off = 100;
+    NSArray *array = [self.dataDictionary objectForKey:@"follows"];
+    for (int i=0; i<[array count]; i++)
+    {
+//        NSDictionary *tempDic = [array objectAtIndex:i];
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.frame = CGRectMake(off, offy, 15, 15);
+        imageView.image = [UIImage imageNamed:@"tx.png"];
+        [headView addSubview:imageView];
+        off += 20;
+    }
+    
+    
     
     offy += 30;
     
@@ -209,16 +276,15 @@
     offy += 30;
     headView.frame = CGRectMake(0, 0, 320, offy );
 
-    self.tableView = [[TaskCommentTableView alloc] initWithFrame:CGRectMake(10, 0, 300, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44) style:UITableViewStylePlain];
-    [self.tableView reloadTableData];
-    self.tableView.backgroundColor = RGBCOLOR(244, 249, 255, 1);
-    [self.wfBgImageView addSubview:self.tableView];
+    
     self.tableView.tableHeaderView = headView;
     
     if (!self.selftoolbarView)
     {
-        self.selftoolbarView = [[UIView alloc] init];
+        self.selftoolbarView = [[UIImageView alloc] init];
     }
+    self.selftoolbarView.userInteractionEnabled = YES;
+    self.selftoolbarView.image = [[UIImage imageNamed:@"renwuToolBarImage.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     self.selftoolbarView.frame = CGRectMake(0,self.wfBgImageView.height-44, 320, 44);
     self.selftoolbarView.backgroundColor =[UIColor whiteColor];
     [self.wfBgImageView addSubview:self.selftoolbarView];
@@ -246,7 +312,7 @@
     UIButton *button4 = [[UIButton alloc] init];;
     button4.frame = CGRectMake(260, 7, 40, 35);
     [button4 setImage:[UIImage imageNamed:@"priority-gd.png"] forState:UIControlStateNormal];
-    [button4 addTarget:self action:@selector(groupButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [button4 addTarget:self action:@selector(moreButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.selftoolbarView addSubview:button4];
 
 }
@@ -262,7 +328,10 @@
 
 -(void)editeButtonAction
 {
-
+    TaskEditeViewController *vc = [[TaskEditeViewController alloc] init];
+    vc.taskId = self.requestDetailId;
+    vc.dataDictionary = [NSMutableDictionary dictionaryWithDictionary:self.dataDictionary];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)fileButtonAction
@@ -286,6 +355,52 @@
     vc.taskId = self.requestDetailId;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+-(void)moreButtonAction
+{
+    UIActionSheet *sheetView = [[UIActionSheet alloc] initWithTitle:@"提示" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"分配",@"拒绝",@"接受", nil];
+    [sheetView showInView:self.wfBgImageView];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        SelectConnectViewController *vc = [[SelectConnectViewController alloc] init];
+        vc.taskId = self.requestDetailId;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (buttonIndex == 1)
+    {
+        [self rejectTaskAction:self.requestDetailId];
+    }
+    else if (buttonIndex == 2)
+    {
+        [self accepetTaskAction:self.requestDetailId];
+    }
+}
+
+
+
+//接受
+-(void)accepetTaskAction:(NSString *)taskId
+{
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@%@/%@",XtaskClaimTaskPath,taskId,[UserEntity shareGlobalUserEntity].personUid]];
+    entity.requestMethod = @"POST";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:acceptTaskTag];
+    
+}
+
+//拒绝
+-(void)rejectTaskAction:(NSString *)taskId
+{
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@/%@",XtaskRejectTaskPath,taskId]];
+    entity.requestMethod = @"POST";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:rejectTaskTag];
+}
+
 
 
 -(void)testAction
@@ -340,6 +455,11 @@
 }
 -(void)commentButtonButtonAction
 {
+    if ([self.textView.text isEqualToString:@""])
+    {
+        [SVProgressHUD showErrorWithStatus:@"输入评论内容为空"];
+        return;
+    }
     self.wsUserMethod.delegate = self;
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:XtaskAddCommentPath];
@@ -348,6 +468,7 @@
     [entity appendRequestParameter:self.requestDetailId withKey:@"taskid"];
     [entity appendRequestParameter:@"userId" withKey:@"comment"];
     [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userId"];
+
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:taskCommentRequestTag];
     
 }
@@ -390,9 +511,13 @@
         NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
         if (dic && [dic isKindOfClass:[NSDictionary class]])
         {
-            NSArray *array = [dic objectForKey:@"comments"];
+            NSDictionary *dataDic = [dic objectForKey:@"comments"];
+            NSArray *array = [dataDic objectForKey:@"data"];
             [self.tableView.dataArray setArray:array];
+            self.dataDictionary = [NSMutableDictionary dictionaryWithDictionary:dic];
+            [self createTableHeadView];
             [self.tableView reloadData];
+
         }
     }
     if (aRequest.tag == taskCommentRequestTag)

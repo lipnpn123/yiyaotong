@@ -44,6 +44,11 @@
     [self.wfTitleImageView addSubview:_titlebutton];
     
     
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(120, 12, 20, 20);
+    imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
+    [self.wfTitleImageView addSubview:imageView];
+    
     
     if (self.mainTableView == nil)
     {

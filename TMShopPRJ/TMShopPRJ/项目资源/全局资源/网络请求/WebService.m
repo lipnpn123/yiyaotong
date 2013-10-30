@@ -113,7 +113,7 @@
 	//如果已经初始化完成，就开始请求
 	if (connection)
 	{
-        NSLog(@"开始请求:\n1. 内容为:%@\n2.文件参数为:%@\n3.连接地址为:%@\n4请求方式为%@",paramDic,fileDic,finalURLString,connection.requestMethod);
+        NSLog(@"开始请求:\n1. 内容为:%@\n2.文件参数为:%@\n3.连接地址为:%@\n4请求方式为%@",string,fileDic,finalURLString,connection.requestMethod);
 
 		NSString *timeStap = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
 		connection.keyValue = timeStap;

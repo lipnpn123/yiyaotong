@@ -42,7 +42,10 @@
 //    self.emotionView.emotionString = @"[/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[晕]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]</1>[1]中文[/1]</1>[/1][/1]</1>[/1]中文[/1]</1>[/1][/1]";
 //    self.emotionView.emotionString = [NSString stringWithFormat:@"%@：%@", self.nameLabel.text,self.emotionView.emotionString];
     
-    self.nameLabel.text  = checkNullValue([dic objectForKey:@"id"]);
+    NSString *taskname = checkNullValue([dic objectForKey:@"username"]);
+//     taskname = [taskname stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    self.nameLabel.text = taskname ;
+    
     self.headImageView.image = [UIImage imageNamed:@"tx.png"];;
     self.emotionView.emotionString  = checkNullValue([dic objectForKey:@"comment"]);
     self.emotionView.emotionString = [NSString stringWithFormat:@"%@：%@", self.nameLabel.text,self.emotionView.emotionString];

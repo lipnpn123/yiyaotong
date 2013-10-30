@@ -10,5 +10,5 @@
 #import "PopListView.h"
 
 @interface TaskRootPageViewController : BaseViewController<UITextFieldDelegate,PopListViewDelegate>
-
+@property (nonatomic,strong)NSString *projectId;
 @end

@@ -8,6 +8,8 @@
 
 #import "TaskEditeViewController.h"
 #import "SelectGroupViewController.h"
+#import "WFDatePickerSelectView.h"
+
 @interface TaskEditeViewController ()
 
 @property (nonatomic,strong)UIScrollView *mainScrollView;
@@ -89,12 +91,20 @@
 -(void)shureAction
 {
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskChangeTaskPath,self.taskId]];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@",XtaskChangeTaskPath]];
     
-    [entity appendRequestParameter:@"tasknametaskname" withKey:@"taskname"];
-    [entity appendRequestParameter:@"" withKey:@"list"];
-    [entity appendRequestParameter:self.taskId withKey:@"id"];
-    [entity appendRequestParameter:@"1" withKey:@"priority"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setValue:@"tasknametaskname" forKey:@"taskname"];
+    [dic setValue:@"" forKey:@"list"];
+    [dic setValue:self.taskId forKey:@"id"];
+    [dic setValue:@"1" forKey:@"priority"];
+    [dic setValue:@"4028809f41fdc2cc0141fdc897c40004" forKey:@"project"];
+    NSArray *array = [NSArray arrayWithObject:dic];
+    [entity appendRequestParameter:array withKey:@"updateBeanids"];
+//    [entity appendRequestParameter:@"tasknametaskname" withKey:@"taskname"];
+//    [entity appendRequestParameter:@"" withKey:@"list"];
+//    [entity appendRequestParameter:self.taskId withKey:@"id"];
+//    [entity appendRequestParameter:@"1" withKey:@"priority"];
 //    [entity appendRequestParameter:@"2013-09-30" withKey:@"starttime"];
 //    [entity appendRequestParameter:@"2013-10-30" withKey:@"duedate"];
 //    [entity appendRequestParameter:@"rt_day" withKey:@"repeattype"];
@@ -103,7 +113,7 @@
 //    [entity appendRequestParameter:@"2013-10-30" withKey:@"remindtime"];
 //    [entity appendRequestParameter:@"permission_private" withKey:@"permission"];
 //    [entity appendRequestParameter:@"开始" withKey:@"status"];
-    [entity appendRequestParameter:@"4028809f41fdc2cc0141fdc897c40004" withKey:@"project"];
+//    [entity appendRequestParameter:@"4028809f41fdc2cc0141fdc897c40004" withKey:@"project"];
  
     
       entity.requestMethod = @"post";
@@ -292,6 +302,12 @@
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
         titleLabel.text = @"截止日期";
         [bgImageView addSubview:titleLabel];
+        
+        UIButton *jiezhiButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        jiezhiButton.backgroundColor = [UIColor redColor];
+        [jiezhiButton addTarget:self action:@selector(jiezhiButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        jiezhiButton.frame = CGRectMake(0, offy, 320, 30);
+        [bgImageView addSubview:jiezhiButton];
     }
     offy += 40;
     {
@@ -319,6 +335,12 @@
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
         titleLabel.text = @"重复";
         [bgImageView addSubview:titleLabel];
+        
+        UIButton *repeateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        repeateButton.backgroundColor = [UIColor redColor];
+        [repeateButton addTarget:self action:@selector(repeateButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        repeateButton.frame = CGRectMake(0, offy, 320, 30);
+        [bgImageView addSubview:repeateButton];
     }
     offy += 40;
     
@@ -354,6 +376,12 @@
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
         titleLabel.text = description;
         [bgImageView addSubview:titleLabel];
+        
+        UIButton *repeateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        repeateButton.backgroundColor = [UIColor redColor];
+        [repeateButton addTarget:self action:@selector(tixingButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        repeateButton.frame = CGRectMake(0, offy, 320, 30);
+        [bgImageView addSubview:repeateButton];
     }
     offy += 40;
     
@@ -380,6 +408,37 @@
     }
 }
 
+-(void)repeateButtonAction
+{
+    UIActionSheet *sheetView = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"每日重复",@"每周重复",@"每月重复", nil];
+    [sheetView showInView:self.wfBgImageView];
+}
+
+-(void)tixingButtonAction
+{
+    WFDatePickerSelectView *pickerView = [[WFDatePickerSelectView alloc] initWithFrame:CGRectMake(0, 0, 320, self.wfBgImageView.height)];
+    [self.wfBgImageView addSubview:pickerView];
+    [pickerView popView];
+    
+}
+
+-(void)jiezhiButtonAction
+{
+    WFDatePickerSelectView *pickerView = [[WFDatePickerSelectView alloc] initWithFrame:CGRectMake(0, 0, 320, self.wfBgImageView.height)];
+    [self.wfBgImageView addSubview:pickerView];
+    [pickerView popView];
+    
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+         
+    }
+}
+
 -(void)groupButtonAction
 {
     SelectGroupViewController *vc = [[SelectGroupViewController alloc] init];
@@ -387,6 +446,21 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text 
+{
+    if ([text isEqualToString:@"\n"])
+    {
+        [textView resignFirstResponder];
+    }
+    return YES;
+}
 
 
 

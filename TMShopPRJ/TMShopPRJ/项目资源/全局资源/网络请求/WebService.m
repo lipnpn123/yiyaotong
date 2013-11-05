@@ -86,21 +86,20 @@
     NSData *data= [string dataUsingEncoding: NSUTF8StringEncoding];
     connection.postBody = [[NSMutableData alloc] initWithData:data];
  	[connection addRequestHeader:@"Content-Type" value:@"application/json"];
-//	if (fileDic)
-//	{
-//		NSArray *fileArray = [fileDic allKeys];
-//		for (int i=0;i<[fileArray count];i++)
-//		{
-//			NSString* key = [fileArray objectAtIndex:i];
-//			NSString* filePath = [fileDic objectForKey:key];
-//			if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-//			{
-//				[connection setFile:filePath forKey:key];
-//			}
-//			[postData appendFormat:@"&%@=%@",key,filePath];
-//		}
-//	}
-//
+	if (fileDic && [fileDic count] > 0)
+	{
+		NSArray *fileArray = [fileDic allKeys];
+		for (int i=0;i<[fileArray count];i++)
+		{
+			NSString* key = [fileArray objectAtIndex:i];
+			NSString* filePath = [fileDic objectForKey:key];
+			if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+			{
+				[connection setFile:filePath forKey:key];
+			}
+		}
+	}
+
  	
     if (self.requestMethod == nil)
     {

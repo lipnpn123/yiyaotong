@@ -34,6 +34,7 @@
         {
             _popBlackBgView = [[UIScrollView alloc] init];
         }
+        self.isNeedRequest = YES;
         _popBlackBgView.frame = CGRectMake(0, 0, BlackViewWidth, BlackViewHeght);
 
 	}

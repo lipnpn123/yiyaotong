@@ -12,8 +12,11 @@
 #import <TencentOpenAPI/WeiyunAPI.h>
 #import "IIViewDeckController.h"
 #import "MMDrawerController.h"
-
+#import "ASIFormDataRequest.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate>
+{
+    ASIFormDataRequest *re ;
+}
 @property (nonatomic , strong) IIViewDeckController  *viewDeckController;
 @property (nonatomic , strong) MMDrawerController  *mmdrawerController;
 

@@ -23,37 +23,40 @@
         self.bgImageView = [[UIImageView alloc] init];
         self.bgImageView.frame = CGRectMake(10, 30, 300, 20);
         self.bgImageView.image = [[UIImage imageNamed:@"rootTaskCellImage.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
-        [self addSubview:self.bgImageView];
+        [self.contentView addSubview:self.bgImageView];
         
         self.headImageView = [[UIImageView alloc] init];
         self.headImageView.frame = CGRectMake(10, 5, 20, 20);
         self.headImageView.image = [[UIImage imageNamed:@"login_press_tx.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
-        [self addSubview:self.headImageView];
+        [self.contentView addSubview:self.headImageView];
         
         self.projectnameLabel = NewLabelWithBoldSize(15);
         self.projectnameLabel.frame = CGRectMake(10, 5, 300, 20);
-        [self addSubview:self.projectnameLabel];
+        [self.contentView addSubview:self.projectnameLabel];
         
         
         self.permissionLabel = NewLabelWithDefaultSize(14);
         self.permissionLabel.frame = CGRectMake(10, 30, 300, 20);
-        [self addSubview:self.permissionLabel];
+        [self.contentView addSubview:self.permissionLabel];
         
         self.attentionLabel = NewLabelWithDefaultSize(12);
         self.attentionLabel.frame = CGRectMake(10, 30, 300, 20);
-        [self addSubview:self.attentionLabel];
+        [self.contentView addSubview:self.attentionLabel];
         
         self.lineImageView = [[UIImageView alloc] init];
         self.lineImageView.frame = CGRectMake(10, 5, 20, 20);
 //        self.lineImageView.image = [[UIImage imageNamed:@"login_press_tx.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
         self.lineImageView.backgroundColor = RGBCOLOR(224, 231, 238, 1);
-        [self addSubview:self.lineImageView];
+        [self.contentView addSubview:self.lineImageView];
         
         
         
         
         self.backgroundView = [[UIImageView alloc] init];
         self.backgroundView.backgroundColor = [UIColor clearColor];;
+        
+        self.contentView.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
 
     }
     return self;
@@ -61,14 +64,14 @@
 
 -(void)updateCellWithDictionary:(NSDictionary *)dic
 {
-    [self removeAllSubviews];
+    [self.contentView removeAllSubviews];
 
-    [self addSubview:self.bgImageView];
-    [self addSubview:self.headImageView];
-    [self addSubview:self.projectnameLabel];
-    [self addSubview:self.permissionLabel];
-    [self addSubview:self.attentionLabel];
-    [self addSubview:self.lineImageView];
+    [self.contentView addSubview:self.bgImageView];
+    [self.contentView addSubview:self.headImageView];
+    [self.contentView addSubview:self.projectnameLabel];
+    [self.contentView addSubview:self.permissionLabel];
+    [self.contentView addSubview:self.attentionLabel];
+    [self.contentView addSubview:self.lineImageView];
     NSString *taskname = checkNullValue([dic objectForKey:@"taskname"]);
     self.projectnameLabel.text = [taskname stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ;
     

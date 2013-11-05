@@ -24,7 +24,8 @@
         self.titleLabel.font = NewFontWithDefaultSize(14);
         [self setTitleColor:[UIColor yellowColor] forState:UIControlStateHighlighted];
         [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self setBackgroundImage:[[UIImage imageNamed:@"popButtonImage2.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] forState:UIControlStateHighlighted];
+        [self setBackgroundImage:[[UIImage imageNamed:@"popButtonImage.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] forState:UIControlStateHighlighted];
+        [self setBackgroundImage:[[UIImage imageNamed:@"popButtonImage.png"] stretchableImageWithLeftCapWidth:16 topCapHeight:16] forState:UIControlStateSelected];
         //        self.backgroundColor = [UIColor redColor];
 	}
 	return self;

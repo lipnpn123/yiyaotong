@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface TaskEditeViewController : BaseViewController<UITextViewDelegate,UITextFieldDelegate>
+@interface TaskEditeViewController : BaseViewController<UITextViewDelegate,UITextFieldDelegate,UIActionSheetDelegate>
 @property(nonatomic,strong)NSString *taskId;
 
 @end

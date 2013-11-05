@@ -32,7 +32,6 @@
 #define XTaskGetUserInfo @"/xtask/user/get/"
 
 
- 
 //1.4用户项目
 #define XTaskProjectQuery       @"/xtask/project/query"
 
@@ -55,7 +54,7 @@
 #define XtaskGroupDeleteList    @"/xtask/user/lists/"
 
 //1.11修改用户信息
-#define XtaskGroupDeleteList    @"/xtask/user/lists/"
+#define XtaskGroupbatchupdateList    @"/xtask/user/batchupdate/"
 
 
 //2.1 新建任务
@@ -114,6 +113,18 @@
 //3.6 删除项目
 #define  XtaskProjectDeletePath             @"/xtask/project/"
 
+//3.10 添加项目分组
+#define  XtaskProjectAddGruopPath           @"/xtask/lists/add"
+
+//3.11 删除项目分组
+#define  XtaskProjectDeleteGruopPath           @"/xtask/lists/add"
+
 
 //5.2 用户动态
-#define XTaskActivityDongPath @"/xtask/activity/"
+#define XTaskActivityDongPath @"/xtask/activity/query"
+
+
+//6.1 上传头像接口
+#define XTasktUploadImagePath @"/xtask/user/upload"
+
+

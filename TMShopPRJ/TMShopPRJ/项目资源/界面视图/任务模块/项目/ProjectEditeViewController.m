@@ -11,13 +11,17 @@
 #import "GroupTableViewCell.h"
 #import "SelectConnectViewController.h"
 #import "PrjectConnectSelectViewController.h"
+#import "PrjectGroupEditeViewController.h"
+ 
 @interface ProjectEditeViewController ()
 {
-    int  rowNum;
+//    int  rowNum;
+//    int  rowNum2;
     UITextField *titleTextFild;
     UITextView *detailTextFild;
 }
 @property(nonatomic,strong) UITableView *mainTableView;
+
 
 @end
 
@@ -32,7 +36,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -51,7 +54,7 @@
     mainBgView.image = [[UIImage imageNamed:@"dabeijingImage.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     mainBgView.frame = CGRectMake(5, 5, 310, self.wfBgImageView.height-5);
     [self.wfBgImageView addSubview:mainBgView];
-    
+
     if (!self.wsUserMethod)
     {
         self.wsUserMethod = [[WSUserMethod alloc] init];
@@ -69,6 +72,7 @@
     
     titleTextFild = [[UITextField alloc] init];
     titleTextFild.delegate = self;
+    titleTextFild.textAlignment = NSTextAlignmentCenter;
     titleTextFild.font = NewFontWithDefaultSize(16);
     titleTextFild.frame= CGRectMake(10, offy, 260, 30);
     [headView addSubview:titleTextFild];
@@ -94,13 +98,15 @@
     headView.frame = CGRectMake(0, 0, 320, offy );
     
     self.dataArray = [NSMutableArray arrayWithArray:[[self.dataDictionary objectForKey:@"follows"] objectForKey:@"data"]];
-    rowNum = [self.dataArray count] + 1;
+ 
     if (self.mainTableView == nil)
     {
-        self.mainTableView = [[ProjectEditeTableView alloc] initWithFrame:CGRectMake(5, 0, 310, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44) style:UITableViewStylePlain];
+        self.mainTableView = [[ProjectEditeTableView alloc] initWithFrame:CGRectMake(5, 0, 310, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44) style:UITableViewStyleGrouped];
     }
     [self.mainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.mainTableView.backgroundColor = RGBCOLOR(244, 249, 255, 1);
+//    self.mainTableView.backgroundColor = RGBCOLOR(244, 249, 255, 1);
+    self.mainTableView.backgroundColor = [UIColor clearColor];
+    self.mainTableView.backgroundView = nil;
     self.mainTableView.dataSource = self;
     self.mainTableView.delegate = self;
     [self.wfBgImageView addSubview:self.mainTableView];
@@ -126,16 +132,44 @@
     // Return the number of rows in the section.
     // 默认返回dataArray的数据元素个数
     //    int num = [self.dataArray count];
-    //    return 10;
-    return rowNum;
+    return 1;
+    if (section == 0)
+    {
+        return 1;
+    }
+    return 5;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return  40;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *label = NewLabelWithBoldSize(15);
+    label.frame = CGRectMake(0, 0, 300, 40);
+    label.textAlignment = NSTextAlignmentCenter;
+    if (section == 0)
+    {
+        label.text = @"项目联系人";
+    }
+    else
+    {
+        label.text = @"项目分组";
+    }
+    return label;
 }
 
 //高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    //    TableCellModel* cell = (TableCellModel*)[self tableView:(UITableView*)self cellForRowAtIndexPath:indexPath];
-    //    return cell.totalHeight;
-    return 60;
+    TableCellModel* cell = (TableCellModel*)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell.totalHeight;
+    //    return 60;
 }
 
 
@@ -143,38 +177,87 @@
 {
 	NSString *CellIdentifier = [NSString stringWithFormat:@"in%d",indexPath.row];
  	//flag为0代表cell需要刷新，1代表不需要刷新，可复用
-    GroupTableViewCell *cell = (GroupTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TableCellModel *cell = (TableCellModel *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-		cell = [[GroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[TableCellModel alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.visibleLabel.userInteractionEnabled = NO;
-        cell.rightDeleteButton.tag= indexPath.row;
-        [cell.rightDeleteButton addTarget:self action:@selector(rightDeleteButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        cell.visibleLabel.delegate = self;
-        NSLog(@"%d %d",[self.dataArray count],indexPath.row);
-        if ([self.dataArray  count] <= indexPath.row)
+        if (indexPath.section == 0)
         {
-            cell.deleteState = NO;
-            cell.visibleLabel.text = @"未命名";
+            int x = 0;
+            int  y = 0;
+            for (int i =0; i<4; i++)
+            {
+                int xd = i%2;
+                int yd = i/2;
+                x = xd * 140 + 20;
+                y = yd * 50 + 5;
+                
+                UIImageView *imageView = [[UIImageView alloc] init];
+                imageView.frame =  CGRectMake(x, y, 40, 40);
+                imageView.image = [UIImage imageNamed:@"login_press_tx.png"];
+                [cell addSubview:imageView];
+                
+                
+                UILabel *nameLabel = NewLabelWithDefaultSize(13);
+                nameLabel.frame  = CGRectMake(x + 50, y, 100, 20);
+                nameLabel.text = @"里鹏鹏";
+                [cell addSubview:nameLabel];
+                
+                UILabel *systemLabel = NewLabelWithDefaultSize(11);
+                systemLabel.frame  = CGRectMake(x + 50, y+20, 100, 20);
+                systemLabel.text = @"非系统用户";
+                systemLabel.textColor = [UIColor grayColor];
+                [cell addSubview:systemLabel];
+            }
+            
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.frame =  CGRectMake(270, 40, 20, 20);
+            imageView.image = [UIImage imageNamed:@"login_press_tx.png"];
+            [cell addSubview:imageView];
+            
+            cell.totalHeight = 100;
+
         }
         else
         {
-            cell.deleteState = YES;
-            NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-            cell.visibleLabel.text = checkNullValue([dic objectForKey:@"loginname"]);
+            int x = 0;
+            int  y = 0;
+            for (int i =0; i<4; i++)
+            {
+                int xd = i%2;
+                int yd = i/2;
+                x = xd * 140 + 20;
+                y = yd * 30 ;
+                UILabel *nameLabel = NewLabelWithDefaultSize(13);
+                nameLabel.frame =  CGRectMake(x, y, 140, 30);
+                nameLabel.text = @"里鹏鹏";
+                [cell addSubview:nameLabel];
+            }
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.frame =  CGRectMake(270, 20, 20, 20);
+            imageView.image = [UIImage imageNamed:@"login_press_tx.png"];
+            [cell addSubview:imageView];
+            cell.totalHeight = 60;
         }
-    }
-    cell.visibleLabel.tag= indexPath.row;
-    if (rowNum == indexPath.row+1)
+     }
+  
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 )
     {
-        cell.deleteState = NO;
+        PrjectConnectSelectViewController *vc = [[PrjectConnectSelectViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     }
     else
     {
-        cell.deleteState = YES;
+        PrjectGroupEditeViewController *vc = [[PrjectGroupEditeViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];     
     }
-    return cell;
 }
 
 -(void)selectConnectCallBack:(NSDictionary *)dic
@@ -186,32 +269,28 @@
 
 -(void)rightDeleteButtonAction:(UIButton *)button
 {
-    NSIndexPath *indexpath = [NSIndexPath indexPathForItem:button.tag inSection:0];
-    GroupTableViewCell *cell = (GroupTableViewCell *) [self.mainTableView cellForRowAtIndexPath:indexpath];
-    if (cell.deleteState)
-    {
-        NSDictionary *dic = [self.dataArray objectAtIndex:indexpath.row];
-        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-        [entity setRequestAction:XtaskProjectmodifyPath];
-        [entity appendRequestParameter:checkNullValue([self.dataDictionary objectForKey:@"id"]) withKey:@"id"];
-        [entity appendRequestParameter:[dic objectForKey:@"id"] withKey:@"delusers"];
-        
-        
-        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:deleteUserAction];
-    }
-    else
-    {
-        PrjectConnectSelectViewController *vc = [[PrjectConnectSelectViewController alloc] init];
-        vc.taskId = [self.dataDictionary objectForKey:@"id"];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+ 
 }
+ 
 -(void)deleteButtonAction
-{ 
-    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskProjectDeletePath,[self.dataDictionary objectForKey:@"id"]]];
-    entity.requestMethod = @"DELETE";
-    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:deletePRjAction];
+{
+    ZXAlertView *alert = [[ZXAlertView alloc] initWithTitle:@"提示"
+                                                    message:@"你确定要删除项目么"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"取消"
+                                          otherButtonTitles:@"确定",nil];
+    
+    [alert showWthOperation:^(NSInteger buttonIndex) {
+        NSLog(@"index:%d",buttonIndex);
+        if (buttonIndex == 1)
+        {
+            UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+            [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskProjectDeletePath,[self.dataDictionary objectForKey:@"id"]]];
+            entity.requestMethod = @"DELETE";
+            [self.wsUserMethod nomoalRequestWithEntity:entity withTag:deletePRjAction];
+        }
+    }];
+
 }
 
 -(void)shureAction
@@ -224,7 +303,7 @@
     [entity appendRequestParameter:detailTextFild.text withKey:@"description"];
     [entity appendRequestParameter:@"" withKey:@"permission"];
     entity.requestMethod = @"PUT";
-    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:deleteUserAction];
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:compelteChageAction];
 }
 
  

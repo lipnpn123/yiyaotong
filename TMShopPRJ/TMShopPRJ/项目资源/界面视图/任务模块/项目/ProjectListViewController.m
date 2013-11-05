@@ -121,6 +121,8 @@
     if (!mainTableView)
     {
         mainTableView = [[ProjectMainTableView alloc] initWithFrame:CGRectMake(0,44, 320, Dev_ScreenHeight-20-44-44) style:UITableViewStylePlain];
+        mainTableView.backgroundView = nil;
+        mainTableView.backgroundColor = [UIColor clearColor];
     }
     mainTableView.navigationController = self.navigationController;
     [mainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

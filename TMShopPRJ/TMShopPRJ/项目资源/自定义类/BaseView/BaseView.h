@@ -13,4 +13,5 @@
 @property(nonatomic,assign)BaseViewController* fatherViewController;
 @property (strong,nonatomic)NSMutableArray *dataArray;
 @property (strong,nonatomic)NSMutableDictionary *dataDictionary;
+@property(assign,nonatomic)id fatherPointer;
 @end

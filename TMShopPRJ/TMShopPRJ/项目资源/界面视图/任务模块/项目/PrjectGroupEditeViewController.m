@@ -1,17 +1,14 @@
 //
-//  MyGroupViewController.m
+//  PrjectGroupEditeViewController.m
 //  TMShopPRJ
 //
-//  Created by 罗 乐华建 on 13-10-9.
+//  Created by lipengpeng on 13-11-5.
 //  Copyright (c) 2013年 李 鹏鹏. All rights reserved.
 //
 
-#import "MyGroupViewController.h"
- 
+#import "PrjectGroupEditeViewController.h"
 #import "GroupTableViewCell.h"
-
-
-@interface MyGroupViewController ()
+@interface PrjectGroupEditeViewController ()
 {
     int rowNum;
 }
@@ -21,8 +18,9 @@
 @property (nonatomic,strong) NSMutableArray *deleteArray;
 
 @end
+ 
 
-@implementation MyGroupViewController
+@implementation PrjectGroupEditeViewController
 
 #define DeleteRequestTag    111
 #define AddRequestTag       222
@@ -70,7 +68,7 @@
         self.wsUserMethod = [[WSUserMethod alloc] init];
     }
     self.wsUserMethod.delegate = self;
-
+    
     if (self.mainTableView == nil)
     {
         self.mainTableView = [[UITableView alloc] init];
@@ -86,12 +84,12 @@
     rowNum = [self.dataArray count]+1;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-
-//    [self requestForData];
+    
+    //    [self requestForData];
 }
 - (void)keyboardDidHide:(NSNotification*)notification
 {
-  
+    
     [UIView animateWithDuration:0.35 animations:^{
         self.mainTableView.frame = NomalView_Frame;
     }];
@@ -102,33 +100,33 @@
     [UIView animateWithDuration:0.35 animations:^{
         self.mainTableView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44-225);
     }];
-
+    
 }
 
 -(void)shureAction
 {
-//    [UIView animateWithDuration:0.4 animations:^{
-//    self.mainTableView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44-225);
-//    }];
-//    NSArray *cell = [self.mainTableView cellForRowAtIndexPath:(NSIndexPath *)];
+    //    [UIView animateWithDuration:0.4 animations:^{
+    //    self.mainTableView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44-225);
+    //    }];
+    //    NSArray *cell = [self.mainTableView cellForRowAtIndexPath:(NSIndexPath *)];
     NSMutableString *deleteString=[[NSMutableString alloc] init];
     NSMutableString *addString=[[NSMutableString alloc] init];
-//    NSMutableString *updateString=[[NSMutableString alloc] init];
-//    [deleteString setString:@""];
-//    [addString setString:@""];
-//    [updateString setString:@""];
+    //    NSMutableString *updateString=[[NSMutableString alloc] init];
+    //    [deleteString setString:@""];
+    //    [addString setString:@""];
+    //    [updateString setString:@""];
     
     NSMutableArray *addArray = [[NSMutableArray alloc] init];
     NSMutableArray *updateArray = [[NSMutableArray alloc] init];
-
-
+    
+    
     for (int i=0; i<rowNum-1; i++)
     {
         NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithCapacity:0];
         if (i<[self.dataArray count] )
         {
             NSDictionary *dic = [self.dataArray objectAtIndex:i];
-
+            
             [tempDic setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]] forKey:@"id"];
             [tempDic setValue:[self.textFildDataDictionary objectForKey:[NSString stringWithFormat:@"%d",i]] forKey:@"name"];
             [updateArray addObject:tempDic];
@@ -138,7 +136,7 @@
             [addArray addObject:[NSString stringWithFormat:@"%@",[self.textFildDataDictionary objectForKey:[NSString stringWithFormat:@"%d",i]]]];
         }
     }
-
+    
     for (int i=0; i<[self.deleteArray count]; i++)
     {
         NSDictionary *dic = [self.deleteArray objectAtIndex:i];
@@ -158,17 +156,17 @@
             [addString appendString:@","];
         }
     }
-  
-
+    
+    
     NSMutableString *requestPath = [[NSMutableString alloc] init];
     [requestPath appendString:@"/xtask/lists/update/"];
-   
+    
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:requestPath];
     if (![deleteString isEqualToString:@""])
     {
         [entity appendRequestParameter:deleteString withKey:@"delBeanids"];
-
+        
     }
     
     if (![addString isEqualToString:@""])
@@ -187,7 +185,7 @@
     }
     entity.requestMethod = @"post";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:updateRequestTag];
-
+    
 }
 
 -(void)rightDeleteButtonAction:(UIButton *)button
@@ -195,39 +193,39 @@
     
     NSIndexPath *indexpath = [NSIndexPath indexPathForItem:button.tag inSection:0];
     GroupTableViewCell *cell = (GroupTableViewCell *) [self.mainTableView cellForRowAtIndexPath:indexpath];
-//    if (cell.deleteState)
-//    {
-//        NSDictionary *d = [self.dataArray objectAtIndex:indexpath.row];
-//        self.wsUserMethod.delegate = self;
-//        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-//        [entity setRequestAction:[NSString stringWithFormat:@"/xtask/lists/%@",[d objectForKey:@"id"]]];
-//        entity.requestMethod = @"delete";
-//        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:DeleteRequestTag];
-//
-//    }
-//    else
-//    {
-//         self.wsUserMethod.delegate = self;
-//        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-//        [entity setRequestAction:XtaskaddGroupList];
-//        [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userid"];
-//        [entity appendRequestParameter:@"test" withKey:@"name"];
-//        entity.requestMethod = @"POST";
-//        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:AddRequestTag];
-//
-//    }
-
-     if (cell.deleteState)
-     {
-         rowNum--;
-         [self.mainTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationBottom];
-         if (indexpath.row <[self.dataArray count])
-         {
-             [self.deleteArray addObject:[self.dataArray objectAtIndex:indexpath.row]];
-             [self.dataArray removeObjectAtIndex:indexpath.row];
-         }
-         [self.mainTableView reloadData];
-     }
+    //    if (cell.deleteState)
+    //    {
+    //        NSDictionary *d = [self.dataArray objectAtIndex:indexpath.row];
+    //        self.wsUserMethod.delegate = self;
+    //        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    //        [entity setRequestAction:[NSString stringWithFormat:@"/xtask/lists/%@",[d objectForKey:@"id"]]];
+    //        entity.requestMethod = @"delete";
+    //        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:DeleteRequestTag];
+    //
+    //    }
+    //    else
+    //    {
+    //         self.wsUserMethod.delegate = self;
+    //        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    //        [entity setRequestAction:XtaskaddGroupList];
+    //        [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userid"];
+    //        [entity appendRequestParameter:@"test" withKey:@"name"];
+    //        entity.requestMethod = @"POST";
+    //        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:AddRequestTag];
+    //
+    //    }
+    
+    if (cell.deleteState)
+    {
+        rowNum--;
+        [self.mainTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationBottom];
+        if (indexpath.row <[self.dataArray count])
+        {
+            [self.deleteArray addObject:[self.dataArray objectAtIndex:indexpath.row]];
+            [self.dataArray removeObjectAtIndex:indexpath.row];
+        }
+        [self.mainTableView reloadData];
+    }
     else
     {
         int row = rowNum;
@@ -245,8 +243,8 @@
 {
     // Return the number of rows in the section.
     // 默认返回dataArray的数据元素个数
-//    int num = [self.dataArray count];
-//    return 10;
+    //    int num = [self.dataArray count];
+    //    return 10;
     return rowNum;
 }
 
@@ -255,7 +253,7 @@
 {
     TableCellModel* cell = (TableCellModel*)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     return cell.totalHeight;
-//    return 60;
+    //    return 60;
 }
 
 
@@ -312,13 +310,13 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:textField.tag inSection:0];
-
+    
     CGRect rect = [self.mainTableView rectForRowAtIndexPath:indexPath];
     rect.origin.y =  rect.origin.y - 100;
     [self.mainTableView setContentOffset:CGPointMake(0, rect.origin.y) animated:YES];
     //    [self  scrollRectToVisible:rect animated:YES];
     
-
+    
     return YES;
 }
 -(void)reloadArrayData:(UITextField *)t
@@ -338,7 +336,7 @@
     self.wsUserMethod.delegate = self;
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskGroupList,[UserEntity shareGlobalUserEntity].personUid]];
-     entity.requestMethod = @"POST";
+    entity.requestMethod = @"POST";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
 }
 
@@ -357,7 +355,7 @@
                 {
                     if (![checkNullValue([dic objectForKey:@"listtype"]) isEqualToString:@"system"])
                     {
-                        [self.dataArray addObject:dic];    
+                        [self.dataArray addObject:dic];
                     }
                 }
                 [self.mainTableView reloadData];
@@ -371,7 +369,7 @@
             [SVProgressHUD showSuccessWithStatus:@"删除成功"];
             [self requestForData];
         }
-
+        
     }
     else  if (aRequest.tag ==AddRequestTag)
     {
@@ -385,19 +383,15 @@
     {
         if (aRequest.isRequestSuccess)
         {
-            if (self.fatherViewController && [self.fatherViewController respondsToSelector:@selector(selectGroupCallBack:)])
-            {
-                [self.fatherViewController performSelector:@selector(selectGroupCallBack:) withObject:nil];
-            }
             [SVProgressHUD showSuccessWithStatus:@"添加成功"];
         }
     }
     
- }
+}
 
 - (void)requestFailed:(ASIFormDataRequest *)aRequest
 {
-     
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -410,7 +404,7 @@
 {
     self.mainTableView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    [super dealloc];
+    //    [super dealloc];
 }
 
 @end

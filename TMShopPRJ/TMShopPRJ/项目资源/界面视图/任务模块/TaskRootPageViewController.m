@@ -32,7 +32,6 @@
     
     UIButton *_messageNumView;
 
-    NSMutableArray *groupArray;
     
     RootPopActionView *actionPopView;;
 
@@ -65,9 +64,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!self.wsUserMethod)
+    {
+        self.wsUserMethod = [[WSUserMethod alloc] init];
+    }
+    self.wsUserMethod.delegate = self;
     self.leftBarBtn.size = CGSizeMake(91/2,63/2);
     [self createLeftBarBtn:@"" action:@selector(leftButtonAction) withImageName:nil];
-    if (!_popListView)
+    if (!_popListView && self.projectId == nil)
     {
         _popListView = [[RootTaskPopView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     }
@@ -106,6 +111,7 @@
     {
         _mainTableView = [[TaskRootTableView alloc] initWithFrame:CGRectMake(0, 44, 320, Dev_ScreenHeight-Dev_StateHeight - 88) style:UITableViewStylePlain   ];
         _mainTableView.backgroundColor = [UIColor clearColor];
+        _mainTableView.backgroundView = nil;
     }
     _mainTableView.fatherViewController = self;
     _mainTableView.navigationController = self.navigationController;
@@ -298,11 +304,7 @@
         [SVProgressHUD showErrorWithStatus:@"请输入任务名称"];
         return;
     }
-    if (!self.wsUserMethod)
-    {
-        self.wsUserMethod = [[WSUserMethod alloc] init];
-    }
-    self.wsUserMethod.delegate = self;
+ 
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:XtaskNewtaskPath];
     [entity appendRequestParameter:taskString withKey:@"taskname"];
@@ -344,15 +346,15 @@
 
 -(void)requestGoupData
 {
-    if (!self.wsUserMethod)
+    if (_popListView.isNeedRequest)
     {
-        self.wsUserMethod = [[WSUserMethod alloc] init];
+        self.wsUserMethod.delegate = self;
+        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+        [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskGroupList,[UserEntity shareGlobalUserEntity].personUid]];
+        entity.requestMethod = @"POST";
+        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:tasktGruopTag];
     }
-    self.wsUserMethod.delegate = self;
-    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskGroupList,[UserEntity shareGlobalUserEntity].personUid]];
-    entity.requestMethod = @"POST";
-    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:tasktGruopTag];
+
 
 }
 
@@ -374,7 +376,9 @@
 
 -(void)selectGroupCallBack:(NSDictionary *)dic
 {
-
+//    [_popListView reloadPopViewUI:YES];
+    _popListView.isNeedRequest = YES;
+    [self requestGoupData];
 }
 
 -(void)selectConnectCallBack:(NSDictionary *)dic
@@ -389,6 +393,7 @@
 -(void)popListViewDidSelectCallBack:(NSDictionary *)dic
 {
     NSLog(@"dic --- s%@",dic);
+    [_popListView hidView];
     _mainTableView.requestId = checkNullValue([dic objectForKey:@"id"]);
     _mainTableView.requestType = TaskRootTableViewNomalRequest;
     [_mainTableView reloadTableData];
@@ -516,8 +521,8 @@
                 }
                 [groupArray setArray:array] ;
                 [_popListView checkDataArray:groupArray];
-
-                [_popListView reloadPopViewUI];
+                _popListView.isNeedRequest = NO;
+                [_popListView reloadPopViewUI:YES];
             }
         }
     }

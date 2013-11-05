@@ -15,6 +15,13 @@
 
 @implementation PersonViewController
 
+#define nametextFildTag                     1111111
+#define phonetextFildTag                    1111112
+#define emailtextFildTag                    1111113
+#define changePassWordFildTag               1111114
+#define newPassWordtextFildTag              1111115
+#define shurePassWordtextFildTag            1111116
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,6 +34,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self createRightBarBtn:nil action:@selector(shureAction) withImageName:@"shureNavBarButtonImage.png"];
+    
+    self.rightBarBtn.size = CGSizeMake(32, 32);
+    self.rightBarBtn.origin = CGPointMake(280, 6);
+    
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.frame = CGRectMake(100, 12, 20, 20);
     imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
@@ -42,7 +55,55 @@
     }
     [self.wfTitleImageView addSubview:_titlebutton];
     [self createMainView];
+    if (!self.wsUserMethod)
+    {
+        self.wsUserMethod = [[WSUserMethod alloc] init];
+    }
+    self.wsUserMethod.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
 	// Do any additional setup after loading the view.
+}
+
+-(void)shureAction
+{
+#define nametextFildTag                     1111111
+#define phonetextFildTag                    1111112
+#define emailtextFildTag                    1111113
+#define changePassWordFildTag               1111114
+#define newPassWordtextFildTag              1111115
+#define shurePassWordtextFildTag            1111116
+
+    UITextField *nametextFild = (UITextField *)[self.mainScrollView viewWithTag:nametextFildTag];
+    UITextField *phonetextFild = (UITextField *)[self.mainScrollView viewWithTag:phonetextFildTag];
+    UITextField *emailtextFild = (UITextField *)[self.mainScrollView viewWithTag:emailtextFildTag];
+    UITextField *changePassWordFild = (UITextField *)[self.mainScrollView viewWithTag:changePassWordFildTag];
+    UITextField *newPassWordtextFild = (UITextField *)[self.mainScrollView viewWithTag:newPassWordtextFildTag];
+    UITextField *shurePassWordtextFild = (UITextField *)[self.mainScrollView viewWithTag:shurePassWordtextFildTag];
+//
+    NSString *nameText = checkNullValue(nametextFild.text);
+    NSString *phonetext = checkNullValue(phonetextFild.text);
+    NSString *emailtext = checkNullValue(emailtextFild.text);
+    NSString *changePassWord = checkNullValue(changePassWordFild.text);
+    NSString *newPassWord = checkNullValue(newPassWordtextFild.text);
+    NSString *shurePassWord = checkNullValue(shurePassWordtextFild.text);
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:XtaskGroupbatchupdateList];
+     
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setValue:[UserEntity shareGlobalUserEntity].personUid forKey:@"id"];
+//    [dic setValue:@"lipnpn" forKey:@"loginname"];
+    [dic setValue:phonetext forKey:@"mobile"];
+    [dic setValue:emailtext forKey:@"email"];
+    [dic setValue:nameText forKey:@"name"];
+    [dic setValue:newPassWord forKey:@"password"];
+    
+    NSArray *array = [NSArray arrayWithObject:dic];
+    [entity appendRequestParameter:array withKey:@"updateBeanids"];
+    
+    
+    entity.requestMethod = @"post";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
 }
 
 -(void)createMainView
@@ -93,6 +154,7 @@
         UIImageView *textViewBgView = [[UIImageView alloc] init];
         textViewBgView.frame= CGRectMake(labelOffw, offy, width, 60);
         textViewBgView.image = [[UIImage imageNamed:@"dabeijingImage.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:5];
+        textViewBgView.userInteractionEnabled= YES;
         //    textViewBgView.backgroundColor = [UIColor redColor];
         [bgImageView addSubview:textViewBgView];
   
@@ -136,6 +198,7 @@
         nametextFild.frame = CGRectMake(100, off+5, 180, 20);
         nametextFild.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         nametextFild.font = NewFontWithDefaultSize(14);
+        nametextFild.tag = nametextFildTag;
         [textViewBgView addSubview:nametextFild];
         
         off += 33;
@@ -162,6 +225,7 @@
         }
         
         UITextField *phonetextFild = [[UITextField alloc] init];
+        phonetextFild.tag = phonetextFildTag;
         phonetextFild.frame = CGRectMake(100, off+5, 180, 20);
         phonetextFild.font = NewFontWithDefaultSize(14);
         phonetextFild.delegate = self;
@@ -192,6 +256,7 @@
         
         UITextField *emailtextFild = [[UITextField alloc] init];
         emailtextFild.frame = CGRectMake(100, off+5, 180, 20);
+        emailtextFild.tag = emailtextFildTag;
         emailtextFild.font = NewFontWithDefaultSize(14);
         emailtextFild.delegate = self;
         [textViewBgView addSubview:emailtextFild];
@@ -209,6 +274,7 @@
         textViewBgView.frame= CGRectMake(labelOffw, offy, width, 60);
         textViewBgView.image = [[UIImage imageNamed:@"dabeijingImage.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:5];
         //    textViewBgView.backgroundColor = [UIColor redColor];
+        textViewBgView.userInteractionEnabled= YES;
         [bgImageView addSubview:textViewBgView];
         
         int off = 10;
@@ -236,6 +302,7 @@
         UITextField *changePassWordFild = [[UITextField alloc] init];
         changePassWordFild.delegate = self;
         changePassWordFild.frame = CGRectMake(100, off+5, 180, 20);
+        changePassWordFild.tag = changePassWordFildTag;
         changePassWordFild.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         changePassWordFild.font = NewFontWithDefaultSize(14);
         [textViewBgView addSubview:changePassWordFild];
@@ -265,6 +332,7 @@
         
         UITextField *newPassWordtextFild = [[UITextField alloc] init];
         newPassWordtextFild.frame = CGRectMake(100, off+5, 180, 20);
+        newPassWordtextFild.tag = newPassWordtextFildTag;
         newPassWordtextFild.font = NewFontWithDefaultSize(14);
         newPassWordtextFild.delegate = self;
         [textViewBgView addSubview:newPassWordtextFild];
@@ -295,6 +363,7 @@
         UITextField *shurePassWordtextFild = [[UITextField alloc] init];
         shurePassWordtextFild.frame = CGRectMake(100, off+5, 180, 20);
         shurePassWordtextFild.font = NewFontWithDefaultSize(14);
+        shurePassWordtextFild.tag = shurePassWordtextFildTag;
         shurePassWordtextFild.delegate = self;
         [textViewBgView addSubview:shurePassWordtextFild];
         off += 60;
@@ -316,7 +385,21 @@
         bgImageView.frame = CGRectMake(0, 0, self.mainScrollView.width, offy);
     }
 }
+- (void)keyboardDidHide:(NSNotification*)notification
+{
+    
+    [UIView animateWithDuration:0.35 animations:^{
+        self.mainScrollView.frame = NomalView_Frame;
+    }];
+}
 
+- (void)keyboardDidShow:(NSNotification*)notification
+{
+    [UIView animateWithDuration:0.35 animations:^{
+        self.mainScrollView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44-225);
+    }];
+    
+}
 -(void)headImageButtonAction
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"获取头像方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相机拍摄",@"照片库获取", nil] ;
@@ -329,28 +412,61 @@
     if (buttonIndex == 0)
     {
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        }
+        else
+        {        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
         picker.delegate = self;
         [self presentModalViewController:picker animated:YES];
     }
     else if (buttonIndex == 1)
     {
+
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         picker.delegate = self;
         [self presentModalViewController:picker animated:YES];
     }
+}
+
+-(void)uploadImageMethod:(UIImage *)image
+{
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:XTasktUploadImagePath];
+ 
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"dabeijingImage" ofType:@"png"];
+    [entity appendFileRequestParameter:path withKey:@"pictureid"];
+    [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"id"];
+    
+    
+    entity.requestMethod = @"post";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
+    
 }
 #pragma mark UIImagePickerController delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)aImage editingInfo:(NSDictionary *)editingInfo
 {
     
-     
+    [self uploadImageMethod:aImage];
     [picker dismissModalViewControllerAnimated:YES];
     
 }
 #pragma mark ----textFild
-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:textField.tag inSection:0];
+    
+    CGRect rect = [textField superview].frame;
+    rect.origin.y += textField.origin.y;
+    [self.mainScrollView setContentOffset:CGPointMake(0, rect.origin.y - 80) animated:YES];
+    //    [self  scrollRectToVisible:rect animated:YES];
+    
+    
+    return YES;
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -362,4 +478,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
 @end

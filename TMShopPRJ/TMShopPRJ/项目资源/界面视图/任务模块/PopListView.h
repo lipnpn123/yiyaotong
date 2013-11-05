@@ -21,6 +21,7 @@
 }
 @property (nonatomic,assign)id fatherPointer;
 @property (nonatomic,strong)UIScrollView * popBlackBgView;
+@property (nonatomic,assign)BOOL isNeedRequest;
 
 -(void)popView;
 -(void)hidView;

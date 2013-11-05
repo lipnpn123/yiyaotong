@@ -12,6 +12,7 @@
 #import "ProjectEditeViewController.h"
 #import "ProjectListViewController.h"
 #import "PersonViewController.h"
+#import "ProjectTaskViewController.h"
 
 @interface LeftRootViewController ()
 {
@@ -186,7 +187,7 @@
     else if (indexPath.section == 1)
     {
         NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-        TaskRootPageViewController *vc = [[TaskRootPageViewController alloc] init];
+        ProjectTaskViewController *vc = [[ProjectTaskViewController alloc] init];
         vc.projectId = checkNullValue([dic objectForKey:@"id"]);
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         [self.mm_drawerController setCenterViewController:nav withCloseAnimation:YES completion:nil];

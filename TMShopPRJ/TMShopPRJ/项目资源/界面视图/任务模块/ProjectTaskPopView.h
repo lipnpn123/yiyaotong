@@ -1,17 +1,14 @@
 //
-//  RootTaskPopView.h
+//  ProjectTaskPopView.h
 //  TMShopPRJ
 //
-//  Created by 罗 乐华建 on 13-9-30.
+//  Created by lipengpeng on 13-11-4.
 //  Copyright (c) 2013年 李 鹏鹏. All rights reserved.
 //
 
 #import "PopListView.h"
 
-
-@interface RootTaskPopView : PopListView
-
-
+@interface ProjectTaskPopView : PopListView
 -(void)checkDataArray:(NSArray *)array;
 -(void)reloadPopViewUI;
 -(void)reloadPopViewUI:(BOOL)reload;

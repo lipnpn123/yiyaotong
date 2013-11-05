@@ -33,7 +33,12 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
+        if (!self.wsUserMethod)
+        {
+            self.wsUserMethod = [[WSUserMethod alloc] init];
+        }
+        self.wsUserMethod.delegate = self;
     }
     return self;
 }
@@ -247,11 +252,7 @@
 -(void)loginButtonAction
 {
      
-    if (!self.wsUserMethod)
-    {
-        self.wsUserMethod = [[WSUserMethod alloc] init];
-    }
-    self.wsUserMethod.delegate = self;
+
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:XTaskLoginPath2];
     [entity appendRequestParameter:@"18618434025" withKey:@"loginname"];
@@ -309,6 +310,10 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if (textField == _userPassWordTextFild)
+    {
+        [self loginButtonAction];
+    }
     [self endEditeState];
     return YES;
 }

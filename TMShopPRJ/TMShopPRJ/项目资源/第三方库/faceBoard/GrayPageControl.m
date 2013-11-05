@@ -34,6 +34,10 @@
     for (int i = 0; i < [self.subviews count]; i++)
     {
         UIImageView* dot = [self.subviews objectAtIndex:i];
+        if (![dot isKindOfClass:[UIImageView class]])
+        {
+            return;
+        }
         if (i == self.currentPage) dot.image = activeImage;
         else dot.image = inactiveImage;
     }

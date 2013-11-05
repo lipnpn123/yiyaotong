@@ -17,6 +17,8 @@
 #import "TaskRootPageViewController.h"
 #import "LeftRootViewController.h"
 #import "NewMessageViewController.h"
+#import "ASIFormDataRequest.h"
+
 
 @implementation AppDelegate
 
@@ -41,11 +43,32 @@
     {
         [self createLoginViewController];
     }
-    
+    [self createRequestMethod];
     [self.window makeKeyAndVisible];
     return YES;
 }
+ 
+-(void)createRequestMethod
+{
+    re = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://192.168.0.202:8080/task/user/upload"]];
+    re.requestMethod = @"POST";
+    [re addRequestHeader:@"ContentType" value:@"application/json"];
+    re.delegate = self;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"dabeijingImage" ofType:@"png"];
+    NSData *image = [[NSData alloc] initWithContentsOfFile:path];
+    [re setPostValue:image forKey:@"file"];
+//    [re setPostValue:@"ddfd" forKey:@"pictureid"];
+    [re startAsynchronous];
+}
+- (void)requestFinished:(ASIFormDataRequest *)aRequest
+{
+    NSLog(@"%@",[aRequest responseString]);
+}
+- (void)requestFailed:(ASIFormDataRequest *)aRequest
+{
+    NSLog(@"%@",[aRequest responseString]);
 
+}
 -(void)createLoginViewController
 {
     UserLoginViewController *vc = [[UserLoginViewController alloc] init];

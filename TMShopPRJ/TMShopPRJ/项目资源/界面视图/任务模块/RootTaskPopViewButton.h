@@ -10,6 +10,8 @@
 #import "GlobalDataInfo.h"
 @interface RootTaskPopViewButton : UIButton
 
+@property (nonatomic,assign)BOOL chageTag;
+
 @property (nonatomic,strong)UILabel *visibleNumLabel;
 @property (nonatomic,strong)NSDictionary *dataDictionary;
 @end

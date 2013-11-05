@@ -68,8 +68,8 @@
     }
     self.wsUserMethod.delegate = self;
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XTaskActivityDongPath,[UserEntity shareGlobalUserEntity].personUid]];
-    
+    [entity setRequestAction:[NSString stringWithFormat:@"%@",XTaskActivityDongPath]];
+    [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userid"];
     entity.requestMethod = @"POST";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
 }

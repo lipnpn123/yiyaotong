@@ -231,7 +231,7 @@
 	{
 		[self.dataArray addObjectsFromArray:responseArray];
 	}
-	[self reloadData];
+	[self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 	[self show_noDataBgView];
 	[self endRequestMoreUI];
     if (self.pageNum == 0)

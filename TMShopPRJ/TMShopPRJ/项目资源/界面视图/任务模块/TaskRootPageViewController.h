@@ -10,5 +10,10 @@
 #import "PopListView.h"
 
 @interface TaskRootPageViewController : BaseViewController<UITextFieldDelegate,PopListViewDelegate>
+{
+    NSMutableArray *groupArray;
+
+}
 @property (nonatomic,strong)NSString *projectId;
+
 @end

@@ -79,6 +79,7 @@
 @property (nonatomic,strong)MessageSelectButton *chaosongButton;
 @property (nonatomic,strong)MessageSelectButton *taskStateButton;
 @property (nonatomic,strong)MessageSelectButton *projectButton;
+@property (nonatomic,strong)UIButton *shureButton;
 
 @end
 
@@ -143,6 +144,17 @@
     [self.popBlackBgView addSubview:self.projectButton];
     contentOff += buttonHeight;
 
+    if (!self.shureButton)
+    {
+        self.shureButton = [[UIButton alloc] init];
+    }
+    [self.shureButton setTitle:@"确定" forState:UIControlStateNormal];
+    [self.shureButton setBackgroundImage:[UIImage imageNamed:@"popButtonImage.png"] forState:UIControlStateNormal];
+    [self.shureButton addTarget:self action:@selector(shureButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    self.shureButton.frame = CGRectMake(5,   contentOff, buttonWidth, buttonHeight);
+    [self.popBlackBgView addSubview:self.shureButton];
+    contentOff += buttonHeight;
+    
     if (contentOff <= self.popBlackBgView.height)
     {
         [self.popBlackBgView setContentSize:CGSizeMake(self.popBlackBgView.width, self.popBlackBgView.height+1)];
@@ -151,6 +163,11 @@
     {
         [self.popBlackBgView setContentSize:CGSizeMake(self.popBlackBgView.width, contentOff+10)];
     }
+}
+
+-(void)shureButtonAction
+{
+    [self hidView];
 }
 
 -(void)becomPopAnimtion

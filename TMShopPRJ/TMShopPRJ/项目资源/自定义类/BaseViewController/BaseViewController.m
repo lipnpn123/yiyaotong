@@ -185,7 +185,7 @@
     
 	[self.leftBarBtn removeFromSuperview];
 	self.leftBarBtn = button;
-    [self.view addSubview:self.leftBarBtn];
+    [self.wfTitleImageView addSubview:self.leftBarBtn];
     
 }
 
@@ -237,7 +237,7 @@
     
 	[self.rightBarBtn removeFromSuperview];
 	self.rightBarBtn = button;
-    [self.view addSubview:self.rightBarBtn];
+    [self.wfTitleImageView addSubview:self.rightBarBtn];
     
 }
 

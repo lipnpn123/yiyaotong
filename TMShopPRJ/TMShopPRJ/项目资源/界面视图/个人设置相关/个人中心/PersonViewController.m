@@ -458,7 +458,7 @@
 #pragma mark ----textFild
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:textField.tag inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
     
     CGRect rect = [textField superview].frame;
     rect.origin.y += textField.origin.y;

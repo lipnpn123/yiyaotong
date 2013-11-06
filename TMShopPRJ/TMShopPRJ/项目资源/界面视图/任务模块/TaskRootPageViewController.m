@@ -143,7 +143,12 @@
 }
 -(void)leftButtonAction
 {
-    
+    if (_mainTableView.isEditing )
+    {
+        [_mainTableView setEditing:NO animated:YES];
+        self.mm_drawerController.doNotPan = _mainTableView.editing;
+        return;
+    }
     [self.mm_drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 
 }
@@ -246,6 +251,8 @@
     [self.wfBgImageView addSubview:_popListView];
 }
 
+#pragma mark 输入框
+#pragma mark
 -(void)beginTaskTextState
 {
 //    _taskIconImageView.frame = CGRectMake(15, 12, 16, 16);
@@ -304,7 +311,8 @@
     [UIView commitAnimations];
 
 }
-
+#pragma mark 事件
+#pragma mark
 -(void)addTaskAction
 {
     NSString *taskString =checkNullValue(_taskTextFild.text);
@@ -370,16 +378,18 @@
 
 -(void)popActionView:(UIImage *)image
 {
-    if (!actionPopView)
-    {
-        actionPopView = [[RootPopActionView alloc] init];
-    }
-    actionPopView.frame = CGRectMake(0, 0, 320, self.view.height);
-    [actionPopView popView];
-    [actionPopView setPopData:image];
-    actionPopView.fatherViewController = self;
-    actionPopView.backgroundColor = RGBCOLOR(1, 1, 1, 0.4);
-    [self.view addSubview:actionPopView];
+    [_mainTableView setEditing:YES animated:YES];
+    self.mm_drawerController.doNotPan = _mainTableView.editing;
+    //    if (!actionPopView)
+//    {
+//        actionPopView = [[RootPopActionView alloc] init];
+//    }
+//    actionPopView.frame = CGRectMake(0, 0, 320, self.view.height);
+//    [actionPopView popView];
+//    [actionPopView setPopData:image];
+//    actionPopView.fatherViewController = self;
+//    actionPopView.backgroundColor = RGBCOLOR(1, 1, 1, 0.4);
+//    [self.view addSubview:actionPopView];
 }
 #pragma mark ---
 #pragma mark ---回调

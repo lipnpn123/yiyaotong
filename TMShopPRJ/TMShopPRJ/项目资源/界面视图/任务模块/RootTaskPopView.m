@@ -116,19 +116,20 @@
     }
     [self.visibleAllButton addTarget:self action:@selector(visibleAllButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.visibleAllButton.frame = CGRectMake(5, contentOff, buttonWidth, buttonHeight);
-    [self.visibleAllButton setTitle:@"展开" forState:UIControlStateNormal ];
+//    [self.visibleAllButton setTitle:@"展开" forState:UIControlStateNormal ];
     [self.firstView addSubview: self.visibleAllButton];
     
     if (!self.jiantoulayer)
     {
         self.jiantoulayer = [CALayer layer];
-        self.jiantoulayer.frame = CGRectMake(buttonWidth - 30, contentOff + 5, 20, 20);
+        self.jiantoulayer.frame = CGRectMake(buttonWidth - 80, contentOff, 20, 20);
         self.jiantoulayer.contentsGravity = kCAGravityResizeAspect;
-        self.jiantoulayer.contents = (id)[UIImage imageNamed:@"jiantouImage.png"].CGImage;
+        self.jiantoulayer.contents = (id)[UIImage imageNamed:@"xiaJiantou.png"].CGImage;
     }
     [[self.firstView layer] addSublayer:self.jiantoulayer];
+    self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 90) * 180.0f, 0.0f, 0.0f, 1.0f);
 
-    contentOff += 30;
+    contentOff += 20;
 
 //    if (!self.lineView1)
 //    {
@@ -209,7 +210,7 @@
         }
     }
     off += 0;
-    contentOff = 10;
+    contentOff = 20;
     if (  self.secondView  == nil)
     {
         self.secondView = [[UIView alloc] init];;
@@ -221,7 +222,7 @@
     {
         self.lineView1 = [[UIView alloc] init];
     }
-    self.lineView1.frame = CGRectMake(2, contentOff - 2,self.popBlackBgView.width-4 , 0.5);
+    self.lineView1.frame = CGRectMake(2, contentOff - 10,self.popBlackBgView.width-4 , 0.5);
     self.lineView1.backgroundColor = mostViewBgColor;
     [self.secondView addSubview: self.lineView1];
     
@@ -406,7 +407,7 @@
             self.completeOrderButton.alpha = 1;
             self.attentionOrderButton.alpha = 1;
             self.deleteOrderButton.alpha = 1;
-            self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 360) * 180.0f, 0.0f, 0.0f, 1.0f);
+            self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 180) * 180.0f, 0.0f, 0.0f, 1.0f);
         }
         completion:^(BOOL finished) {
 
@@ -419,7 +420,7 @@
         self.completeOrderButton.alpha = 1;
         self.attentionOrderButton.alpha = 1;
         self.deleteOrderButton.alpha = 1;
-        self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 360) * 180.0f, 0.0f, 0.0f, 1.0f);
+        self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 180) * 180.0f, 0.0f, 0.0f, 1.0f);
         [UIView animateWithDuration:0.2
         delay:0.1
         options:UIViewAnimationOptionCurveEaseOut

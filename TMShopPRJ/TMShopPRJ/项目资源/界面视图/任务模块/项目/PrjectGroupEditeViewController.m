@@ -8,6 +8,10 @@
 
 #import "PrjectGroupEditeViewController.h"
 #import "GroupTableViewCell.h"
+#import "GroupEntity.h"
+
+ 
+
 @interface PrjectGroupEditeViewController ()
 {
     int rowNum;
@@ -16,6 +20,8 @@
 @property (nonatomic,strong) UITableView *mainTableView;
 @property (nonatomic,strong) NSMutableDictionary *textFildDataDictionary;
 @property (nonatomic,strong) NSMutableArray *deleteArray;
+@property (nonatomic,strong) NSMutableArray *visibleArray;
+@property (nonatomic,strong) NSMutableArray *groupDataArray;
 
 @end
  
@@ -61,7 +67,8 @@
     imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
     [self.wfTitleImageView addSubview:imageView];
     
-    
+    self.groupDataArray = [NSMutableArray array];
+    [self.groupDataArray setArray:self.dataArray];
     
     if (!self.wsUserMethod)
     {
@@ -81,7 +88,7 @@
     
     self.textFildDataDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
     
-    rowNum = [self.dataArray count]+1;
+    rowNum = [self.groupDataArray count]+1;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     
@@ -105,131 +112,38 @@
 
 -(void)shureAction
 {
-    //    [UIView animateWithDuration:0.4 animations:^{
-    //    self.mainTableView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight-44-225);
-    //    }];
-    //    NSArray *cell = [self.mainTableView cellForRowAtIndexPath:(NSIndexPath *)];
-    NSMutableString *deleteString=[[NSMutableString alloc] init];
-    NSMutableString *addString=[[NSMutableString alloc] init];
-    //    NSMutableString *updateString=[[NSMutableString alloc] init];
-    //    [deleteString setString:@""];
-    //    [addString setString:@""];
-    //    [updateString setString:@""];
-    
-    NSMutableArray *addArray = [[NSMutableArray alloc] init];
-    NSMutableArray *updateArray = [[NSMutableArray alloc] init];
-    
-    
-    for (int i=0; i<rowNum-1; i++)
+    if (self.fatherViewController && [self.fatherViewController respondsToSelector:@selector(prjGroupSelectCallBack:withDeleteArray:)])
     {
-        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithCapacity:0];
-        if (i<[self.dataArray count] )
-        {
-            NSDictionary *dic = [self.dataArray objectAtIndex:i];
-            
-            [tempDic setValue:[NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]] forKey:@"id"];
-            [tempDic setValue:[self.textFildDataDictionary objectForKey:[NSString stringWithFormat:@"%d",i]] forKey:@"name"];
-            [updateArray addObject:tempDic];
-        }
-        else
-        {
-            [addArray addObject:[NSString stringWithFormat:@"%@",[self.textFildDataDictionary objectForKey:[NSString stringWithFormat:@"%d",i]]]];
-        }
+        [self.fatherViewController performSelector:@selector(prjGroupSelectCallBack:withDeleteArray:) withObject:self.groupDataArray withObject:self.deleteArray];
     }
-    
-    for (int i=0; i<[self.deleteArray count]; i++)
-    {
-        NSDictionary *dic = [self.deleteArray objectAtIndex:i];
-        [deleteString appendFormat:@"%@",[dic objectForKey:@"id"]];
-        if (i != [self.deleteArray count] && i != [self.deleteArray count]-1)
-        {
-            [deleteString appendString:@","];
-        }
-    }
-    
-    for (int i=0; i<[addArray count]; i++)
-    {
-        NSString *str = [addArray objectAtIndex:i];
-        [addString appendFormat:@"%@",str];
-        if (i != [addArray count] && i != [addArray count]-1)
-        {
-            [addString appendString:@","];
-        }
-    }
-    
-    
-    NSMutableString *requestPath = [[NSMutableString alloc] init];
-    [requestPath appendString:@"/xtask/lists/update/"];
-    
-    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:requestPath];
-    if (![deleteString isEqualToString:@""])
-    {
-        [entity appendRequestParameter:deleteString withKey:@"delBeanids"];
-        
-    }
-    
-    if (![addString isEqualToString:@""])
-    {
-        [entity appendRequestParameter:addString withKey:@"addBeanids"];
-    }
-    
-    if ([updateArray count] >0)
-    {
-        [entity appendRequestParameter:updateArray withKey:@"updateBeanids"];
-    }
-    if ([entity.requestParamDictionary count] == 0)
-    {
-        [SVProgressHUD showErrorWithStatus:@"没有任何更改"];
-        return;
-    }
-    entity.requestMethod = @"post";
-    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:updateRequestTag];
-    
+    [self popSelf];
 }
 
 -(void)rightDeleteButtonAction:(UIButton *)button
 {
     
-    NSIndexPath *indexpath = [NSIndexPath indexPathForItem:button.tag inSection:0];
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     GroupTableViewCell *cell = (GroupTableViewCell *) [self.mainTableView cellForRowAtIndexPath:indexpath];
-    //    if (cell.deleteState)
-    //    {
-    //        NSDictionary *d = [self.dataArray objectAtIndex:indexpath.row];
-    //        self.wsUserMethod.delegate = self;
-    //        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    //        [entity setRequestAction:[NSString stringWithFormat:@"/xtask/lists/%@",[d objectForKey:@"id"]]];
-    //        entity.requestMethod = @"delete";
-    //        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:DeleteRequestTag];
-    //
-    //    }
-    //    else
-    //    {
-    //         self.wsUserMethod.delegate = self;
-    //        UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    //        [entity setRequestAction:XtaskaddGroupList];
-    //        [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userid"];
-    //        [entity appendRequestParameter:@"test" withKey:@"name"];
-    //        entity.requestMethod = @"POST";
-    //        [self.wsUserMethod nomoalRequestWithEntity:entity withTag:AddRequestTag];
-    //
-    //    }
     
     if (cell.deleteState)
     {
         rowNum--;
         [self.mainTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationBottom];
-        if (indexpath.row <[self.dataArray count])
+        if (indexpath.row <[self.groupDataArray count])
         {
-            [self.deleteArray addObject:[self.dataArray objectAtIndex:indexpath.row]];
-            [self.dataArray removeObjectAtIndex:indexpath.row];
+            [self.deleteArray addObject:[self.groupDataArray objectAtIndex:indexpath.row]];
+            [self.groupDataArray removeObjectAtIndex:indexpath.row];
         }
         [self.mainTableView reloadData];
     }
     else
     {
         int row = rowNum;
-        rowNum++;
+        GroupEntity *g = [[GroupEntity alloc] init];
+        g.goupName = @"未命名";
+        [self.groupDataArray addObject:g];
+        rowNum = [self.groupDataArray count] + 1;;
+
         [self.mainTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
         [self.mainTableView reloadData];
         [self.mainTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -271,8 +185,8 @@
         cell.visibleLabel.delegate = self;
         cell.rightDeleteButton.tag= indexPath.row;
         [cell.rightDeleteButton addTarget:self action:@selector(rightDeleteButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        NSLog(@"%d %d",[self.dataArray count],indexPath.row);
-        if ([self.dataArray  count] <= indexPath.row)
+        NSLog(@"%d %d",[self.groupDataArray count],indexPath.row);
+        if ([self.groupDataArray  count] <= indexPath.row)
         {
             cell.deleteState = NO;
             cell.visibleLabel.text = @"未命名";
@@ -281,8 +195,8 @@
         else
         {
             cell.deleteState = YES;
-            NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-            cell.visibleLabel.text = checkNullValue([dic objectForKey:@"name"]);
+            GroupEntity *g = [self.groupDataArray objectAtIndex:indexPath.row];
+            cell.visibleLabel.text = checkNullValue(g.goupName);
             [self.textFildDataDictionary setValue: cell.visibleLabel.text forKey:[NSString stringWithFormat:@"%d",indexPath.row]];
         }
     }
@@ -321,78 +235,11 @@
 }
 -(void)reloadArrayData:(UITextField *)t
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:t.tag inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:t.tag inSection:0];
     GroupTableViewCell *cell = (GroupTableViewCell *) [self.mainTableView cellForRowAtIndexPath:indexPath];
     [self.textFildDataDictionary setValue: cell.visibleLabel.text forKey:[NSString stringWithFormat:@"%d",indexPath.row]];
 }
-#pragma ---请求
 
--(void)requestForData
-{
-    if (!self.wsUserMethod)
-    {
-        self.wsUserMethod = [[WSUserMethod alloc] init];
-    }
-    self.wsUserMethod.delegate = self;
-    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskGroupList,[UserEntity shareGlobalUserEntity].personUid]];
-    entity.requestMethod = @"POST";
-    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
-}
-
-- (void)requestFinished:(ASIFormDataRequest *)aRequest
-{
-    if (aRequest.tag ==1)
-    {
-        NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
-        if (dic && [dic isKindOfClass:[NSDictionary class]])
-        {
-            NSArray *array = [dic objectForKey:@"data"];
-            if (array && [array isKindOfClass:[NSArray class]])
-            {
-                self.dataArray  =[NSMutableArray array];
-                for (NSDictionary *dic in array)
-                {
-                    if (![checkNullValue([dic objectForKey:@"listtype"]) isEqualToString:@"system"])
-                    {
-                        [self.dataArray addObject:dic];
-                    }
-                }
-                [self.mainTableView reloadData];
-            }
-        }
-    }
-    else  if (aRequest.tag ==DeleteRequestTag)
-    {
-        if (aRequest.isRequestSuccess)
-        {
-            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-            [self requestForData];
-        }
-        
-    }
-    else  if (aRequest.tag ==AddRequestTag)
-    {
-        if (aRequest.isRequestSuccess)
-        {
-            [SVProgressHUD showSuccessWithStatus:@"添加成功"];
-            [self requestForData];
-        }
-    }
-    else  if (aRequest.tag ==updateRequestTag)
-    {
-        if (aRequest.isRequestSuccess)
-        {
-            [SVProgressHUD showSuccessWithStatus:@"添加成功"];
-        }
-    }
-    
-}
-
-- (void)requestFailed:(ASIFormDataRequest *)aRequest
-{
-    
-}
 
 - (void)didReceiveMemoryWarning
 {

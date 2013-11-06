@@ -127,7 +127,7 @@
 {
 //    testSS = !testSS;
 //    [self reloadData];
-    [self moveRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] toIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    [self moveRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
 }
 
 -(void)requestForData

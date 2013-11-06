@@ -12,17 +12,21 @@
 #import "SelectConnectViewController.h"
 #import "PrjectConnectSelectViewController.h"
 #import "PrjectGroupEditeViewController.h"
- 
+#import "GroupEntity.h"
+
 @interface ProjectEditeViewController ()
 {
 //    int  rowNum;
 //    int  rowNum2;
     UITextField *titleTextFild;
     UITextView *detailTextFild;
+    BOOL reloadState;
 }
 @property(nonatomic,strong) UITableView *mainTableView;
 @property(nonatomic,strong) NSMutableArray *puserArray;
-@property(nonatomic,strong) NSMutableArray *plistArray;
+//@property(nonatomic,strong) NSMutableArray *plistArray;
+@property(nonatomic,strong) NSMutableArray *groupDataArray;
+@property(nonatomic,strong) NSMutableArray *deleteGrupArray;;
 
 
 @end
@@ -100,9 +104,20 @@
     
     self.dataArray = [NSMutableArray arrayWithArray:[[self.dataDictionary objectForKey:@"follows"] objectForKey:@"data"]];
     self.puserArray = [NSMutableArray array];
-    self.plistArray = [NSMutableArray array];
+    NSMutableArray *plistArray = [NSMutableArray array];
+    self.groupDataArray = [NSMutableArray array];
     [self.puserArray setArray:[[self.dataDictionary objectForKey:@"pusers"] objectForKey:@"data"]];
-    [self.plistArray setArray:[[self.dataDictionary objectForKey:@"plists"] objectForKey:@"data"]];
+
+    
+    [plistArray setArray:[[self.dataDictionary objectForKey:@"plists"] objectForKey:@"data"]];
+    for (NSDictionary *dic in plistArray)
+    {
+        GroupEntity *g = [[GroupEntity alloc] init];
+        g.goupDictionary = [NSMutableDictionary dictionaryWithDictionary:dic];
+        g.gruopId = [dic objectForKey:@"id"];
+        g.goupName = [dic objectForKey:@"name"];
+        [self.groupDataArray addObject:g];
+    }
     
     if (self.mainTableView == nil)
     {
@@ -183,6 +198,10 @@
 	NSString *CellIdentifier = [NSString stringWithFormat:@"in%d",indexPath.row];
  	//flag为0代表cell需要刷新，1代表不需要刷新，可复用
     TableCellModel *cell = (TableCellModel *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (reloadState)
+    {
+        cell = nil;
+    }
     if (cell == nil)
 	{
 		cell = [[TableCellModel alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -235,7 +254,7 @@
             int x = 0;
             int  y = 0;
             
-            int count = [self.plistArray count];
+            int count = [self.groupDataArray count];
             if (count >4)
             {
                 count = 4;
@@ -246,12 +265,12 @@
                 int yd = i/2;
                 x = xd * 140 + 20;
                 y = yd * 30 ;
-                NSDictionary *dic = [self.plistArray objectAtIndex:i];
+                GroupEntity *g = [self.groupDataArray objectAtIndex:i];
 
                 
                 UILabel *nameLabel = NewLabelWithDefaultSize(13);
                 nameLabel.frame =  CGRectMake(x, y, 140, 30);
-                nameLabel.text = [dic objectForKey:@"name"];
+                nameLabel.text = checkNullValue(g.goupName);
                 [cell addSubview:nameLabel];
             }
             UIImageView *imageView = [[UIImageView alloc] init];
@@ -271,11 +290,14 @@
     if (indexPath.section == 0 )
     {
         PrjectConnectSelectViewController *vc = [[PrjectConnectSelectViewController alloc] init];
+        vc.dataArray = [NSMutableArray arrayWithArray:self.puserArray];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
     {
         PrjectGroupEditeViewController *vc = [[PrjectGroupEditeViewController alloc] init];
+        vc.fatherViewController = self;
+        vc.dataArray = [NSMutableArray arrayWithArray:self.groupDataArray];
         [self.navigationController pushViewController:vc animated:YES];     
     }
 }
@@ -285,6 +307,13 @@
     
 }
 
+-(void)prjGroupSelectCallBack:(NSArray *)array withDeleteArray:(NSArray *)deleteArray
+{
+    reloadState = YES;
+    [self.groupDataArray setArray:array];
+    [self.deleteGrupArray addObjectsFromArray:deleteArray];
+    [_mainTableView reloadData];
+}
 #pragma mark --
 
 -(void)rightDeleteButtonAction:(UIButton *)button
@@ -315,7 +344,36 @@
 
 -(void)shureAction
 {
-
+    NSMutableArray *addArray = [NSMutableArray array];
+    for (GroupEntity *g in self.groupDataArray)
+    {
+        if (g.gruopId && ![g.gruopId isEqualToString:@""])
+        {
+//已有的修改的
+            
+        }
+        else
+        {
+//没有的添加的
+            [addArray addObject:checkNullValue(g.goupName)];
+        }
+    }
+    NSMutableString *deleteString = [[NSMutableString alloc] init];
+    for (int i =0 ;i<[self.deleteGrupArray count];i++)
+    {
+        GroupEntity *g = [self.deleteGrupArray objectAtIndex:i];
+//要删除的组id
+        NSString *groupId = g.gruopId;
+        if (g.gruopId && ![g.gruopId isEqualToString:@""])
+        {
+            [deleteString appendString:groupId];
+        }
+        if (i !=0 && i!= [self.deleteGrupArray count] - 1)
+        {
+            [deleteString appendString:@","];
+        }
+    }
+    
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:XtaskProjectmodifyPath];
     [entity appendRequestParameter:checkNullValue([self.dataDictionary objectForKey:@"id"]) withKey:@"id"];

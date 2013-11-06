@@ -311,7 +311,7 @@
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:textField.tag inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
 
     CGRect rect = [self.mainTableView rectForRowAtIndexPath:indexPath];
     rect.origin.y =  rect.origin.y - 100;
@@ -323,7 +323,7 @@
 }
 -(void)reloadArrayData:(UITextField *)t
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:t.tag inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:t.tag inSection:0];
     GroupTableViewCell *cell = (GroupTableViewCell *) [self.mainTableView cellForRowAtIndexPath:indexPath];
     [self.textFildDataDictionary setValue: cell.visibleLabel.text forKey:[NSString stringWithFormat:@"%d",indexPath.row]];
 }

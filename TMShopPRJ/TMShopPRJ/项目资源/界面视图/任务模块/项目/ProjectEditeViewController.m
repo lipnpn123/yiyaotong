@@ -21,6 +21,8 @@
     UITextView *detailTextFild;
 }
 @property(nonatomic,strong) UITableView *mainTableView;
+@property(nonatomic,strong) NSMutableArray *puserArray;
+@property(nonatomic,strong) NSMutableArray *plistArray;
 
 
 @end
@@ -54,7 +56,6 @@
     mainBgView.image = [[UIImage imageNamed:@"dabeijingImage.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     mainBgView.frame = CGRectMake(5, 5, 310, self.wfBgImageView.height-5);
     [self.wfBgImageView addSubview:mainBgView];
-
     if (!self.wsUserMethod)
     {
         self.wsUserMethod = [[WSUserMethod alloc] init];
@@ -98,10 +99,14 @@
     headView.frame = CGRectMake(0, 0, 320, offy );
     
     self.dataArray = [NSMutableArray arrayWithArray:[[self.dataDictionary objectForKey:@"follows"] objectForKey:@"data"]];
- 
+    self.puserArray = [NSMutableArray array];
+    self.plistArray = [NSMutableArray array];
+    [self.puserArray setArray:[[self.dataDictionary objectForKey:@"pusers"] objectForKey:@"data"]];
+    [self.plistArray setArray:[[self.dataDictionary objectForKey:@"plists"] objectForKey:@"data"]];
+    
     if (self.mainTableView == nil)
     {
-        self.mainTableView = [[ProjectEditeTableView alloc] initWithFrame:CGRectMake(5, 0, 310, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44) style:UITableViewStyleGrouped];
+        self.mainTableView = [[ProjectEditeTableView alloc] initWithFrame:CGRectMake(5, 7, 310, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44 -10) style:UITableViewStyleGrouped];
     }
     [self.mainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 //    self.mainTableView.backgroundColor = RGBCOLOR(244, 249, 255, 1);
@@ -186,12 +191,18 @@
         {
             int x = 0;
             int  y = 0;
-            for (int i =0; i<4; i++)
+            int count = [self.puserArray count];
+            if (count >4)
+            {
+                count = 4;
+            }
+            for (int i =0; i<count; i++)
             {
                 int xd = i%2;
                 int yd = i/2;
                 x = xd * 140 + 20;
                 y = yd * 50 + 5;
+                NSDictionary *dic = [self.puserArray objectAtIndex:i];
                 
                 UIImageView *imageView = [[UIImageView alloc] init];
                 imageView.frame =  CGRectMake(x, y, 40, 40);
@@ -200,12 +211,12 @@
                 
                 
                 UILabel *nameLabel = NewLabelWithDefaultSize(13);
-                nameLabel.frame  = CGRectMake(x + 50, y, 100, 20);
-                nameLabel.text = @"里鹏鹏";
+                nameLabel.frame  = CGRectMake(x + 50, y, 80, 20);
+                nameLabel.text = [dic objectForKey:@"userid"];;
                 [cell addSubview:nameLabel];
                 
                 UILabel *systemLabel = NewLabelWithDefaultSize(11);
-                systemLabel.frame  = CGRectMake(x + 50, y+20, 100, 20);
+                systemLabel.frame  = CGRectMake(x + 50, y+20, 80, 20);
                 systemLabel.text = @"非系统用户";
                 systemLabel.textColor = [UIColor grayColor];
                 [cell addSubview:systemLabel];
@@ -213,7 +224,7 @@
             
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.frame =  CGRectMake(270, 40, 20, 20);
-            imageView.image = [UIImage imageNamed:@"login_press_tx.png"];
+            imageView.image = [UIImage imageNamed:@"jiantouImage.png"];
             [cell addSubview:imageView];
             
             cell.totalHeight = 100;
@@ -223,20 +234,29 @@
         {
             int x = 0;
             int  y = 0;
-            for (int i =0; i<4; i++)
+            
+            int count = [self.plistArray count];
+            if (count >4)
+            {
+                count = 4;
+            }
+            for (int i =0; i<count; i++)
             {
                 int xd = i%2;
                 int yd = i/2;
                 x = xd * 140 + 20;
                 y = yd * 30 ;
+                NSDictionary *dic = [self.plistArray objectAtIndex:i];
+
+                
                 UILabel *nameLabel = NewLabelWithDefaultSize(13);
                 nameLabel.frame =  CGRectMake(x, y, 140, 30);
-                nameLabel.text = @"里鹏鹏";
+                nameLabel.text = [dic objectForKey:@"name"];
                 [cell addSubview:nameLabel];
             }
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.frame =  CGRectMake(270, 20, 20, 20);
-            imageView.image = [UIImage imageNamed:@"login_press_tx.png"];
+            imageView.image = [UIImage imageNamed:@"jiantouImage.png"];
             [cell addSubview:imageView];
             cell.totalHeight = 60;
         }

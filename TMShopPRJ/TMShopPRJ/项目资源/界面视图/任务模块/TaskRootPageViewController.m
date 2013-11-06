@@ -29,6 +29,7 @@
     
     TaskRootTableView *_mainTableView ;
     UIButton *_titlebutton;
+    UILabel *_titleVisibleLabel;
     
     UIButton *_messageNumView;
 
@@ -77,19 +78,28 @@
         _popListView = [[RootTaskPopView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     }
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(100, 12, 20, 20);
+    imageView.frame = CGRectMake(120, 12, 20, 20);
     imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
     [self.wfTitleImageView addSubview:imageView];
     
     if (!_titlebutton)
     {
         _titlebutton = [[UIButton alloc] init];
-        _titlebutton.frame = CGRectMake(110, 7, 120, 30);
+        _titlebutton.frame = CGRectMake(100, 7, 150, 30);
         [_titlebutton addTarget:self action:@selector(popListAction) forControlEvents:UIControlEventTouchUpInside];
-        [_titlebutton setTitle:@"Xtask工作" forState:UIControlStateNormal];
+//        [_titlebutton setTitle:@"Xtask工作" forState:UIControlStateNormal];
         [_titlebutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
     [self.wfTitleImageView addSubview:_titlebutton];
+    
+    if (!_titleVisibleLabel)
+    {
+        _titleVisibleLabel = NewLabelWithBoldSize(17);
+    }
+    _titleVisibleLabel.textColor = [UIColor whiteColor];
+    _titleVisibleLabel.frame = CGRectMake(150, 7, 120, 30);
+    _titleVisibleLabel.text =@"Xtask工作";
+    [self.wfTitleImageView addSubview:_titleVisibleLabel];
 
     if (!_messageNumView)
     {
@@ -395,6 +405,7 @@
     NSLog(@"dic --- s%@",dic);
     [_popListView hidView];
     _mainTableView.requestId = checkNullValue([dic objectForKey:@"id"]);
+    _titleVisibleLabel.text = checkNullValue([dic objectForKey:@"name"]);
     _mainTableView.requestType = TaskRootTableViewNomalRequest;
     [_mainTableView reloadTableData];
 }

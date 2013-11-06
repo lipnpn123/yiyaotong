@@ -44,6 +44,7 @@
 @property (nonatomic,strong) NSMutableDictionary *systemDictionary;
 @property (nonatomic,strong) NSMutableArray *custumArray;
 @property (nonatomic,strong) RootTaskPopViewButton *selectButton;
+@property (nonatomic,strong) CALayer *jiantoulayer;
 @end
 
 @implementation RootTaskPopView
@@ -117,6 +118,16 @@
     self.visibleAllButton.frame = CGRectMake(5, contentOff, buttonWidth, buttonHeight);
     [self.visibleAllButton setTitle:@"展开" forState:UIControlStateNormal ];
     [self.firstView addSubview: self.visibleAllButton];
+    
+    if (!self.jiantoulayer)
+    {
+        self.jiantoulayer = [CALayer layer];
+        self.jiantoulayer.frame = CGRectMake(buttonWidth - 30, contentOff + 5, 20, 20);
+        self.jiantoulayer.contentsGravity = kCAGravityResizeAspect;
+        self.jiantoulayer.contents = (id)[UIImage imageNamed:@"jiantouImage.png"].CGImage;
+    }
+    [[self.firstView layer] addSublayer:self.jiantoulayer];
+
     contentOff += 30;
 
 //    if (!self.lineView1)
@@ -379,7 +390,8 @@
         self.completeOrderButton.hidden = NO;
         self.attentionOrderButton.hidden = NO;
         self.deleteOrderButton.hidden = NO;
-        
+        self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 90) * 180.0f, 0.0f, 0.0f, 1.0f);
+ 
         [UIView animateWithDuration:0.2
         delay:0.1
         options:UIViewAnimationOptionCurveEaseOut
@@ -394,6 +406,7 @@
             self.completeOrderButton.alpha = 1;
             self.attentionOrderButton.alpha = 1;
             self.deleteOrderButton.alpha = 1;
+            self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 360) * 180.0f, 0.0f, 0.0f, 1.0f);
         }
         completion:^(BOOL finished) {
 
@@ -406,6 +419,7 @@
         self.completeOrderButton.alpha = 1;
         self.attentionOrderButton.alpha = 1;
         self.deleteOrderButton.alpha = 1;
+        self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 360) * 180.0f, 0.0f, 0.0f, 1.0f);
         [UIView animateWithDuration:0.2
         delay:0.1
         options:UIViewAnimationOptionCurveEaseOut
@@ -419,6 +433,7 @@
             self.attentionOrderButton.alpha = 0;
             self.deleteOrderButton.alpha = 0;
             
+            self.jiantoulayer.transform = CATransform3DMakeRotation((M_PI / 90) * 180.0f, 0.0f, 0.0f, 1.0f);
         }
         completion:^(BOOL finished) {
             self.allotButton.hidden = YES;
@@ -431,12 +446,13 @@
 
 -(void)editeButtonAction
 {
-
+    [self hidView];
     if (self.fatherPointer && [(NSObject *)self.fatherPointer isKindOfClass:[UIViewController class]])
     {
         MyGroupViewController *vc = [[MyGroupViewController alloc] init];
-        vc.dataArray = self.custumArray;
-        [self.navigationController pushViewController:vc animated:YES];
+        vc.fatherViewController = self.fatherPointer;
+        vc.dataArray = [NSMutableArray arrayWithArray:self.custumArray];
+         [self.navigationController pushViewController:vc animated:YES];
 
     }
 }

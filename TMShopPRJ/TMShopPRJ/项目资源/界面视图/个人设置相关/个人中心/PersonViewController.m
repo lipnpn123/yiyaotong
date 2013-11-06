@@ -144,8 +144,9 @@
         [textViewBgView addSubview:titleLabel];
         
         UIImageView *jiantouImageView = [[UIImageView alloc] init];
-        jiantouImageView.frame = CGRectMake(260, 15, 20, 20);
-        jiantouImageView.backgroundColor = [UIColor redColor];
+        jiantouImageView.frame = CGRectMake(260, 20, 20, 20);
+        jiantouImageView.image = [UIImage imageNamed:@"jiantouImage.png"];
+//        jiantouImageView.backgroundColor = [UIColor redColor];
         [textViewBgView addSubview:jiantouImageView];
     }
     offy += 70;

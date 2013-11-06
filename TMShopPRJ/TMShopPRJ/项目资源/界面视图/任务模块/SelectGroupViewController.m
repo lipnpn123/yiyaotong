@@ -11,6 +11,7 @@
 
 @interface SelectGroupViewController ()
 @property (nonatomic,strong) UITableView *mainTableView;
+@property (nonatomic,strong) NSDictionary *selectDictionary;
 
 @end
 
@@ -115,6 +116,7 @@
     if (buttonIndex == 1)
     {
         NSDictionary *dic = [self.dataArray objectAtIndex:alertView.tag];
+        self.selectDictionary = dic;
         [self selectGoupAction:[dic objectForKey:@"id"]];
     }
 }
@@ -160,7 +162,12 @@
     }
     else if (aRequest.tag == 2)
     {
+        if (self.fatherViewController  && [self.fatherViewController respondsToSelector:@selector(selectGroupActionCallBack:)])
+        {
+            [self.fatherViewController performSelector:@selector(selectGroupActionCallBack:) withObject:self.selectDictionary];
+        }
         [self popSelf];
+
     }
     else  if (aRequest.tag ==3)
     {

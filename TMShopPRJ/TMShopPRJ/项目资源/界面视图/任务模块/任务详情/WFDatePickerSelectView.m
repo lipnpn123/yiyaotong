@@ -81,7 +81,7 @@
 {
     if (self.fatherPointer  && [self.fatherPointer respondsToSelector:@selector(popDatePickerSelectView:)])
     {
-        [self.fatherPointer performSelector:@selector(popDatePickerSelectView:) withObject:_mainPickerView];
+        [self.fatherPointer performSelector:@selector(popDatePickerSelectView:) withObject:self];
     }
     [self hidView];
 }
@@ -96,14 +96,27 @@
     
     mainToolBar.frame = CGRectMake(0, self.height, 320, 44);
     _mainPickerView.frame = CGRectMake(0, self.height+44, 320, 200);
-    self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.1];
-    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7)
+    {
+        self.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
+    }
+    else
+    {
+        self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.1];
+    }
     [UIView animateWithDuration:0.3 animations:
      ^{
          mainToolBar.frame = CGRectMake(0, self.height - 200-44, 320, 44);
          
          _mainPickerView.frame = CGRectMake(0, self.height - 200, 320, 200);
-         self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+         if ([[UIDevice currentDevice].systemVersion floatValue] >= 7)
+         {
+             self.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+         }
+         else
+         {
+             self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+         }
          
      } completion:^(BOOL finished)
      {
@@ -112,6 +125,7 @@
      }];
     
     [UIView setAnimationsEnabled:YES];
+
      self.hidden=NO;
 }
 -(void)hidView
@@ -119,18 +133,30 @@
     mainToolBar.frame = CGRectMake(0, self.height - 200-44, 320, 44);
     
     _mainPickerView.frame = CGRectMake(0, self.height - 200, 320, 200);
-    self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
-    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7)
+    {
+        self.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+    }
+    else
+    {
+        self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+    }
     [UIView animateWithDuration:0.3 animations:
      ^{
-         self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.1];
          mainToolBar.frame = CGRectMake(0, self.height, 320, 44);
          _mainPickerView.frame = CGRectMake(0, self.height+44, 320, 200);
          
+         if ([[UIDevice currentDevice].systemVersion floatValue] >= 7)
+         {
+             self.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
+         }
+         else
+         {
+             self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.1];
+         }
      } completion:^(BOOL finished)
      {
          self.hidden = YES;
-         
          
      }];
     

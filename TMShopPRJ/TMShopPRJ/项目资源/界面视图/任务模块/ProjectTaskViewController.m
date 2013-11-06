@@ -17,7 +17,7 @@
 
 @implementation ProjectTaskViewController
 
-#define reqeustTag 0x11111
+#define reqeustTag 0x1234
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,25 +30,29 @@
 
 -(void)viewDidLoad
 {
+    _popListView = [[ProjectTaskPopView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
     [super viewDidLoad];
 
-    _popListView = [[ProjectTaskPopView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
-    [self requestGoupData];
 
+    
 }
 -(void)requestGoupData
 {
-    
+    NSLog(@"requestGoupData");
     self.wsUserMethod.delegate = self;
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskGroupList,[UserEntity shareGlobalUserEntity].personUid]];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@",XTaskProjectQuery]];
+    [entity appendRequestParameter:@"4028804a422127e8014221325a640006" withKey:@"id"];
     entity.requestMethod = @"POST";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:reqeustTag];
     
 }
 -(void)popListAction
 {
-    [self requestGoupData];
+    if (_popListView.isNeedRequest)
+    {
+        [self requestGoupData];
+    }
     _popListView.navigationController = self.navigationController;
     _popListView.fatherPointer = self;
     [_popListView popView];
@@ -63,7 +67,12 @@
         NSDictionary  *dic = (NSDictionary *)aRequest.returnObject;
         if (dic && [dic isKindOfClass:[NSDictionary class]])
         {
-            NSArray *array = [dic objectForKey:@"data"];
+            NSArray *array = [dic objectForKey:@"data"] ;
+            if ([array count] > 0 )
+            {
+                NSDictionary *dic  = [array objectAtIndex:0];
+                array = [[dic objectForKey:@"plists"] objectForKey:@"data"];
+            }
             if (array && [array isKindOfClass:[NSArray class]])
             {
                 if (!groupArray)
@@ -72,8 +81,8 @@
                 }
                 [groupArray setArray:array] ;
                 [_popListView checkDataArray:groupArray];
-                
-                [_popListView reloadPopViewUI];
+                _popListView.isNeedRequest = NO;
+                [_popListView reloadPopViewUI:YES];
             }
         }
 

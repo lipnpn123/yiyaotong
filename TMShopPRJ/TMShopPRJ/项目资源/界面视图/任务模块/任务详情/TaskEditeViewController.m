@@ -11,12 +11,26 @@
 #import "WFDatePickerSelectView.h"
 
 @interface TaskEditeViewController ()
-
+{
+    WFDatePickerSelectView *tixingPickerView;
+    WFDatePickerSelectView *jiezhiPickerView;
+}
 @property (nonatomic,strong)UIScrollView *mainScrollView;
  
 @end
 
 @implementation TaskEditeViewController
+
+#define repeateSheetViewTag         11111
+#define levalSheetViewTag           11112
+
+#define titleInputViewTag          111113
+#define detileInputViewTag          111114
+#define grupVisibleViewTag          111115
+#define leavelVisibleViewTag          111116
+#define dateVisibleViewTag           111117
+#define repeateVisibleViewTag          111118
+#define tixingVisibleViewTag          111119
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -76,14 +90,14 @@
 {
     
     [UIView animateWithDuration:0.35 animations:^{
-        self.mainScrollView.frame = CGRectMake(10, 10, 300, self.wfBgImageView.height-20-225);
+        self.mainScrollView.frame = CGRectMake(10, 10, 300, self.wfBgImageView.height-20);
     }];
 }
 
 - (void)keyboardDidShow:(NSNotification*)notification
 {
     [UIView animateWithDuration:0.35 animations:^{
-        self.mainScrollView.frame = CGRectMake(10, 10, 300, self.wfBgImageView.height-20);
+        self.mainScrollView.frame = CGRectMake(10, 10, 300, self.wfBgImageView.height-20-225);
     }];
     
 }
@@ -162,6 +176,7 @@
         
         UITextField *textView = [[UITextField alloc] init];
         textView.delegate = self;
+        textView.tag= titleInputViewTag;
         textView.font = NewFontWithDefaultSize(14);
         textView.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textView.backgroundColor = [UIColor clearColor];
@@ -196,6 +211,7 @@
         NSString *description = checkNullValue([self.dataDictionary objectForKey:@"description"]);
         UITextView *textView = [[UITextView alloc] init];
         textView.delegate = self;
+        textView.tag = detileInputViewTag;
         textView.backgroundColor = [UIColor clearColor];
         textView.text = description;
         textView.frame= CGRectMake(labelOffw, offy+5, width, 50);
@@ -236,12 +252,13 @@
         NSString *description = checkNullValue([self.dataDictionary objectForKey:@"list"]);
         if ( [description isEqualToString:@""])
         {
-            description= @"没有分组";
+            description= @"无";
         }
 
         UILabel *titleLabel2  = NewLabelWithDefaultSize(14);
         titleLabel2.frame = CGRectMake(labelOffw, offy, width, 30);
         titleLabel2.text = description;
+        titleLabel2.tag = grupVisibleViewTag;
         [bgImageView addSubview:titleLabel2];
     }
     
@@ -271,8 +288,15 @@
  
         UILabel *titleLabel  = NewLabelWithDefaultSize(14);
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
-        titleLabel.text = @"高";
+        titleLabel.text = @"低";
         [bgImageView addSubview:titleLabel];
+        titleLabel.tag = leavelVisibleViewTag;
+        
+        UIButton *levalButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        //        jiezhiButton.backgroundColor = [UIColor redColor];
+        [levalButton addTarget:self action:@selector(levalButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        levalButton.frame = CGRectMake(0, offy, 320, 30);
+        [bgImageView addSubview:levalButton];
     }
  
     offy += 40;
@@ -300,7 +324,8 @@
         
         UILabel *titleLabel  = NewLabelWithDefaultSize(14);
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
-        titleLabel.text = @"截止日期";
+        titleLabel.text = @"无";
+        titleLabel.tag = dateVisibleViewTag;
         [bgImageView addSubview:titleLabel];
         
         UIButton *jiezhiButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -333,7 +358,8 @@
         
         UILabel *titleLabel  = NewLabelWithDefaultSize(14);
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
-        titleLabel.text = @"重复";
+        titleLabel.text = @"无";
+        titleLabel.tag = repeateSheetViewTag;
         [bgImageView addSubview:titleLabel];
         
         UIButton *repeateButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -375,6 +401,7 @@
         UILabel *titleLabel  = NewLabelWithDefaultSize(14);
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
         titleLabel.text = description;
+        titleLabel.tag = tixingVisibleViewTag;
         [bgImageView addSubview:titleLabel];
         
         UIButton *repeateButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -411,40 +438,126 @@
 -(void)repeateButtonAction
 {
     UIActionSheet *sheetView = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"每日重复",@"每周重复",@"每月重复", nil];
+    sheetView.tag = repeateSheetViewTag;
     [sheetView showInView:self.wfBgImageView];
 }
 
 -(void)tixingButtonAction
 {
-    WFDatePickerSelectView *pickerView = [[WFDatePickerSelectView alloc] initWithFrame:CGRectMake(0, 0, 320, self.wfBgImageView.height)];
-    [self.wfBgImageView addSubview:pickerView];
-    [pickerView popView];
+    if (!tixingPickerView)
+    {
+        tixingPickerView = [[WFDatePickerSelectView alloc] initWithFrame:CGRectMake(0, 0, 320, self.wfBgImageView.height)];
+
+    }
+    tixingPickerView.mainPickerView.datePickerMode = UIDatePickerModeTime;
+    tixingPickerView.fatherPointer = self;
+    [self.wfBgImageView addSubview:tixingPickerView];
+    [tixingPickerView popView];
     
 }
 
 -(void)jiezhiButtonAction
 {
-    WFDatePickerSelectView *pickerView = [[WFDatePickerSelectView alloc] initWithFrame:CGRectMake(0, 0, 320, self.wfBgImageView.height)];
-    [self.wfBgImageView addSubview:pickerView];
-    [pickerView popView];
-    
-    
+    if (!jiezhiPickerView)
+    {
+        jiezhiPickerView = [[WFDatePickerSelectView alloc] initWithFrame:CGRectMake(0, 0, 320, self.wfBgImageView.height)];
+    }
+    jiezhiPickerView.fatherPointer = self;
+    [self.wfBgImageView addSubview:jiezhiPickerView];
+    [jiezhiPickerView popView];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void)levalButtonAction
 {
-    if (buttonIndex == 0)
-    {
-         
-    }
+    UIActionSheet *sheetView = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"高",@"中",@"低", nil];
+    sheetView.tag = levalSheetViewTag;
+    [sheetView showInView:self.wfBgImageView];
 }
 
 -(void)groupButtonAction
 {
     SelectGroupViewController *vc = [[SelectGroupViewController alloc] init];
+    vc.fatherViewController = self;
     vc.taskId = self.taskId;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+-(void)selectGroupActionCallBack:(NSDictionary *)dic
+{
+    UILabel *dateLabel = (UILabel *)[self.mainScrollView viewWithTag:grupVisibleViewTag];;
+    dateLabel.text = [dic objectForKey:@"name"];
+}
+#pragma mark ---
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == repeateSheetViewTag)
+    {
+        UILabel *visibileLabel = (UILabel *)[self.mainScrollView  viewWithTag:repeateSheetViewTag];
+        if (buttonIndex == 0)
+        {
+            visibileLabel.text = @"每日重复";
+        }
+        else if (buttonIndex == 1)
+        {
+            visibileLabel.text = @"每周重复";
+        }
+        else if (buttonIndex == 2)
+        {
+            visibileLabel.text = @"每月重复";
+
+        }
+    }
+    else if (actionSheet.tag == levalSheetViewTag)
+    {
+        UILabel *visibileLabel = (UILabel *)[self.mainScrollView  viewWithTag:leavelVisibleViewTag];
+
+        if (buttonIndex == 0)
+        {
+            visibileLabel.text = @"高";
+
+        }
+        else if (buttonIndex == 1)
+        {
+            visibileLabel.text = @"中";
+        }
+        else if (buttonIndex == 2)
+        {
+            visibileLabel.text = @"低";
+        }
+    }
+
+}
+
+-(void)popDatePickerSelectView:(WFDatePickerSelectView *)datePicker
+{
+    if (tixingPickerView == datePicker)
+    {
+        NSDate *date =  datePicker.mainPickerView.date;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //设定时间格式,这里可以设置成自己需要的格式
+        [dateFormatter setDateFormat:@"HH:mm"];
+        //用[NSDate date]可以获取系统当前时间
+        NSString *currentDateStr = [dateFormatter stringFromDate:date];
+        UILabel *dateLabel = (UILabel *)[self.mainScrollView viewWithTag:tixingVisibleViewTag];;
+        dateLabel.text = currentDateStr;
+        
+    }
+    else if (jiezhiPickerView == datePicker)
+    {
+        NSDate *date =  datePicker.mainPickerView.date;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //设定时间格式,这里可以设置成自己需要的格式
+        //用[NSDate date]可以获取系统当前时间
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *currentDateStr = [dateFormatter stringFromDate:date];
+
+        UILabel *dateLabel = (UILabel *)[self.mainScrollView viewWithTag:dateVisibleViewTag];;
+        dateLabel.text = currentDateStr;
+    }
+    
+
+}
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

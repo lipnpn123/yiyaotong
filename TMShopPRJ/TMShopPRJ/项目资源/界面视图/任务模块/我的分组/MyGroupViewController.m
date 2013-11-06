@@ -193,7 +193,7 @@
 -(void)rightDeleteButtonAction:(UIButton *)button
 {
     
-    NSIndexPath *indexpath = [NSIndexPath indexPathForItem:button.tag inSection:0];
+    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:button.tag inSection:0];
     GroupTableViewCell *cell = (GroupTableViewCell *) [self.mainTableView cellForRowAtIndexPath:indexpath];
 //    if (cell.deleteState)
 //    {
@@ -389,7 +389,8 @@
             {
                 [self.fatherViewController performSelector:@selector(selectGroupCallBack:) withObject:nil];
             }
-            [SVProgressHUD showSuccessWithStatus:@"添加成功"];
+            [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+            [self popSelf];
         }
     }
     

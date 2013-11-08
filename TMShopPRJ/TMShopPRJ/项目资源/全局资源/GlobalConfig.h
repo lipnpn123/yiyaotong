@@ -8,3 +8,6 @@
 
 
 
+#define RT_DAY          @"rt_day"
+#define RT_WEEK         @"rt_week"
+#define RT_MONTH        @"rt_month"

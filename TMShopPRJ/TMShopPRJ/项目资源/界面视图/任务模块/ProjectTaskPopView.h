@@ -13,4 +13,5 @@
 -(void)reloadPopViewUI;
 -(void)reloadPopViewUI:(BOOL)reload;
 
+@property (nonatomic,assign)BOOL isOwner;
 @end

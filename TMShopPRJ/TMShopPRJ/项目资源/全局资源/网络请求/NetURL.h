@@ -14,9 +14,11 @@
 
 //#define HEAD_URL_STR        @"http://58.17.31.108:8004/api"			//主机名
 //#define HEAD_URL_STR  @"http://202.75.213.134:8012/api"
-#define HEAD_URL_STR  @"http://192.168.0.31:8080"
+//#define HEAD_URL_STR  @"http://192.168.0.31:80"
+#define HEAD_URL_STR  @"http://www.xtasks.com"
+//#define HEAD_URL_STR  @"http://192.168.0.202:8080"
 
-#define HEADIMAGE_URL_STR				@"http://192.168.0.31:8080"	 				//图片主机名
+#define HEADIMAGE_URL_STR				@"http://192.168.0.31:80"	 				//图片主机名
 #define CreateImagePath(obj) [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",HEADIMAGE_URL_STR,obj]]
 
 //1.1提交注册信息
@@ -107,11 +109,14 @@
 //3.3 删除项目组成员
 #define XtaskProjectDeleteuserPath        @"/xtask/project/moveuser"
 
+//3.6 删除项目
+#define  XtaskProjectDeletePath             @"/xtask/project/"
+
 //3.7 修改项目
 #define  XtaskProjectmodifyPath             @"/xtask/project/modify"
 
-//3.6 删除项目
-#define  XtaskProjectDeletePath             @"/xtask/project/"
+//3.8 退出项目
+#define XtaskProjextQuitePath           @"/xtask/project/quit/"
 
 //3.10 添加项目分组
 #define  XtaskProjectAddGruopPath           @"/xtask/lists/add"
@@ -119,6 +124,12 @@
 //3.11 删除项目分组
 #define  XtaskProjectDeleteGruopPath           @"/xtask/lists/add"
 
+
+//4.1 关注任务
+#define XtaskWatchtypePath          @"/xtask/watch/new/"
+
+//4.5 取消关注
+#define XtaskDeleteWatchtypePath @"/xtask/watch/"
 
 //5.2 用户动态
 #define XTaskActivityDongPath @"/xtask/activity/query"

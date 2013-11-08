@@ -15,6 +15,7 @@
 @property (nonatomic,strong) UIView *thirdView;
 @property (nonatomic,strong) NSMutableDictionary *systemDictionary;
 @property (nonatomic,strong) RootTaskPopViewButton *selectButton;
+@property (nonatomic,strong) UIButton *editeButton;
 
 @end
 
@@ -68,6 +69,23 @@
         
         contentOff += buttonHeight;
     }
+    
+    if (self.isOwner)
+    {
+        if (!self.editeButton)
+        {
+            self.editeButton = [[UIButton alloc] init];
+        }
+        self.editeButton.titleLabel.font = NewFontWithDefaultSize(12);
+        self.editeButton.frame = CGRectMake(5, contentOff, buttonWidth, buttonHeight);
+        [self.editeButton setTitle:@"编辑我的分组" forState:UIControlStateNormal ];
+        [self.editeButton setBackgroundImage:[UIImage imageNamed:@"popButtonImage.png"] forState:UIControlStateNormal];
+        [self. editeButton addTarget:self action:@selector(editeButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.thirdView addSubview: self.editeButton];
+        contentOff += buttonHeight;
+    }
+
+    
     self.thirdView.frame = CGRectMake(0, off, buttonWidth, contentOff);
     off += contentOff;
     

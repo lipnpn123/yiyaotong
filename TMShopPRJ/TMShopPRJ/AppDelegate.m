@@ -50,6 +50,7 @@
  
 -(void)createRequestMethod
 {
+ 
     re = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://192.168.0.202:8080/task/user/upload"]];
     re.requestMethod = @"POST";
     [re addRequestHeader:@"ContentType" value:@"application/json"];

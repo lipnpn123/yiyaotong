@@ -1,18 +1,19 @@
 //
-//  PrjectGroupEditeViewController.m
+//  PrjectConnectSelectViewController.m
 //  TMShopPRJ
 //
-//  Created by lipengpeng on 13-11-5.
+//  Created by lipengpeng on 13-10-23.
 //  Copyright (c) 2013年 李 鹏鹏. All rights reserved.
 //
 
-#import "PrjectGroupEditeViewController.h"
+#import "PrjectConnectSelectViewController.h"
 #import "GroupTableViewCell.h"
 #import "GroupEntity.h"
+#import "PrjConnetEditeViewController.h"
 
- 
 
-@interface PrjectGroupEditeViewController ()
+
+@interface PrjectConnectSelectViewController ()
 {
     int rowNum;
 }
@@ -24,9 +25,9 @@
 @property (nonatomic,strong) NSMutableArray *groupDataArray;
 
 @end
- 
 
-@implementation PrjectGroupEditeViewController
+
+@implementation PrjectConnectSelectViewController
 
 #define DeleteRequestTag    111
 #define AddRequestTag       222
@@ -45,11 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self createRightBarBtn:nil action:@selector(shureAction) withImageName:@"shureNavBarButtonImage.png"];
-    
-    self.rightBarBtn.size = CGSizeMake(32, 32);
-    self.rightBarBtn.origin = CGPointMake(280, 6);
-	
+ 	
     // Do any additional setup after loading the view.
     UIButton *_titlebutton =nil;
     if (!_titlebutton)
@@ -66,15 +63,17 @@
     imageView.frame = CGRectMake(100, 12, 20, 20);
     imageView.image = [UIImage imageNamed:@"titleIconImage.png"] ;
     [self.wfTitleImageView addSubview:imageView];
-    
-    self.groupDataArray = [NSMutableArray array];
-    [self.groupDataArray setArray:self.dataArray];
+
     
     if (!self.wsUserMethod)
     {
         self.wsUserMethod = [[WSUserMethod alloc] init];
     }
     self.wsUserMethod.delegate = self;
+    
+    
+    self.groupDataArray = [NSMutableArray array];
+    [self.groupDataArray setArray:self.dataArray];
     
     if (self.mainTableView == nil)
     {
@@ -83,17 +82,53 @@
     [self.mainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.mainTableView.dataSource = self;
     self.mainTableView.delegate = self;
-    self.mainTableView.frame = NomalView_Frame;
+    self.mainTableView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight -44);
     [self.wfBgImageView addSubview:self.mainTableView];
     
-    self.textFildDataDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (self.isOwner)
+    {
+        UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        addButton.frame = CGRectMake(15, self.wfBgImageView.height - 40, 290, 30);
+        [addButton addTarget:self action:@selector(addButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [addButton setTitle:@"添加联系人" forState:UIControlStateNormal];
+        [addButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [addButton setBackgroundImage:[[UIImage imageNamed:@"connectbuttonImage_3.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
+        [self.wfBgImageView addSubview:addButton];
+        
+        [self createRightBarBtn:nil action:@selector(shureAction) withImageName:@"shureNavBarButtonImage.png"];
+
+        
+        self.rightBarBtn.size = CGSizeMake(32, 32);
+        self.rightBarBtn.origin = CGPointMake(280, 6);
+    }
+    else
+    {
     
-    rowNum = [self.groupDataArray count]+1;
+        self.mainTableView.frame = CGRectMake(0, 0, 320, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight );
+    }
+    
+    rowNum = [self.groupDataArray count] ;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     
     //    [self requestForData];
 }
+
+
+
+-(void)addButtonAction
+{
+    NSMutableSet *set = [[NSMutableSet alloc] init];
+    for (GroupEntity *g in self.groupDataArray)
+    {
+        [set addObject:g.gruopId];
+    }
+    PrjConnetEditeViewController *vc = [[PrjConnetEditeViewController alloc] init];
+    vc.set = set;
+    vc.fatherViewController = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)keyboardDidHide:(NSNotification*)notification
 {
     
@@ -112,9 +147,9 @@
 
 -(void)shureAction
 {
-    if (self.fatherViewController && [self.fatherViewController respondsToSelector:@selector(prjGroupSelectCallBack:withDeleteArray:)])
+    if (self.fatherViewController && [self.fatherViewController respondsToSelector:@selector(selectConnectCallBack:withDeleteArray:)])
     {
-        [self.fatherViewController performSelector:@selector(prjGroupSelectCallBack:withDeleteArray:) withObject:self.groupDataArray withObject:self.deleteArray];
+        [self.fatherViewController performSelector:@selector(selectConnectCallBack:withDeleteArray:) withObject:self.groupDataArray withObject:self.deleteArray];
     }
     [self popSelf];
 }
@@ -127,29 +162,27 @@
     
     if (cell.deleteState)
     {
-        rowNum--;
-        [self.mainTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationBottom];
         if (indexpath.row <[self.groupDataArray count])
         {
             [self.deleteArray addObject:[self.groupDataArray objectAtIndex:indexpath.row]];
             [self.groupDataArray removeObjectAtIndex:indexpath.row];
         }
+        [self.mainTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationBottom];
         [self.mainTableView reloadData];
     }
-    else
-    {
-        int row = rowNum;
-        GroupEntity *g = [[GroupEntity alloc] init];
-        g.goupName = @"未命名";
-        [self.groupDataArray addObject:g];
-        rowNum = [self.groupDataArray count] + 1;;
-
-        [self.mainTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
-        [self.mainTableView reloadData];
-        [self.mainTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
+ 
 }
-
+#pragma --
+#pragma mark UITableView
+-(void)selectCallBack:(NSDictionary *)dic
+{
+    GroupEntity *g= [[GroupEntity alloc] init];
+    g.gruopId = [dic objectForKey:@"id"];
+    g.goupName = [dic objectForKey:@"linkuser"];
+    [self.groupDataArray addObject:g];
+    rowNum = [self.groupDataArray count] ;
+    [_mainTableView reloadData];
+}
 #pragma --
 #pragma mark UITableView
 
@@ -159,7 +192,7 @@
     // 默认返回dataArray的数据元素个数
     //    int num = [self.dataArray count];
     //    return 10;
-    return rowNum;
+    return [self.groupDataArray  count];;
 }
 
 //高度
@@ -181,8 +214,9 @@
 		cell = [[GroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.totalHeight = 60;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.visibleLabel.userInteractionEnabled = YES;
         cell.visibleLabel.delegate = self;
+        cell.isNomalState = self.isOwner;
+        cell.visibleLabel.userInteractionEnabled = NO;
         cell.rightDeleteButton.tag= indexPath.row;
         [cell.rightDeleteButton addTarget:self action:@selector(rightDeleteButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         NSLog(@"%d %d",[self.groupDataArray count],indexPath.row);
@@ -190,18 +224,18 @@
         {
             cell.deleteState = NO;
             cell.visibleLabel.text = @"未命名";
-            [self.textFildDataDictionary setValue: cell.visibleLabel.text forKey:[NSString stringWithFormat:@"%d",indexPath.row]];
+            
         }
         else
         {
             cell.deleteState = YES;
             GroupEntity *g = [self.groupDataArray objectAtIndex:indexPath.row];
             cell.visibleLabel.text = checkNullValue(g.goupName);
-            [self.textFildDataDictionary setValue: cell.visibleLabel.text forKey:[NSString stringWithFormat:@"%d",indexPath.row]];
+            
         }
     }
     cell.visibleLabel.tag= indexPath.row;
-    if (rowNum == indexPath.row+1)
+    if ([self.groupDataArray count] <= indexPath.row)
     {
         cell.deleteState = NO;
     }
@@ -218,12 +252,12 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    [self performSelectorInBackground:@selector(reloadArrayData:) withObject:textField];
+
     return YES;
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:textField.tag inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
     
     CGRect rect = [self.mainTableView rectForRowAtIndexPath:indexPath];
     rect.origin.y =  rect.origin.y - 100;
@@ -233,12 +267,7 @@
     
     return YES;
 }
--(void)reloadArrayData:(UITextField *)t
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:t.tag inSection:0];
-    GroupTableViewCell *cell = (GroupTableViewCell *) [self.mainTableView cellForRowAtIndexPath:indexPath];
-    [self.textFildDataDictionary setValue: cell.visibleLabel.text forKey:[NSString stringWithFormat:@"%d",indexPath.row]];
-}
+
 
 
 - (void)didReceiveMemoryWarning
@@ -253,5 +282,4 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     //    [super dealloc];
 }
-
 @end

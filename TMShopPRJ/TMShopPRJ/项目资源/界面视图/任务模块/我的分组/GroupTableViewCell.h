@@ -15,5 +15,6 @@
 @property (nonatomic,strong)UIButton  *rightDeleteButton;
 @property (nonatomic,strong)UITextField  *visibleLabel;
 @property (nonatomic)BOOL deleteState;
+@property (nonatomic)BOOL isNomalState;
 
 @end

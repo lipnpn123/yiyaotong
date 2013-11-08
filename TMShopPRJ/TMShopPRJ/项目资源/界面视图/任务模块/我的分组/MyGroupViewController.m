@@ -7,7 +7,7 @@
 //
 
 #import "MyGroupViewController.h"
- 
+#import "GroupTableViewCell.h"
 #import "GroupTableViewCell.h"
 
 

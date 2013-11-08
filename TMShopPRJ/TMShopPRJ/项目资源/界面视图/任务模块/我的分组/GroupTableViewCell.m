@@ -14,6 +14,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
 	{
+        self.isNomalState = YES;
         self.leftContentView = [[UIImageView alloc] init];
         self.leftContentView.frame = CGRectMake(10, 10, 260, 40);
         self.leftContentView.image = [[UIImage imageNamed:@"groupCellImage.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
@@ -52,6 +53,26 @@
         
     }
 }
+-(void)setIsNomalState:(BOOL)de
+{
+    _isNomalState = de;
+    if (de)
+    {
+
+        self.leftContentView.frame = CGRectMake(10, 10, 260, 40);
+        self.visibleLabel.frame = CGRectMake(20, 10, 240, 40);
+        self.rightDeleteButton.frame = CGRectMake(280, 15, 30, 30);
+        self.rightDeleteButton.hidden = NO;
+    }
+    else
+    {
+        self.leftContentView.frame = CGRectMake(10, 10, 280, 40);
+        self.visibleLabel.frame = CGRectMake(20, 10, 260, 40);
+        self.rightDeleteButton.frame = CGRectMake(280, 15, 30, 30);
+        self.rightDeleteButton.hidden = YES;
+    }
+}
+
 
 -(void)updateCellWithDictionary:(NSDictionary *)dic
 {

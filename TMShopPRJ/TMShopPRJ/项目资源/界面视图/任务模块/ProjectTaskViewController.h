@@ -9,5 +9,6 @@
 #import "TaskRootPageViewController.h"
 
 @interface ProjectTaskViewController : TaskRootPageViewController
+@property (nonatomic,assign)BOOL isOwner;
 
 @end

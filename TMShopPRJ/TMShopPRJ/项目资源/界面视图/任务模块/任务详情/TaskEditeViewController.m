@@ -16,7 +16,10 @@
     WFDatePickerSelectView *jiezhiPickerView;
 }
 @property (nonatomic,strong)UIScrollView *mainScrollView;
- 
+@property (nonatomic,strong)NSString *selectGroupId;
+@property (nonatomic,strong)NSString *selectReateString;
+@property (nonatomic,strong)NSString *selectPriority;
+
 @end
 
 @implementation TaskEditeViewController
@@ -32,11 +35,15 @@
 #define repeateVisibleViewTag          111118
 #define tixingVisibleViewTag          111119
 
+
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.selectPriority = @"1";
     }
     return self;
 }
@@ -104,34 +111,63 @@
 
 -(void)shureAction
 {
+
+    UITextField *titleTextFild = (UITextField *)[self.mainScrollView viewWithTag:titleInputViewTag];
+    UITextField *detileInputTextFild = (UITextField *)[self.mainScrollView viewWithTag:detileInputViewTag];
+//    UILabel *grupVisibleLabel = (UILabel *)[self.mainScrollView viewWithTag:grupVisibleViewTag];
+//    UILabel *leavelVisibleView = (UILabel *)[self.mainScrollView viewWithTag:leavelVisibleViewTag];
+    UILabel *dateVisibleView = (UILabel *)[self.mainScrollView viewWithTag:dateVisibleViewTag];
+//    UILabel *repeateVisibleView = (UILabel *)[self.mainScrollView viewWithTag:repeateVisibleViewTag];
+    UILabel *tixingVisibleView = (UILabel *)[self.mainScrollView viewWithTag:tixingVisibleViewTag];
+
+    
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:[NSString stringWithFormat:@"%@",XtaskChangeTaskPath]];
+    NSString *prj = checkNullValue([self.dataDictionary objectForKey:@"project"]);
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    [dic setValue:@"tasknametaskname" forKey:@"taskname"];
-    [dic setValue:@"" forKey:@"list"];
     [dic setValue:self.taskId forKey:@"id"];
-    [dic setValue:@"1" forKey:@"priority"];
-    [dic setValue:@"4028809f41fdc2cc0141fdc897c40004" forKey:@"project"];
+    [dic setValue:titleTextFild.text forKey:@"taskname"];//项目名字
+    [dic setValue:detileInputTextFild.text forKey:@"description"];//项目描述
+    [dic setValue:tixingVisibleView.text forKey:@"remindtime"];//提醒
+    [dic setValue:dateVisibleView.text forKey:@"duedate"];//截至日期
+    [dic setValue:prj forKey:@"project"];
+
+    if (self.selectGroupId)
+    {
+        [dic setValue:self.selectGroupId forKey:@"list"];
+    }
+    if (self.selectReateString)
+    {
+        [dic setValue:self.selectReateString forKey:@"repeattype"];
+    }
+    if (self.selectPriority)
+    {
+        [dic setValue:self.selectPriority forKey:@"priority"];
+    }
+    
+//    [dic setValue:@"2013-8-19 12:00:00" forKey:@"createTime"];
+//    [dic setValue:@"北京" forKey:@"locateid"];
+//    [dic setValue:@"100" forKey:@"scheduletime"];
+//    [dic setValue:@"permission_private" forKey:@"permission"];
+//    [dic setValue:@"200" forKey:@"scheduletime"];
+//    [dic setValue:@"开始" forKey:@"status"];
+
+
+
+
     NSArray *array = [NSArray arrayWithObject:dic];
     [entity appendRequestParameter:array withKey:@"updateBeanids"];
-//    [entity appendRequestParameter:@"tasknametaskname" withKey:@"taskname"];
-//    [entity appendRequestParameter:@"" withKey:@"list"];
-//    [entity appendRequestParameter:self.taskId withKey:@"id"];
-//    [entity appendRequestParameter:@"1" withKey:@"priority"];
-//    [entity appendRequestParameter:@"2013-09-30" withKey:@"starttime"];
-//    [entity appendRequestParameter:@"2013-10-30" withKey:@"duedate"];
-//    [entity appendRequestParameter:@"rt_day" withKey:@"repeattype"];
-//    [entity appendRequestParameter:@"100" withKey:@"scheduletime"];
-//    [entity appendRequestParameter:@"description" withKey:@"description"];
-//    [entity appendRequestParameter:@"2013-10-30" withKey:@"remindtime"];
-//    [entity appendRequestParameter:@"permission_private" withKey:@"permission"];
-//    [entity appendRequestParameter:@"开始" withKey:@"status"];
+ 
 //    [entity appendRequestParameter:@"4028809f41fdc2cc0141fdc897c40004" withKey:@"project"];
  
     
-      entity.requestMethod = @"post";
+    entity.requestMethod = @"POST";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:1];
+}
+-(void)addButtonAction
+{
+
 }
 
 -(void)createMainView
@@ -249,12 +285,18 @@
         [bgImageView addSubview:titleLabel];
 
         
-        NSString *description = checkNullValue([self.dataDictionary objectForKey:@"list"]);
-        if ( [description isEqualToString:@""])
+        NSString * description= @"无";
+        if ([[self.dataDictionary objectForKey:@"listsdata"] isKindOfClass:[NSDictionary class]])
         {
-            description= @"无";
+            NSArray *l =  [[self.dataDictionary objectForKey:@"listsdata"] objectForKey:@"data"] ;
+            
+            if ([l isKindOfClass:[NSArray class]] && l)
+            {
+                NSDictionary *dic = [l objectAtIndex:0];
+                description = [dic objectForKey:@"name"];
+            }
         }
-
+ 
         UILabel *titleLabel2  = NewLabelWithDefaultSize(14);
         titleLabel2.frame = CGRectMake(labelOffw, offy, width, 30);
         titleLabel2.text = description;
@@ -324,8 +366,13 @@
         
         UILabel *titleLabel  = NewLabelWithDefaultSize(14);
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
-        titleLabel.text = @"无";
         titleLabel.tag = dateVisibleViewTag;
+        NSString *r = checkNullValue([self.dataDictionary objectForKey:@"duedate"]);
+        if ([r isEqualToString:@""])
+        {
+            r = @"无";
+        }
+        titleLabel.text = r;
         [bgImageView addSubview:titleLabel];
         
         UIButton *jiezhiButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -358,7 +405,23 @@
         
         UILabel *titleLabel  = NewLabelWithDefaultSize(14);
         titleLabel.frame = CGRectMake(labelOffw, offy, width, 30);
-        titleLabel.text = @"无";
+        NSString *r = checkNullValue([self.dataDictionary objectForKey:@"repeattype"]);
+        if ([r isEqualToString:RT_MONTH])
+        {
+            titleLabel.text = @"每月";
+        }
+        else if ([r isEqualToString:RT_WEEK])
+        {
+            titleLabel.text = @"每周";
+        }
+        else if ([r isEqualToString:RT_DAY])
+        {
+            titleLabel.text = @"每日";
+        }
+        else
+        {
+            titleLabel.text = @"无";
+        }
         titleLabel.tag = repeateSheetViewTag;
         [bgImageView addSubview:titleLabel];
         
@@ -486,6 +549,7 @@
 {
     UILabel *dateLabel = (UILabel *)[self.mainScrollView viewWithTag:grupVisibleViewTag];;
     dateLabel.text = [dic objectForKey:@"name"];
+    self.selectGroupId = [dic objectForKey:@"id"];
 }
 #pragma mark ---
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -496,14 +560,18 @@
         if (buttonIndex == 0)
         {
             visibileLabel.text = @"每日重复";
+            
+            self.selectReateString = RT_DAY;
         }
         else if (buttonIndex == 1)
         {
             visibileLabel.text = @"每周重复";
+            self.selectReateString = RT_WEEK;
         }
         else if (buttonIndex == 2)
         {
             visibileLabel.text = @"每月重复";
+            self.selectReateString = RT_MONTH;
 
         }
     }
@@ -514,15 +582,18 @@
         if (buttonIndex == 0)
         {
             visibileLabel.text = @"高";
+            self.selectPriority= @"1";
 
         }
         else if (buttonIndex == 1)
         {
             visibileLabel.text = @"中";
+            self.selectPriority= @"2";
         }
         else if (buttonIndex == 2)
         {
             visibileLabel.text = @"低";
+            self.selectPriority= @"3";
         }
     }
 
@@ -535,7 +606,7 @@
         NSDate *date =  datePicker.mainPickerView.date;
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         //设定时间格式,这里可以设置成自己需要的格式
-        [dateFormatter setDateFormat:@"HH:mm"];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
         //用[NSDate date]可以获取系统当前时间
         NSString *currentDateStr = [dateFormatter stringFromDate:date];
         UILabel *dateLabel = (UILabel *)[self.mainScrollView viewWithTag:tixingVisibleViewTag];;

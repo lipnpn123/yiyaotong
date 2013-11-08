@@ -24,6 +24,8 @@
 }
 @property(nonatomic,strong) UITableView *mainTableView;
 @property(nonatomic,strong) NSMutableArray *puserArray;
+@property(nonatomic,strong) NSMutableArray *deletePuserArray;;
+
 //@property(nonatomic,strong) NSMutableArray *plistArray;
 @property(nonatomic,strong) NSMutableArray *groupDataArray;
 @property(nonatomic,strong) NSMutableArray *deleteGrupArray;;
@@ -37,6 +39,7 @@
 #define compelteChageAction         1112
 #define leavePRjAction              1113
 #define deletePRjAction             1114
+#define exitePRjAction              1115
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,10 +53,7 @@
 {
     [super viewDidLoad];
 
-    [self createRightBarBtn:nil action:@selector(shureAction) withImageName:@"shureNavBarButtonImage.png"];
-    self.rightBarBtn.size = CGSizeMake(32, 32);
-    self.rightBarBtn.origin = CGPointMake(280, 6);
-    
+
     UIImageView *mainBgView = [[UIImageView alloc] init];
     mainBgView.userInteractionEnabled = YES;
     //    mainBgView.backgroundColor= [UIColor blackColor];
@@ -103,12 +103,13 @@
     headView.frame = CGRectMake(0, 0, 320, offy );
     
     self.dataArray = [NSMutableArray arrayWithArray:[[self.dataDictionary objectForKey:@"follows"] objectForKey:@"data"]];
-    self.puserArray = [NSMutableArray array];
-    NSMutableArray *plistArray = [NSMutableArray array];
-    self.groupDataArray = [NSMutableArray array];
-    [self.puserArray setArray:[[self.dataDictionary objectForKey:@"pusers"] objectForKey:@"data"]];
 
+    self.puserArray = [NSMutableArray array];
+    self.deletePuserArray = [NSMutableArray array];
+    self.deleteGrupArray = [NSMutableArray array];
+    self.groupDataArray = [NSMutableArray array];
     
+    NSMutableArray *plistArray = [NSMutableArray array];
     [plistArray setArray:[[self.dataDictionary objectForKey:@"plists"] objectForKey:@"data"]];
     for (NSDictionary *dic in plistArray)
     {
@@ -118,6 +119,20 @@
         g.goupName = [dic objectForKey:@"name"];
         [self.groupDataArray addObject:g];
     }
+    
+
+    
+    NSMutableArray *puserArray2 =  [NSMutableArray array];
+    [puserArray2 setArray:[[self.dataDictionary objectForKey:@"pusers"] objectForKey:@"data"]];
+    for (NSDictionary *dic in puserArray2)
+    {
+        GroupEntity *g = [[GroupEntity alloc] init];
+        g.goupDictionary = [NSMutableDictionary dictionaryWithDictionary:dic];
+        g.gruopId = [dic objectForKey:@"id"];
+        g.goupName = [dic objectForKey:@"userid"];
+        [self.puserArray addObject:g];
+    }
+    
     
     if (self.mainTableView == nil)
     {
@@ -132,17 +147,45 @@
     [self.wfBgImageView addSubview:self.mainTableView];
     self.mainTableView.tableHeaderView = headView;
 
-    
-    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    addButton.frame = CGRectMake(15, self.wfBgImageView.height - 40, 290, 30);
-    [addButton addTarget:self action:@selector(deleteButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setTitle:@"删除项目" forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [addButton setBackgroundImage:[[UIImage imageNamed:@"connectbuttonImage_3.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
-    [self.wfBgImageView addSubview:addButton];
+    if ([[self.dataDictionary objectForKey:@"ownerid"] isEqualToString:[UserEntity shareGlobalUserEntity].personUid])
+    {
+        self.isOwner = YES;
+        UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        addButton.frame = CGRectMake(15, self.wfBgImageView.height - 40, 290, 30);
+        [addButton addTarget:self action:@selector(deleteButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [addButton setTitle:@"删除项目" forState:UIControlStateNormal];
+        [addButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [addButton setBackgroundImage:[[UIImage imageNamed:@"connectbuttonImage_3.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
+        [self.wfBgImageView addSubview:addButton];
+        [self createRightBarBtn:nil action:@selector(shureAction) withImageName:@"shureNavBarButtonImage.png"];
+        
+        
+        self.rightBarBtn.size = CGSizeMake(32, 32);
+        self.rightBarBtn.origin = CGPointMake(280, 6);
+        
+    }
+    else
+    {
+        UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        addButton.frame = CGRectMake(15, self.wfBgImageView.height - 40, 290, 30);
+        [addButton addTarget:self action:@selector(exiteButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [addButton setTitle:@"退出项目" forState:UIControlStateNormal];
+        [addButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [addButton setBackgroundImage:[[UIImage imageNamed:@"connectbuttonImage_3.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
+        [self.wfBgImageView addSubview:addButton];
+        self.mainTableView.frame = CGRectMake(5, 7, 310, Dev_ScreenHeight - Dev_StateHeight - Dev_ToolbarHeight );
+    }
 }
 
-
+-(void)exiteButtonAction
+{
+    NSLog(@"%@",self.dataDictionary);
+    UserRequestEntity *entity = [[UserRequestEntity alloc] init];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@%@/%@",XtaskProjextQuitePath,[self.dataDictionary objectForKey:@"id"],[UserEntity shareGlobalUserEntity].personUid]];
+    
+    entity.requestMethod = @"POST";
+    [self.wsUserMethod nomoalRequestWithEntity:entity withTag:exitePRjAction];
+}
 
 #pragma --
 #pragma mark UITableView
@@ -221,7 +264,7 @@
                 int yd = i/2;
                 x = xd * 140 + 20;
                 y = yd * 50 + 5;
-                NSDictionary *dic = [self.puserArray objectAtIndex:i];
+                GroupEntity *g = [self.puserArray objectAtIndex:i];
                 
                 UIImageView *imageView = [[UIImageView alloc] init];
                 imageView.frame =  CGRectMake(x, y, 40, 40);
@@ -231,7 +274,7 @@
                 
                 UILabel *nameLabel = NewLabelWithDefaultSize(13);
                 nameLabel.frame  = CGRectMake(x + 50, y, 80, 20);
-                nameLabel.text = [dic objectForKey:@"userid"];;
+                nameLabel.text = g.goupName;;
                 [cell addSubview:nameLabel];
                 
                 UILabel *systemLabel = NewLabelWithDefaultSize(11);
@@ -290,22 +333,29 @@
     if (indexPath.section == 0 )
     {
         PrjectConnectSelectViewController *vc = [[PrjectConnectSelectViewController alloc] init];
+        vc.fatherViewController = self;
+        vc.isOwner = self.isOwner;
         vc.dataArray = [NSMutableArray arrayWithArray:self.puserArray];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
     {
         PrjectGroupEditeViewController *vc = [[PrjectGroupEditeViewController alloc] init];
+        vc.isOwner = self.isOwner;
         vc.fatherViewController = self;
         vc.dataArray = [NSMutableArray arrayWithArray:self.groupDataArray];
         [self.navigationController pushViewController:vc animated:YES];     
     }
 }
 
--(void)selectConnectCallBack:(NSDictionary *)dic
+-(void)selectConnectCallBack:(NSArray *)array withDeleteArray:(NSArray *)deleteArray
 {
-    
+    reloadState = YES;
+    [self.puserArray setArray:array];
+    [self.deletePuserArray addObjectsFromArray:deleteArray];
+    [_mainTableView reloadData];
 }
+
 
 -(void)prjGroupSelectCallBack:(NSArray *)array withDeleteArray:(NSArray *)deleteArray
 {
@@ -313,6 +363,7 @@
     [self.groupDataArray setArray:array];
     [self.deleteGrupArray addObjectsFromArray:deleteArray];
     [_mainTableView reloadData];
+    
 }
 #pragma mark --
 
@@ -344,43 +395,120 @@
 
 -(void)shureAction
 {
-    NSMutableArray *addArray = [NSMutableArray array];
+    NSMutableArray *addGroupArray = [NSMutableArray array];
     for (GroupEntity *g in self.groupDataArray)
     {
+        NSLog(@"g.gruopId -- %@",g.gruopId);
+
+        NSMutableDictionary *dic = [NSMutableDictionary  dictionary];
         if (g.gruopId && ![g.gruopId isEqualToString:@""])
         {
 //已有的修改的
-            
+            [dic setValue:checkNullValue(g.gruopId) forKey:@"id"];
+            [dic setValue:checkNullValue(g.goupName) forKey:@"name"];
         }
         else
         {
 //没有的添加的
-            [addArray addObject:checkNullValue(g.goupName)];
+            [dic setValue:checkNullValue(g.goupName) forKey:@"name"];
         }
+        [addGroupArray addObject:dic];
     }
-    NSMutableString *deleteString = [[NSMutableString alloc] init];
-    for (int i =0 ;i<[self.deleteGrupArray count];i++)
+
+    NSMutableString *deleteGroupString = [[NSMutableString alloc] init];
+    for (int i=0;i<[self.deleteGrupArray count];i++)
     {
         GroupEntity *g = [self.deleteGrupArray objectAtIndex:i];
-//要删除的组id
-        NSString *groupId = g.gruopId;
+        NSLog(@"g.gruopId -- %@",g.gruopId);
         if (g.gruopId && ![g.gruopId isEqualToString:@""])
         {
-            [deleteString appendString:groupId];
-        }
-        if (i !=0 && i!= [self.deleteGrupArray count] - 1)
-        {
-            [deleteString appendString:@","];
+            [deleteGroupString appendString:g.gruopId];
+            [deleteGroupString appendString:@","];
         }
     }
+    if ([deleteGroupString length] >0)
+    {
+        [deleteGroupString setString:[deleteGroupString substringWithRange:NSMakeRange(0, [deleteGroupString length]-1)]];;
+    }
+    NSLog(@"deleteGroupString -- %@",deleteGroupString);
+    NSLog(@"addArray -- %@",addGroupArray);
+
+    
+    NSMutableArray *addUserArray = [NSMutableArray array];
+    NSMutableString *updateUserString = [[NSMutableString alloc] init];
+    for (GroupEntity *g in self.puserArray)
+    {
+        NSMutableDictionary *dic = [NSMutableDictionary  dictionary];
+        if (g.gruopId && ![g.gruopId isEqualToString:@""])
+        {
+//            //已有的修改的
+//            [dic setValue:checkNullValue(g.gruopId) forKey:@"id"];
+//            [dic setValue:checkNullValue(g.goupName) forKey:@"name"];
+//            [updateUserArray addObject:dic];
+            [updateUserString  appendString:g.gruopId];
+            [updateUserString  appendString:@","];
+        }
+        else
+        {
+            //没有的添加的
+            [dic setValue:checkNullValue(g.goupName) forKey:@"name"];
+            [addUserArray addObject:dic];
+        }
+    }
+
+    
+    if ([updateUserString length] >0)
+    {
+        [updateUserString setString:[updateUserString substringWithRange:NSMakeRange(0,[updateUserString length]-1)]];;
+    }
+    [updateUserString setString:@"4028805841a67df80141a67f53500000"];
+    NSMutableString *deleteUserString = [[NSMutableString alloc] init];
+    for (int i=0;i<[self.deletePuserArray count];i++)
+    {
+        GroupEntity *g = [self.deletePuserArray objectAtIndex:i];
+        if (g.gruopId && ![g.gruopId isEqualToString:@""])
+        {
+            [deleteUserString appendString:g.gruopId];
+            [deleteUserString appendString:@","];
+        }
+    }
+    if ([deleteUserString length] >0)
+    {
+        [deleteUserString setString:[deleteUserString substringWithRange:NSMakeRange(0,[deleteUserString length]-1)]];;
+    }
+    NSLog(@"addUserArray -- %@",addUserArray);
+    NSLog(@"deleteUserString -- %@",deleteUserString);
+
+    
     
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:XtaskProjectmodifyPath];
     [entity appendRequestParameter:checkNullValue([self.dataDictionary objectForKey:@"id"]) withKey:@"id"];
     [entity appendRequestParameter:checkNullValue(titleTextFild.text) withKey:@"projectname"];
     [entity appendRequestParameter:detailTextFild.text withKey:@"description"];
-    [entity appendRequestParameter:@"" withKey:@"permission"];
-    entity.requestMethod = @"PUT";
+    [entity appendRequestParameter:@"permission_private" withKey:@"permission"];
+
+    if ([addGroupArray count] >0)
+    {
+        [entity appendRequestParameter:addGroupArray withKey:@"lists"];
+    }
+    if (![deleteUserString isEqualToString:@""])
+    {
+        [entity appendRequestParameter:deleteGroupString withKey:@"dellists"];
+    }
+    if ([updateUserString length] >0 )
+    {
+        [entity appendRequestParameter:updateUserString withKey:@"projectusers"];
+    }
+    if ([addUserArray count] >0)
+    {
+        [entity appendRequestParameter:addUserArray withKey:@"addpusers"];
+    }
+    if (![deleteUserString isEqualToString:@""])
+    {
+        [entity appendRequestParameter:deleteUserString withKey:@"delusers"];
+    }
+    entity.requestMethod = @"POST";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:compelteChageAction];
 }
 
@@ -413,8 +541,14 @@
 
 - (void)requestFinished:(ASIFormDataRequest *)aRequest
 {
+    if (aRequest.tag == exitePRjAction)
+    {
         
+    }
+    else if (aRequest.tag == deletePRjAction)
+    {
     
+    }
 } 
 
 @end

@@ -505,6 +505,15 @@
 	return size;
 	
 }
++(BOOL)isMatchPhoneNumber:(NSString *)str
+{
+    NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    
+    BOOL isMatch = [pred evaluateWithObject:str];
+    return isMatch ;
+}
 /*
  此函数用于返回一个label的自适应size
  注：传入的label需要设置好字体和宽度

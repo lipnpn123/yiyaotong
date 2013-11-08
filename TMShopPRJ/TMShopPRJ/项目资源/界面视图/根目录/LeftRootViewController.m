@@ -188,6 +188,10 @@
     {
         NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
         ProjectTaskViewController *vc = [[ProjectTaskViewController alloc] init];
+        if ([[self.dataDictionary objectForKey:@"ownerid"] isEqualToString:[UserEntity shareGlobalUserEntity].personUid])
+        {
+            vc.isOwner = YES;
+        }
         vc.projectId = checkNullValue([dic objectForKey:@"id"]);
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         [self.mm_drawerController setCenterViewController:nav withCloseAnimation:YES completion:nil];

@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface PrjectGroupEditeViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic,assign)BOOL isOwner;
 
 @end

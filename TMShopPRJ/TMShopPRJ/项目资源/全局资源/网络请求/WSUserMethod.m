@@ -22,7 +22,7 @@
     }
     [_requestURL appendFormat:@"%@",action];
 }
--(void)appendRequestParameter:(NSString *)value withKey:(NSString *)key
+-(void)appendRequestParameter:(NSObject *)value withKey:(NSString *)key
 {
     if (!value)
     {
@@ -39,7 +39,7 @@
 //    [_requestURL appendFormat:@"&%@=%@",key,[[NSString stringWithFormat:@"%@",value] stringByAddingPercentEscapesUsingEncoding:gbkEncoding]];
 }
 
--(void)appendFileRequestParameter:(NSString *)value withKey:(NSString *)key{
+-(void)appendFileRequestParameter:(NSObject *)value withKey:(NSString *)key{
     if (!value)
     {
         value = @"";

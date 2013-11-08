@@ -125,13 +125,13 @@
     offy += (h + 10);
 
     UIImageView *contentView = [[UIImageView alloc] init];
-    contentView.frame= CGRectMake(10, offy, 300, 40);
+    contentView.frame= CGRectMake(15, offy, 280, 50);
     contentView.image = [UIImage imageNamed:@"priority-icon_1.png"];
 //    contentView.backgroundColor = [UIColor redColor];
     [headView addSubview:contentView];
 
     
-    offy += 50;
+    offy += 60;
  
     UIImageView *timeButton = [[UIImageView alloc] init];
     timeButton.frame = CGRectMake(10, offy, 20, 20);
@@ -211,9 +211,14 @@
     actionLabel.text = @"关注的人:";
     [headView addSubview:actionLabel];
     
-    int off = 100;
-    NSArray *array = [self.dataDictionary objectForKey:@"follows"];
-    for (int i=0; i<[array count]; i++)
+    int off = 80;
+    NSArray *array = [[self.dataDictionary objectForKey:@"follows"] objectForKey:@"data"];
+    int c =[array count] ;
+    if (c > 5)
+    {
+        c =5;
+    }
+    for (int i=0; i<c; i++)
     {
 //        NSDictionary *tempDic = [array objectAtIndex:i];
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -289,6 +294,8 @@
     self.selftoolbarView.frame = CGRectMake(0,self.wfBgImageView.height-44, 320, 44);
     self.selftoolbarView.backgroundColor =[UIColor whiteColor];
     [self.wfBgImageView addSubview:self.selftoolbarView];
+    
+    
     
     UIButton *button = [[UIButton alloc] init];;
     button.frame = CGRectMake(15, 7, 40, 35);
@@ -397,7 +404,7 @@
 -(void)rejectTaskAction:(NSString *)taskId
 {
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
-    [entity setRequestAction:[NSString stringWithFormat:@"%@/%@",XtaskRejectTaskPath,taskId]];
+    [entity setRequestAction:[NSString stringWithFormat:@"%@%@",XtaskRejectTaskPath,taskId]];
     entity.requestMethod = @"POST";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:rejectTaskTag];
 }
@@ -468,7 +475,7 @@
     entity.requestMethod = @"POST";
     [entity appendRequestParameter:self.requestDetailId withKey:@"taskid"];
     [entity appendRequestParameter:@"userId" withKey:@"comment"];
-    [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userId"];
+    [entity appendRequestParameter:[UserEntity shareGlobalUserEntity].personUid withKey:@"userid"];
 
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:taskCommentRequestTag];
     

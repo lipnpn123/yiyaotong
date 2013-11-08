@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface ProjectEditeViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UITextViewDelegate>
+@property (nonatomic,assign)BOOL isOwner;
 
 @end

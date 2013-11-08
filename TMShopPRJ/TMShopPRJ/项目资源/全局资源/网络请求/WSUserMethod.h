@@ -26,8 +26,8 @@
 @property (readonly,nonatomic)NSMutableDictionary *requestFileParamDictionary;
 
 -(void)setRequestAction:(NSString *)action;
--(void)appendRequestParameter:(NSString *)value withKey:(NSString *)key;
--(void)appendFileRequestParameter:(NSString *)value withKey:(NSString *)key;
+-(void)appendRequestParameter:(NSObject *)value withKey:(NSString *)key;
+-(void)appendFileRequestParameter:(NSObject *)value withKey:(NSString *)key;
 
 @end
 @interface WSUserMethod : WebService 

@@ -9,7 +9,8 @@
 #import "SelectConnectViewController.h"
 
 
-@interface PrjectConnectSelectViewController : SelectConnectViewController<UITableViewDataSource,UITableViewDelegate>
+@interface PrjectConnectSelectViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)NSString *taskId;
+@property (nonatomic,assign)BOOL isOwner;
 
 @end

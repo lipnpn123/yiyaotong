@@ -42,7 +42,7 @@
     self.wsUserMethod.delegate = self;
     UserRequestEntity *entity = [[UserRequestEntity alloc] init];
     [entity setRequestAction:[NSString stringWithFormat:@"%@",XTaskProjectQuery]];
-    [entity appendRequestParameter:@"4028804a422127e8014221325a640006" withKey:@"id"];
+    [entity appendRequestParameter:self.projectId withKey:@"id"];
     entity.requestMethod = @"POST";
     [self.wsUserMethod nomoalRequestWithEntity:entity withTag:reqeustTag];
     
@@ -55,6 +55,8 @@
     }
     _popListView.navigationController = self.navigationController;
     _popListView.fatherPointer = self;
+    _popListView.isOwner = self.isOwner;
+
     [_popListView popView];
     [self.wfBgImageView addSubview:_popListView];
 }

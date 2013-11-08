@@ -28,6 +28,7 @@
 //错误提示
 +(void)ErrorAlert:(NSString*)errorMsg withTitle:(NSString*)titleMsg;
 +(BOOL)isisMatchedEmail:(NSString *)str;
++(BOOL)isMatchPhoneNumber:(NSString *)str;
 //判断是数字
 + (BOOL)isPureInt:(NSString *)string;
 //获取随机字符串
